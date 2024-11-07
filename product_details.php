@@ -86,12 +86,12 @@ $cores = getProductColors($conn, $produto);
 <div class="product_detail_container wrapper">
     <div class="product_container">
         <div class="slideshow_container">
-            <img class="prev_icon" onclick="slide(-1)" src="assets/icons/arrow.png" alt="Previous">
-            <img class="next_icon" onclick="slide(1)" src="assets/icons/arrow.png" alt="Next">
+            <img class="prev_icon" onclick="slide(-1)" src="/assets/icons/arrow.png" alt="Previous">
+            <img class="next_icon" onclick="slide(1)" src="/assets/icons/arrow.png" alt="Next">
             <div class="slideshow">
                 <?php while ($row = $productImages->fetch_assoc()): ?>
-                    <a href="assets/imgs/produtos/<?= htmlspecialchars($row['c_descricao']) ?>/<?= htmlspecialchars($row['foto']) ?>" target="_blank">
-                        <img class="img" src="assets/imgs/produtos/<?= htmlspecialchars($row['c_descricao']) ?>/<?= htmlspecialchars($row['foto']) ?>" alt="<?= htmlspecialchars($row['nome']) ?>">
+                    <a href="/assets/imgs/produtos/<?= htmlspecialchars($row['c_descricao']) ?>/<?= htmlspecialchars($row['foto']) ?>" target="_blank">
+                        <img class="img" src="/assets/imgs/produtos/<?= htmlspecialchars($row['c_descricao']) ?>/<?= htmlspecialchars($row['foto']) ?>" alt="<?= htmlspecialchars($row['nome']) ?>">
                     </a>
                 <?php endwhile; ?>
             </div>
@@ -105,7 +105,7 @@ $cores = getProductColors($conn, $produto);
             ?>
                 <div class="product_imgs">
                     <a href="#">
-                        <img class="img" onclick="img_click(<?= $img_index ?>)" src="assets/imgs/produtos/<?= htmlspecialchars($row['c_descricao']) ?>/<?= htmlspecialchars($row['foto']) ?>" alt="<?= htmlspecialchars($row['nome']) ?>" title="Ver Imagem">
+                        <img class="img" onclick="img_click(<?= $img_index ?>)" src="/assets/imgs/produtos/<?= htmlspecialchars($row['c_descricao']) ?>/<?= htmlspecialchars($row['foto']) ?>" alt="<?= htmlspecialchars($row['nome']) ?>" title="Ver Imagem">
                     </a>
                 </div>
             <?php

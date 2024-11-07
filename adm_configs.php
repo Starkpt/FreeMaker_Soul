@@ -60,7 +60,7 @@ include 'components/header/header.php';
                         } else {
                         ?>
                             <a href="imgs/users/profile_pics/<?= $row['foto'] ?>" target="_blank">
-                                <img class="user_foto" src="imgs/users/profile_pics/<?= $row['foto'] ?>" height="60">
+                                <img class="user_foto"img src="/assets/imgs/users/profile_pics/<?= $row['foto'] ?>" height="60">
                             </a>
                         <?php
                         }

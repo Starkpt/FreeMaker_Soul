@@ -3,7 +3,7 @@
 <div class="footer">
     <div class="wrapper">
         <div class="col1">
-            <img class="logo" src="imgs/logos/logo.png" alt="LogoFreemaker_soul" class="failory-logo-image">
+            <img class="logo"img src="/assets/imgs/logos/logo.png" alt="LogoFreemaker_soul" class="failory-logo-image">
             <h3>Freemaker Soul®</h3>
             <p>Acredite no seu potencial <br> e conquiste o impossível!</p>
         </div>
