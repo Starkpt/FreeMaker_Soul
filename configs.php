@@ -9,6 +9,9 @@ $db = 'freemaker_soul';
 
 define('SALT', '@#$7:d@erR_er€');
 
+// define('ROOT_PATH', __DIR__ . "/");
+
+
 if ($debug) {
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
@@ -30,6 +33,3 @@ if ($conn->connect_error) {
 
 $conn->set_charset("utf8");
 session_start();
-
-
- 

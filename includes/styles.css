@@ -542,7 +542,12 @@ a {
   user-select: none;
 }
 
-.search-bar a img {
+.search-bar button {
+  background: none;
+  border: none;
+}
+
+.search-bar button img {
   opacity: 0.7;
   height: 18px;
   margin-top: 5px;

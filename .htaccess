@@ -1,0 +1,10 @@
+RewriteEngine On
+
+# Redirect to remove the "pages" folder from the URL
+RewriteCond %{REQUEST_URI} !^/pages/
+RewriteRule ^produtos/(.*)$ /pages/produtos/$1 [L,QSA]
+
+# Remove the ".php" extension from the URL
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.+)$ $1.php [L,QSA]

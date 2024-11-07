@@ -1,52 +1,59 @@
 <?php
+// Set the page title
 $title = "Produtos";
+
+// Include components
 include 'components/header/header.php';
 include "components/product_card/product_card.php";
 
-if (@$_SESSION['adm'] === 1) {
-  $add_btn = 'Adicionar Produto';
-} else {
-  $add_btn = 'Sugerir Produto';
-}
+// Define button label based on session 'adm' status
+$add_btn = (isset($_SESSION['adm']) && $_SESSION['adm'] === 1) ? 'Adicionar Produto' : 'Sugerir Produto';
 
-@$categoria = $_GET['categoria'];
+// Get category filter if it exists
+$categoria = $_GET['categoria'] ?? null;
 
-?>
-
-<div class="mais_container wrapper" id="add_container">
-  <a href="#" id="add" title="<?= $add_btn ?>">
-    <button class="mais"><?= $add_btn ?></button>
-  </a>
-</div>
-
-<div class="product-sample wrapper">
-  <?php
+// Database query to get products
+function getProducts($conn, $categoria = null)
+{
   $sql = 'SELECT p.ID, c.c_descricao, p.nome, p.descricao, p.preco, MIN(f.foto) AS foto
             FROM produtos AS p
             JOIN fotos AS f ON f.ID_produto = p.ID
             JOIN categorias AS c ON c.ID = p.ID_categoria';
-  if ($categoria)
+
+  // Add condition if a category is specified
+  if ($categoria) {
     $sql .= ' WHERE c.c_descricao = ?';
+  }
 
   $sql .= ' GROUP BY p.ID, p.nome, p.descricao, p.preco';
+
+  // Prepare and execute query
   $stmt = $conn->prepare($sql);
 
-  if ($categoria)
+  if ($categoria) {
     $stmt->bind_param('s', $categoria);
-
+  }
 
   $stmt->execute();
-  $result = $stmt->get_result();
+  return $stmt->get_result();
+}
 
+// Fetch products from database
+$result = getProducts($conn, $categoria);
 
+?>
 
-  while ($row = $result->fetch_assoc()) {
-    if ($row) {
-      echo productCard($row);
-    }
-  }
-  ?>
+<!-- HTML Output -->
+<div class="mais_container wrapper" id="add_container">
+  <a href="#" id="add" title="<?= htmlspecialchars($add_btn) ?>">
+    <button class="mais"><?= htmlspecialchars($add_btn) ?></button>
+  </a>
 </div>
 
+<div class="product-sample wrapper">
+  <?php while ($row = $result->fetch_assoc()): ?>
+    <?= productCard($row); ?>
+  <?php endwhile; ?>
+</div>
 
 <?php include 'components/footer/footer.php'; ?>
