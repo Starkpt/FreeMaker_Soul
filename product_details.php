@@ -1,126 +1,139 @@
 <?php
 $title = 'Detalhes Produto';
 include 'components/header/header.php';
-@$produto = $_GET['produto'];
+
+// Get product ID from the query string if available
+$produto = $_GET['produto'] ?? null;
+
+// Function to retrieve product details
+function getProductDetails($conn, $produto)
+{
+    $sql = 'SELECT p.nome, p.descricao, c.c_descricao, p.preco
+            FROM produtos AS p
+            JOIN categorias AS c ON c.ID = p.ID_categoria
+            WHERE p.ID = ?';
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('i', $produto);
+    $stmt->execute();
+    return $stmt->get_result()->fetch_assoc();
+}
+
+// Function to retrieve product images
+function getProductImages($conn, $produto)
+{
+    $sql = 'SELECT f.foto, p.nome, c.c_descricao
+            FROM fotos AS f
+            JOIN produtos AS p ON p.ID = f.ID_produto
+            JOIN categorias AS c ON c.ID = p.ID_categoria
+            WHERE p.ID = ?';
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('i', $produto);
+    $stmt->execute();
+    return $stmt->get_result();
+}
+
+// Function to retrieve product materials
+function getProductFilaments($conn, $produto)
+{
+    $sql = 'SELECT f.tipo
+            FROM filamentos AS f
+            JOIN produtos_filamentos_cores AS pf ON pf.ID_filamento = f.ID
+            JOIN produtos AS p ON p.ID = pf.ID_produto
+            WHERE p.ID = ?';
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('i', $produto);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $filamentos = [];
+    while ($row = $result->fetch_assoc()) {
+        $filamentos[] = $row['tipo'];
+    }
+    return $filamentos;
+}
+
+// Function to retrieve product colors
+function getProductColors($conn, $produto)
+{
+    $sql = 'SELECT c.cor
+            FROM cores AS c
+            JOIN produtos_filamentos_cores AS pc ON pc.ID_cor = c.ID
+            JOIN produtos AS p ON p.ID = pc.ID_produto
+            WHERE p.ID = ?';
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('i', $produto);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $cores = [];
+    while ($row = $result->fetch_assoc()) {
+        $cores[] = $row['cor'];
+    }
+    return $cores;
+}
+
+// Fetch product data
+$productDetails = getProductDetails($conn, $produto);
+$productImages = getProductImages($conn, $produto);
+$filamentos = getProductFilaments($conn, $produto);
+$cores = getProductColors($conn, $produto);
 ?>
+
 <div class="product_detail_container wrapper">
     <div class="product_container">
-        <?php
-        $sql = 'SELECT f.foto, p.nome, c.c_descricao
-                    FROM fotos AS f
-                    JOIN produtos AS p ON p.ID = f.ID_produto
-                    JOIN categorias AS c ON c.ID = p.ID_categoria
-                    WHERE p.ID = ?';
-
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param('i', $produto);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        ?>
         <div class="slideshow_container">
-            <img class="prev_icon" onclick="slide(-1)" src="assets/icons/arrow.png" alt="">
-            <img class="next_icon" onclick="slide(1)" src="assets/icons/arrow.png" alt="">
+            <img class="prev_icon" onclick="slide(-1)" src="assets/icons/arrow.png" alt="Previous">
+            <img class="next_icon" onclick="slide(1)" src="assets/icons/arrow.png" alt="Next">
             <div class="slideshow">
-                <?php
-                while ($row = $result->fetch_assoc()) {
-                ?>
-                    <a href="assets/imgs/produtos/<?= $row['c_descricao'] ?>/<?= $row['foto'] ?>" target="_blank">
-                        <img class="img" src="assets/imgs/produtos/<?= $row['c_descricao'] ?>/<?= $row['foto'] ?>" alt="<?= $row['nome'] ?>">
+                <?php while ($row = $productImages->fetch_assoc()): ?>
+                    <a href="assets/imgs/produtos/<?= htmlspecialchars($row['c_descricao']) ?>/<?= htmlspecialchars($row['foto']) ?>" target="_blank">
+                        <img class="img" src="assets/imgs/produtos/<?= htmlspecialchars($row['c_descricao']) ?>/<?= htmlspecialchars($row['foto']) ?>" alt="<?= htmlspecialchars($row['nome']) ?>">
                     </a>
-                <?php
-                }
-                ?>
+                <?php endwhile; ?>
             </div>
         </div>
-        <div class="img_selector">
 
+        <div class="img_selector">
             <?php
-            $result->data_seek(0); //Fazer reset ao array
+            $productImages->data_seek(0);
             $img_index = 0;
-            while ($row = $result->fetch_assoc()) {
+            while ($row = $productImages->fetch_assoc()):
             ?>
                 <div class="product_imgs">
                     <a href="#">
-                        <img class="img" onclick="img_click(<?= $img_index ?>)" src="assets/imgs/produtos/<?= $row['c_descricao'] ?>/<?= $row['foto'] ?>" alt="<?= $row['nome'] ?>" title="Ver Imagem">
+                        <img class="img" onclick="img_click(<?= $img_index ?>)" src="assets/imgs/produtos/<?= htmlspecialchars($row['c_descricao']) ?>/<?= htmlspecialchars($row['foto']) ?>" alt="<?= htmlspecialchars($row['nome']) ?>" title="Ver Imagem">
                     </a>
                 </div>
             <?php
                 $img_index++;
-            }
+            endwhile;
             ?>
-
         </div>
     </div>
-    <?php
-    $sql = 'SELECT p.nome, p.descricao, c.c_descricao, p.preco
-                FROM produtos AS p
-                JOIN categorias AS c ON c.ID = p.ID_categoria
-                WHERE p.ID = ?';
 
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('s', $produto);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
-    ?>
     <div class="product_description">
         <div class="container_description">
-            <h2 class="nome"><?= $row['nome'] ?></h2>
-            <div class="descricao"><strong>Descrição:</strong> <?= $row['descricao'] ?></div><br>
-            <div class="categoria"><strong>Categoria:</strong> <?= $row['c_descricao'] ?></div><br>
-            <div class="filamento"><strong>Feito em:</strong>
-                <?php
-                $sql = 'SELECT f.ID, f.tipo
-                                FROM filamentos AS f
-                                JOIN produtos_filamentos_cores AS pf ON pf.ID_filamento = f.ID
-                                JOIN produtos AS p ON p.ID = pf.ID_produto
-                                WHERE p.ID = ?';
+            <h2 class="nome"><?= htmlspecialchars($productDetails['nome']) ?></h2>
+            <div class="descricao"><strong>Descrição:</strong> <?= htmlspecialchars($productDetails['descricao']) ?></div><br>
+            <div class="categoria"><strong>Categoria:</strong> <?= htmlspecialchars($productDetails['c_descricao']) ?></div><br>
+            <div class="filamento"><strong>Feito em:</strong> <?= htmlspecialchars(implode(', ', $filamentos)) ?><br><br></div>
+            <div class="cor"><strong>Cor(es):</strong> <?= htmlspecialchars(implode(', ', $cores)) ?><br><br></div>
+            <div class="preco"><strong>Preço:</strong> <u><?= htmlspecialchars($productDetails['preco']) ?>€</u></div><br><br>
 
-                $stmt = $conn->prepare($sql);
-                $stmt->bind_param('i', $produto);
-                $stmt->execute();
-                $result = $stmt->get_result();
-
-                while ($row_fil = $result->fetch_assoc())
-                    $filamentos[] = $row_fil['tipo'];
-                if (@$filamentos)
-                    echo implode(',', $filamentos);
-                ?>
-                <br><br>
-            </div>
-            <div class="cor"><strong>Cor(es):</strong>
-                <?php
-                $sql = 'SELECT c.ID, c.cor
-                                FROM cores AS c
-                                JOIN produtos_filamentos_cores AS pc ON pc.ID_cor = c.ID
-                                JOIN produtos AS p ON p.ID = pc.ID_produto
-                                WHERE p.ID = ?';
-
-                $stmt = $conn->prepare($sql);
-                $stmt->bind_param('s', $produto);
-                $stmt->execute();
-                $result = $stmt->get_result();
-
-                while ($row_cor = $result->fetch_assoc())
-                    $cores[] = $row_cor['cor'];
-                if (@$cores)
-                    echo implode(',', $cores);
-                ?>
-                <br><br>
-                <div class="preco"><strong>Preço:</strong> <u><?= $row['preco'] ?>€</u></div><br><br>
-            </div>
             <div class="seletores">
                 <div class="filamento">
                     <select name="escolher_filamento" id="escolher_filamento">
                         <option value="">Escolha um tipo de filamento</option>
                         <?php
                         $result = $conn->query('SELECT ID, tipo FROM filamentos');
-                        while ($row = $result->fetch_assoc()) {
+                        while ($row = $result->fetch_assoc()):
                         ?>
-                            <option name="filamento" value="<?= $row['ID'] ?>"> <?= $row['tipo'] ?> </option>';
-                        <?php
-                        }
-                        ?>
+                            <option name="filamento" value="<?= htmlspecialchars($row['ID']) ?>"> <?= htmlspecialchars($row['tipo']) ?> </option>
+                        <?php endwhile; ?>
                     </select>
                 </div>
                 <div class="cor">
@@ -128,12 +141,10 @@ include 'components/header/header.php';
                         <option value="">Escolha uma cor</option>
                         <?php
                         $result = $conn->query('SELECT ID, cor FROM cores');
-                        while ($row = $result->fetch_assoc()) {
+                        while ($row = $result->fetch_assoc()):
                         ?>
-                            <option name="cor" value="<?= $row['ID'] ?>"> <?= $row['cor'] ?> </option>';
-                        <?php
-                        }
-                        ?>
+                            <option name="cor" value="<?= htmlspecialchars($row['ID']) ?>"> <?= htmlspecialchars($row['cor']) ?> </option>
+                        <?php endwhile; ?>
                     </select>
                 </div>
             </div><br>
@@ -150,9 +161,9 @@ include 'components/header/header.php';
         </div>
     </div>
 </div>
-<?php
-include 'components/footer/footer.php';
-?>
+
+<?php include 'components/footer/footer.php'; ?>
+
 
 <script>
     $(document).ready(function() {
