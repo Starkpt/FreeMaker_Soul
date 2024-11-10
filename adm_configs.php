@@ -410,12 +410,8 @@ include 'components/header/header.php';
                 $('#user_edit_list').hide();
                 $('#users_list').show();
             });
-        });
-
-        $(document).ready(function() {
-
+            
             //Função para abrir o painel de edição de produto quando se carrega no botao de editar
-
             $('.prod_edit_link').on('click', function(e) {
                 e.preventDefault();
 

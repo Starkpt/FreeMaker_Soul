@@ -1,15 +1,14 @@
-<link rel="stylesheet" href="includes/styles.css">
-
 <div class="footer">
     <div class="wrapper">
         <div class="col1">
-            <img class="logo"img src="/assets/imgs/logos/logo.png" alt="LogoFreemaker_soul" class="failory-logo-image">
+            <img class="logo" img src="/assets/imgs/logos/logo.png" alt="LogoFreemaker_soul" class="failory-logo-image">
             <h3>Freemaker Soul®</h3>
             <p>Acredite no seu potencial <br> e conquiste o impossível!</p>
         </div>
         <div class="col2">
             <h3>Quem somos</h3>
-            <p>A Freemaker Soul é um projeto recente e<br>
+            <p>
+                A Freemaker Soul é um projeto recente e<br>
                 o seu principal objetivo é disponibilizar um serviço<br>
                 de impressão 3D para todos aqueles que desejam<br>
                 obter algo diferente do habitual.
@@ -33,31 +32,6 @@
     </div>
     <div class="ft_topBtn ">
         ©Site realizado por André Proença em 2024
-        <img src="assets/icons/arrow_up.png" onclick="topFunction()" id="topBtn" title="Voltar ao topo" alt="Ir para o topo da página">
+        <img src="assets/icons/arrow_up.png" onclick="topFunction()" id="topBtn" title="Voltar ao topo" alt="Ir para o topo da página" />
     </div>
 </div>
-</body>
-
-</html>
-
-
-<script>
-    let mybutton = document.getElementById("topBtn");
-
-    window.onscroll = function() {
-        scrollFunction()
-    };
-
-    function scrollFunction() {
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            mybutton.style.display = "block";
-        } else {
-            mybutton.style.display = "none";
-        }
-    }
-
-    function topFunction() {
-        document.body.scrollTop = 0; // Safari
-        document.documentElement.scrollTop = 0; // Chrome, Firefox, IE, Opera
-    }
-</script>

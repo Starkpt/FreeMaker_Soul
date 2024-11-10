@@ -1,13 +1,28 @@
+
 <?php
-function productCard($row)
+// product_card.php
+
+/**
+ * Render a product card with the provided product data.
+ * 
+ * @param array $product Product data (ID, name, price, photo, category)
+ * @return string HTML for a single product card
+ */
+function productCard($product)
 {
-    return '
-        <div class="product">
-            <a href="product_details.php?produto=' . $row['ID'] . '">
-                <img src="/assets/imgs/produtos/' . $row['c_descricao'] . '/' . $row['foto'] . '" alt="' . $row['nome'] . '" title="Ver detalhes">
+    $productLink = htmlspecialchars("/product_details?produto={$product['ID']}");
+    $imagePath = htmlspecialchars("/assets/imgs/produtos/{$product['c_descricao']}/{$product['foto']}");
+    $name = htmlspecialchars($product['nome']);
+    $price = htmlspecialchars($product['preco']);
+
+    echo "
+        <div class='product'>
+            <a href='{$productLink}'>
+                <img src='{$imagePath}' alt='{$name}' title='Ver detalhes'>
             </a>
-            <div class="nome_prod" title="Nome do Produto">' . $row['nome'] . '</div>
-            <div class="preco" title="Preço">' . $row['preco'] . '€</div>
+            <div class='nome_prod' title='Nome do Produto'>{$name}</div>
+            <div class='preco' title='Preço'>{$price}€</div>
         </div>
-    ';
+    ";
 }
+?>

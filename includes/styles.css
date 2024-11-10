@@ -39,7 +39,7 @@ html {
 .wrapper {
   max-width: 1300px;
   margin: 0 auto;
-  user-select: none;
+  /* user-select: auto; */
 }
 
 body {
@@ -539,7 +539,7 @@ a {
   background: transparent;
   transition: 0.5s ease;
   width: 0;
-  user-select: none;
+  /* user-select: auto; */
 }
 
 .search-bar button {
@@ -671,7 +671,7 @@ a {
   margin-bottom: 0;
   display: flex;
   justify-content: space-around;
-  user-select: none;
+  /* user-select: auto; */
 }
 
 .footer .logo {
@@ -714,7 +714,7 @@ a {
   justify-content: center;
   align-items: center;
   position: relative;
-  user-select: none;
+  /* user-select: auto; */
 }
 
 .footer .ft_topBtn img {
@@ -751,7 +751,7 @@ a {
   font-size: 50px;
   color: rgba(230, 230, 230, 0.966);
   text-shadow: 0.1px 0.1px 0.2px rgba(54, 53, 53, 0.562);
-  user-select: none;
+  /* user-select: auto; */
 }
 
 .banner .sep {

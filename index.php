@@ -1,45 +1,42 @@
 <?php
-$title = "Home";
-include 'components/header/header.php';
+include $_SERVER["DOCUMENT_ROOT"] . "/config.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/components/product_card/product_card.php";
+
+require_once "helper-functions.php";
+
+$adm = $_SESSION['adm'] ?? null;
+$error_msg = $_SESSION['error_msg'] ?? '';
+$info_msg = $_SESSION['info_msg'] ?? '';
+
+$current_page = "Home";
+
 ?>
 
-<div class="banner">
-  <div class="wrapper">
-    <h1>Freemaker Soul</h1>
-    <hr class="sep">
+<!DOCTYPE html>
+<html lang="pt-PT">
+
+<?php include  $_SERVER["DOCUMENT_ROOT"] . "/components/page_template/head.php" ?>
+
+<body>
+  <?php include $_SERVER["DOCUMENT_ROOT"] . '/components/header/header.php'; ?>
+
+  <div class="banner">
+    <div class="wrapper">
+      <h1><?= $GLOBALS['site_name']; ?></h1>
+      <hr class="sep">
+    </div>
   </div>
-</div>
 
-<div class="product-sample wrapper">
-  <?php
-  $sql = 'SELECT p.ID, c.c_descricao, p.nome, p.preco, MIN(f.foto) AS foto
-          FROM produtos AS p
-          JOIN fotos AS f ON f.ID_produto = p.ID
-          JOIN categorias AS c ON c.ID = p.ID_categoria
-          GROUP BY p.ID,  p.nome, p.preco';
+  <?php renderHomeProducts(4); ?>
 
-  $result = $conn->query($sql);
+  <div class="mais_container wrapper">
+    <a href="products.php" title="Ver mais produtos">
+      <button class="mais">Ver mais produtos</button>
+    </a>
+  </div>
 
-  for ($i = 0; $i < 4; $i++) {
+  <?php include $_SERVER["DOCUMENT_ROOT"] . '/components/footer/footer.php'; ?>
 
-    if ($row = $result->fetch_assoc()) {
-  ?>
-      <div class="product">
-        <a href="product_details.php?produto=<?= $row['ID'] ?>">
-          <img src="assets/imgs/produtos/<?= $row['c_descricao'] ?>/<?= $row['foto'] ?>" alt="<?= $row['nome'] ?>" title="Ver detalhes">
-        </a>
-        <div class="nome_prod" title="Nome do Produto"><?= $row['nome'] ?></div>
-        <div class="preco" title="Preço"><?= $row['preco'] ?>€</div>
-      </div>
-  <?php
-    }
-  }
-  ?>
-</div>
-<div class="mais_container wrapper">
-  <a href="products.php" title="Ver mais produtos">
-    <button class="mais">Ver mais produtos</button>
-  </a>
-</div>
+</body>
 
-<?php include 'components/footer/footer.php'; ?>
+</html>
