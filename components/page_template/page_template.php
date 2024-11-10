@@ -21,8 +21,8 @@ function renderPage($title = null)
 
     <title><?= $title ? $title . " - " : $title ?><?= $GLOBALS['site_name']; ?></title>
 
-    <link rel="stylesheet" href="/includes/styles.css">
-    <script src="/includes/js/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <script src="/assets/js/jquery-3.7.1.min.js"></script>
   </head>
 
   <body>

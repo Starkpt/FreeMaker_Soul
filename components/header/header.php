@@ -1,11 +1,12 @@
 <!-- Message backdrop modal -->
 <?php
+
 $msg = htmlspecialchars($_GET['msg'] ?? '');
 
 if ($msg): ?>
     <div class="backdrop" id="msg_backdrop">
         <div class="msg_container wrapper">
-            <img id="close_msg" class="close_msg" src="/assets/icons/close.png" alt="Close">
+            <img id="close_msg" class="close_msg" src="/assets/imgs/icons/close.png" alt="Close">
             <div class="msg">
                 <?php
                 switch ($msg) {
@@ -54,16 +55,16 @@ if ($msg): ?>
     <form class="form wrapper" id="form_login" action="actions.php?act=login" method="POST">
         <div class="login_container">
             <div class="log_btn_container">
-                <img id="close_login" class="close_msg" src="/assets/icons/close.png" alt="Close">
+                <img id="close_login" class="close_msg" src="/assets/imgs/icons/close.png" alt="Close">
             </div>
             <div class="titulo">Login</div>
             <div class="input-box">
                 <input type="text" id="name_login" name="nickname" placeholder="Email ou nome de utilizador" required>
-                <img src="/assets/icons/login-avatar.png" alt="User icon">
+                <img src="/assets/imgs/icons/login-avatar.png" alt="User icon">
             </div>
             <div class="input-box">
                 <input type="password" id="pwd_login" name="password" placeholder="Password" required>
-                <img class="eye" src="/assets/icons/closed-eye.png" alt="Show password">
+                <img class="eye" src="/assets/imgs/icons/closed-eye.png" alt="Show password">
             </div>
             <div class="remember-forgot">
                 <label>
@@ -101,26 +102,26 @@ if ($msg): ?>
             <form class="search-bar">
                 <input type="text" placeholder="Pesquisar">
                 <button type="submit">
-                    <img src="/assets/icons/search.png" alt="Search icon">
+                    <img src="/assets/imgs/icons/search.png" alt="Search icon">
                 </button>
             </form>
             <?php if ($_SESSION): ?>
                 <div class="profile_container">
                     <?php if ($adm): ?>
-                        <img class="avatar" src="/assets/icons/crown.png" alt="Admin icon">
+                        <img class="avatar" src="/assets/imgs/icons/crown.png" alt="Admin icon">
                     <?php else: ?>
                         <?php
                         $stmt = $conn->prepare('SELECT foto FROM utilizadores WHERE nome = ?');
                         $stmt->bind_param('s', $_SESSION['nome']);
                         $stmt->execute();
                         $user = $stmt->get_result()->fetch_assoc();
-                        $user_img = $user['foto'] ? "imgs/profile_pics/{$user['foto']}" : 'assets/icons/login-avatar.png';
+                        $user_img = $user['foto'] ? "imgs/profile_pics/{$user['foto']}" : 'assets/imgs/icons/login-avatar.png';
                         ?>
                         <img class="user_pic" src="<?= $user_img ?>" alt="User icon">
                     <?php endif; ?>
                     <ul class="profile-options">
                         <?php if ($adm): ?>
-                            <li><a href="adm_config.php">Configurar</a></li>
+                            <li><a href="config/config.php">Configurar</a></li>
                         <?php else: ?>
                             <li><a href="profile.php">Ver perfil</a></li>
                         <?php endif; ?>
@@ -140,19 +141,19 @@ if ($msg): ?>
         <div class="titulo">Registar</div>
         <div class="input-box">
             <input type="text" name="nickname" placeholder="Nome de utilizador" required>
-            <img src="/assets/icons/login-avatar.png" alt="User icon">
+            <img src="/assets/imgs/icons/login-avatar.png" alt="User icon">
         </div>
         <div class="input-box">
             <input type="email" name="email" placeholder="Email" required>
-            <img src="/assets/icons/at.png" alt="Email icon">
+            <img src="/assets/imgs/icons/at.png" alt="Email icon">
         </div>
         <div class="input-box">
             <input type="password" name="password" placeholder="Password" minlength="8" required>
-            <img class="eye" src="/assets/icons/closed-eye.png" alt="Show password">
+            <img class="eye" src="/assets/imgs/icons/closed-eye.png" alt="Show password">
         </div>
         <div class="input-box">
             <input type="password" name="re_password" placeholder="Repetir password" required>
-            <img class="re_eye" src="/assets/icons/closed-eye.png" alt="Show password">
+            <img class="re_eye" src="/assets/imgs/icons/closed-eye.png" alt="Show password">
         </div>
         <button type="submit" class="btn">Registar</button>
     </form>
@@ -161,4 +162,4 @@ if ($msg): ?>
 <script>
     const msg = "<?= $msg ?>"; // Global variable for JavaScript use
 </script>
-<script src="/includes/js/main.js"></script>
+<script src="/utils/js/main.js"></script>

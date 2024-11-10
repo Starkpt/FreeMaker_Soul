@@ -2,7 +2,9 @@
 include $_SERVER["DOCUMENT_ROOT"] . "/config.php";
 include $_SERVER["DOCUMENT_ROOT"] . "/components/product_card/product_card.php";
 
-require_once "helper-functions.php";
+require_once 'product_helpers.php';
+require_once 'components/product_card/product_card.php';
+require_once "utils/helper-functions.php";
 
 $adm = $_SESSION['adm'] ?? null;
 $error_msg = $_SESSION['error_msg'] ?? '';

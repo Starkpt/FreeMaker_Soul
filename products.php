@@ -2,7 +2,7 @@
 require_once 'config.php';
 require_once 'product_helpers.php';
 require_once 'components/product_card/product_card.php';
-require_once "helper-functions.php";
+require_once "utils/helper-functions.php";
 
 $current_page = "Produtos";
 $categoria = $_GET['categoria'] ?? null;
@@ -23,6 +23,6 @@ echo renderHomeProducts();
 echo renderFooter();
 
 echo '
-<script src="includes/js/main.js"></script>
+<script src="/utils/js/main.js"></script>
 </body>
 </html>';

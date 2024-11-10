@@ -62,7 +62,7 @@ ob_end_flush(); /*Apagar a cache anterior e deixar o conteúdo ser mostrado em t
             </div>
             <div class="add_btn_container" id="add_fil" style="display: none;">
                 <div class="add_btn">
-                    <img src="assets/icons/add.png" alt="Botão de adicionar mais filamentos" title="Adicionar mais filamentos">
+                    <img src="assets/imgs/icons/add.png" alt="Botão de adicionar mais filamentos" title="Adicionar mais filamentos">
                 </div>
             </div>
             <div class="input-box cor" id="input-box">
@@ -80,7 +80,7 @@ ob_end_flush(); /*Apagar a cache anterior e deixar o conteúdo ser mostrado em t
             </div>
             <div class="add_btn_container" id="add_cor" style="display: none;">
                 <div class="add_btn">
-                    <img src="assets/icons/add.png" alt="Botão de adicionar mais cores" title="Adicionar mais cores">
+                    <img src="assets/imgs/icons/add.png" alt="Botão de adicionar mais cores" title="Adicionar mais cores">
                 </div>
             </div>
             <div class="input-box" id="input-box">
@@ -91,7 +91,7 @@ ob_end_flush(); /*Apagar a cache anterior e deixar o conteúdo ser mostrado em t
             </div>
             <div class="add_btn_container" id="add_btn_container" style="display: none;">
                 <div class="add_btn">
-                    <img src="assets/icons/add.png" alt="Botão de adicionar ficheiro" title="Adicionar mais ficheiros">
+                    <img src="assets/imgs/icons/add.png" alt="Botão de adicionar ficheiro" title="Adicionar mais ficheiros">
                 </div>
             </div>
             <div>
@@ -135,7 +135,7 @@ ob_end_flush(); /*Apagar a cache anterior e deixar o conteúdo ser mostrado em t
             </div>
             <div class="add_btn_container" id="add_btn_container" style="display: none;">
                 <div class="add_btn">
-                    <img src="assets/icons/add.png" alt="Botão de adicionar ficheiro" title="Adicionar mais ficheiros">
+                    <img src="assets/imgs/icons/add.png" alt="Botão de adicionar ficheiro" title="Adicionar mais ficheiros">
                 </div>
             </div>
             <div>

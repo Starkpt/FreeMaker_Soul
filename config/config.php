@@ -55,7 +55,7 @@ include 'components/header/header.php';
                         <?php
                         if (!$row['foto']) {
                         ?>
-                            <img class="user_foto" src="assets/icons/login-avatar2.png" height="60">
+                            <img class="user_foto" src="assets/imgs/icons/login-avatar2.png" height="60">
                         <?php
                         } else {
                         ?>
@@ -68,10 +68,10 @@ include 'components/header/header.php';
                     </td>
                     <td class="icon_container">
                         <a href="actions.php?act=del_user&ID=<?= $row['ID'] ?>" onclick="return confirm('Pretende apagar o cliente <?= @$row['nome'] ?>?')" style="text-decoration: none">
-                            <img src="assets/icons/trash.png" class="icon" alt="Eliminar" title="Eliminar Utilizador">
+                            <img src="assets/imgs/icons/trash.png" class="icon" alt="Eliminar" title="Eliminar Utilizador">
                         </a>
                         <a href="#" class="edit_user_link">
-                            <img src="assets/icons/pencil.png" class='user_edit icon' data-id="<?= $row['ID'] ?>" alt="Editar" title="Editar Utilizador">
+                            <img src="assets/imgs/icons/pencil.png" class='user_edit icon' data-id="<?= $row['ID'] ?>" alt="Editar" title="Editar Utilizador">
                         </a>
                     </td>
                 </tr>
@@ -215,10 +215,10 @@ include 'components/header/header.php';
                     </td>
                     <td class="icon_container" align="center">
                         <a href="actions.php?act=del_prod&ID=<?= $row['ID'] ?>" onclick="return confirm('Pretende apagar o produto <?= $row['nome'] ?>?')" style="text-decoration: none">
-                            <img src="assets/icons/trash.png" class="icon" alt="Eliminar" title="Eliminar Produto">
+                            <img src="assets/imgs/icons/trash.png" class="icon" alt="Eliminar" title="Eliminar Produto">
                         </a>
                         <a href="#" class="prod_edit_link">
-                            <img src="assets/icons/pencil.png" class='prod_edit icon' data-id="<?= $row['ID'] ?>" alt="Editar" title="Editar Produto">
+                            <img src="assets/imgs/icons/pencil.png" class='prod_edit icon' data-id="<?= $row['ID'] ?>" alt="Editar" title="Editar Produto">
                         </a>
                     </td>
                 </tr>
@@ -295,7 +295,7 @@ include 'components/header/header.php';
                     </td>
                     <div class="add_btn_container" id="add_fil" style="display: none;">
                         <div class="add_btn">
-                            <img src="assets/icons/add.png" alt="Botão de adicionar mais filamentos" title="Adicionar mais filamentos">
+                            <img src="assets/imgs/icons/add.png" alt="Botão de adicionar mais filamentos" title="Adicionar mais filamentos">
                         </div>
                     </div>
                     <td>
@@ -313,7 +313,7 @@ include 'components/header/header.php';
                     </td>
                     <div class="add_btn_container" id="add_cor" style="display: none;">
                         <div class="add_btn">
-                            <img src="assets/icons/add.png" alt="Botão de adicionar mais cores" title="Adicionar mais cores">
+                            <img src="assets/imgs/icons/add.png" alt="Botão de adicionar mais cores" title="Adicionar mais cores">
                         </div>
                     </div>
                     <td>

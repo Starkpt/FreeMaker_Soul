@@ -86,8 +86,8 @@ $cores = getProductColors($conn, $produto);
 <div class="product_detail_container wrapper">
     <div class="product_container">
         <div class="slideshow_container">
-            <img class="prev_icon" onclick="slide(-1)" src="/assets/icons/arrow.png" alt="Previous">
-            <img class="next_icon" onclick="slide(1)" src="/assets/icons/arrow.png" alt="Next">
+            <img class="prev_icon" onclick="slide(-1)" src="/assets/imgs/icons/arrow.png" alt="Previous">
+            <img class="next_icon" onclick="slide(1)" src="/assets/imgs/icons/arrow.png" alt="Next">
             <div class="slideshow">
                 <?php while ($row = $productImages->fetch_assoc()): ?>
                     <a href="/assets/imgs/produtos/<?= htmlspecialchars($row['c_descricao']) ?>/<?= htmlspecialchars($row['foto']) ?>" target="_blank">
