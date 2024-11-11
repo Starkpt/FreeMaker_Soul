@@ -1,7 +1,7 @@
 <?php
 ob_start(); /*Criar buffer temporário que armazena o conteúdo da página que só será mostrado após ser limpo*/
 $title = "Inserir Produtos";
-include 'components/header/header.php';
+include 'includes/header/header.php';
 if (!$_SESSION) {
     header('Location: login.php');
     ob_flush();/*Encaminhar o que está em cache*/
@@ -13,7 +13,7 @@ ob_end_flush(); /*Apagar a cache anterior e deixar o conteúdo ser mostrado em t
 <?php if (@$_SESSION['adm']) { ?>
 
     <div class="insert_product_container">
-        <form class="insert_product" id="insert_product" action="actions.php?act=insert_product" method="POST" enctype="multipart/form-data">
+        <form class="insert_product" id="insert_product" action="/utils/actions.php?act=insert_product" method="POST" enctype="multipart/form-data">
             <div class="insert_title wrapper">
                 Inserção de Novo Produto<br>
                 <hr>
@@ -103,7 +103,7 @@ ob_end_flush(); /*Apagar a cache anterior e deixar o conteúdo ser mostrado em t
 <?php } else { ?>
 
     <div class="insert_product_container">
-        <form class="insert_product" id="insert_product" action="actions.php?act=sugest_product" method="POST" enctype="multipart/form-data">
+        <form class="insert_product" id="insert_product" action="/utils/actions.php?act=sugest_product" method="POST" enctype="multipart/form-data">
             <div class="insert_title wrapper">
                 Pedido de orçamento
                 <hr>
@@ -362,4 +362,4 @@ ob_end_flush(); /*Apagar a cache anterior e deixar o conteúdo ser mostrado em t
     });
 </script>
 
-<?php include 'components/footer/footer.php'; ?>
+<?php include 'includes/footer/footer.php'; ?>

@@ -1,9 +1,9 @@
 <?php
-include $_SERVER["DOCUMENT_ROOT"] . "/config.php";
-include $_SERVER["DOCUMENT_ROOT"] . "/components/product_card/product_card.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/config/config.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/includes/product_card/product_card.php";
 
-require_once 'product_helpers.php';
-require_once 'components/product_card/product_card.php';
+require_once 'public/produtos/product_helpers.php';
+require_once 'includes/product_card/product_card.php';
 require_once "utils/helper-functions.php";
 
 $adm = $_SESSION['adm'] ?? null;
@@ -17,10 +17,10 @@ $current_page = "Home";
 <!DOCTYPE html>
 <html lang="pt-PT">
 
-<?php include  $_SERVER["DOCUMENT_ROOT"] . "/components/page_template/head.php" ?>
+<?php include  $_SERVER["DOCUMENT_ROOT"] . "/templates/head.php" ?>
 
 <body>
-  <?php include $_SERVER["DOCUMENT_ROOT"] . '/components/header/header.php'; ?>
+  <?php include $_SERVER["DOCUMENT_ROOT"] . '/includes/header/header.php'; ?>
 
   <div class="banner">
     <div class="wrapper">
@@ -37,7 +37,7 @@ $current_page = "Home";
     </a>
   </div>
 
-  <?php include $_SERVER["DOCUMENT_ROOT"] . '/components/footer/footer.php'; ?>
+  <?php include $_SERVER["DOCUMENT_ROOT"] . '/includes/footer/footer.php'; ?>
 
 </body>
 

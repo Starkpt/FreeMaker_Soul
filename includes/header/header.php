@@ -36,7 +36,7 @@ if ($msg): ?>
                     case 'del_prod_error':
                     case 'edit_user_error':
                     case 'edit_prod_error':
-                        echo htmlspecialchars($error_msg) . ' <a href="insert_prod.php">[Tente novamente]</a>';
+                        echo htmlspecialchars($error_msg) . ' <a href="/utils/insert_prod.php">[Tente novamente]</a>';
                         break;
                     case 'insert_success':
                     case 'del_user_success':
@@ -52,7 +52,7 @@ if ($msg): ?>
 
 <!-- Login Form Modal -->
 <div class="backdrop" id="login_backdrop">
-    <form class="form wrapper" id="form_login" action="actions.php?act=login" method="POST">
+    <form class="form wrapper" id="form_login" action="/utils/actions.php?act=login" method="POST">
         <div class="login_container">
             <div class="log_btn_container">
                 <img id="close_login" class="close_msg" src="/assets/imgs/icons/close.png" alt="Close">
@@ -83,7 +83,7 @@ if ($msg): ?>
 <!-- Header -->
 <header class="header">
     <div class="wrapper">
-        <a class="logo" href="index">
+        <a class="logo" href="/index">
             <img src="/assets/imgs/logos/logo.png" alt="Logotipo do proprietário" title="Página principal">
         </a>
         <nav class="menu">
@@ -121,11 +121,11 @@ if ($msg): ?>
                     <?php endif; ?>
                     <ul class="profile-options">
                         <?php if ($adm): ?>
-                            <li><a href="config/config.php">Configurar</a></li>
+                            <li><a href="/config/admin-config.php">Configurar</a></li>
                         <?php else: ?>
                             <li><a href="profile.php">Ver perfil</a></li>
                         <?php endif; ?>
-                        <li><a href="actions.php?act=logout">Logout</a></li>
+                        <li><a href="/utils/actions.php?act=logout">Logout</a></li>
                     </ul>
                 </div>
             <?php else: ?>
@@ -137,7 +137,7 @@ if ($msg): ?>
 
 <!-- Signup Form Modal -->
 <div class="backdrop" id="signup_backdrop">
-    <form class="form wrapper" id="form_signup" action="actions.php?act=register" method="POST">
+    <form class="form wrapper" id="form_signup" action="/utils/actions.php?act=register" method="POST">
         <div class="titulo">Registar</div>
         <div class="input-box">
             <input type="text" name="nickname" placeholder="Nome de utilizador" required>
@@ -162,4 +162,4 @@ if ($msg): ?>
 <script>
     const msg = "<?= $msg ?>"; // Global variable for JavaScript use
 </script>
-<script src="/utils/js/main.js"></script>
+<script src="/utils/main.js"></script>

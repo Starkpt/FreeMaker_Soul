@@ -1,6 +1,6 @@
 <?php
 $title = 'Detalhes Produto';
-include 'components/header/header.php';
+include 'includes/header/header.php';
 
 // Get product ID from the query string if available
 $produto = $_GET['produto'] ?? null;
@@ -162,7 +162,7 @@ $cores = getProductColors($conn, $produto);
     </div>
 </div>
 
-<?php include 'components/footer/footer.php'; ?>
+<?php include 'includes/footer/footer.php'; ?>
 
 
 <script>
