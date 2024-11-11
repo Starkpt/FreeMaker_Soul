@@ -32,6 +32,6 @@
     </div>
     <div class="ft_topBtn ">
         ©Site realizado por André Proença em 2024
-        <img src="assets/icons/arrow_up.png" onclick="topFunction()" id="topBtn" title="Voltar ao topo" alt="Ir para o topo da página" />
+        <img src="assets/imgs/icons/arrow_up.png" onclick="topFunction()" id="topBtn" title="Voltar ao topo" alt="Ir para o topo da página" />
     </div>
 </div>

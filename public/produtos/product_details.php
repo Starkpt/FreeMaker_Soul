@@ -1,6 +1,6 @@
 <?php
 $title = 'Detalhes Produto';
-include 'components/header/header.php';
+include 'includes/header/header.php';
 
 // Get product ID from the query string if available
 $produto = $_GET['produto'] ?? null;
@@ -86,8 +86,8 @@ $cores = getProductColors($conn, $produto);
 <div class="product_detail_container wrapper">
     <div class="product_container">
         <div class="slideshow_container">
-            <img class="prev_icon" onclick="slide(-1)" src="/assets/icons/arrow.png" alt="Previous">
-            <img class="next_icon" onclick="slide(1)" src="/assets/icons/arrow.png" alt="Next">
+            <img class="prev_icon" onclick="slide(-1)" src="/assets/imgs/icons/arrow.png" alt="Previous">
+            <img class="next_icon" onclick="slide(1)" src="/assets/imgs/icons/arrow.png" alt="Next">
             <div class="slideshow">
                 <?php while ($row = $productImages->fetch_assoc()): ?>
                     <a href="/assets/imgs/produtos/<?= htmlspecialchars($row['c_descricao']) ?>/<?= htmlspecialchars($row['foto']) ?>" target="_blank">
@@ -162,7 +162,7 @@ $cores = getProductColors($conn, $produto);
     </div>
 </div>
 
-<?php include 'components/footer/footer.php'; ?>
+<?php include 'includes/footer/footer.php'; ?>
 
 
 <script>

@@ -82,6 +82,6 @@ function renderAddButton()
 function renderFooter()
 {
   ob_start();
-  include 'components/footer/footer.php';
+  include 'includes/footer/footer.php';
   return ob_get_clean();
 }

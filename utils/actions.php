@@ -1,5 +1,5 @@
 <?php
-include 'config.php';
+include  $_SERVER["DOCUMENT_ROOT"] . '/config/config.php';
 $act = $_GET['act'];
 
 /********************************************************************************************************************************************/
@@ -58,13 +58,13 @@ switch ($act) {
 
 
         if (!$row) {
-            header('Location: index.php?msg=nao_ha_registo');
+            header('Location: ../index.php?msg=nao_ha_registo');
             exit;
         }
 
 
         if ($row['pw'] !== $password) {
-            header('Location: index.php?msg=login_error');
+            header('Location: ../index.php?msg=login_error');
             exit;
         }
 
@@ -79,7 +79,7 @@ switch ($act) {
             $_SESSION['email'] = $row['email'];
             $_SESSION['adm'] = $row['adm'];
 
-            header('Location: index.php?msg=login_success');
+            header('Location: ../index.php?msg=login_success');
         }
 
         break;
@@ -243,11 +243,11 @@ switch ($act) {
             $_SESSION['error_msg'] = 'Não foi possível introduzir o produto';
 
             $conn->rollback();
-            header('Location: insert_prod.php?msg=insert_error');
+            header('Location: utils/insert_prod.php?msg=insert_error');
             exit;
         } else {
             $conn->commit();
-            header('Location: insert_prod.php?msg=insert_success');
+            header('Location: utils/insert_prod.php?msg=insert_success');
         }
 
         break;
@@ -303,11 +303,11 @@ switch ($act) {
             $_SESSION['error_msg'] = 'A sugestão para orçamento não foi adicionada';
 
             $conn->rollback();
-            header('Location: insert_prod.php?msg=insert_error');
+            header('Location: utils/insert_prod.php?msg=insert_error');
             exit;
         } else {
             $conn->commit();
-            header('Location: insert_prod.php?msg=insert_success');
+            header('Location: utils/insert_prod.php?msg=insert_success');
         }
 
         break;
@@ -336,12 +336,12 @@ switch ($act) {
         if ($stmt === 0) {
             $_SESSION['error_msg'] = 'Não foi possível eliminar o utilizador!';
             $conn->rollback();
-            header('Location: adm_config.php?msg=del_user_error');
+            header('Location: config/admin-config.php?msg=del_user_error');
             exit;
         } else {
             $_SESSION['info_msg'] = 'Utilizador eliminado com sucesso!';
             $conn->commit();
-            header('Location: adm_config.php?msg=del_user_success');
+            header('Location: config/admin-config.php?msg=del_user_success');
         }
         break;
 
@@ -389,7 +389,7 @@ switch ($act) {
                 if (file_exists('imgs/users/profile_pics/' . $row['foto'])) {
 
                     $_SESSION['error_msg'] = 'Não foi possível eliminar o ficheiro, tente novamente o processo de edição...';
-                    header('Location: adm_config.php?msg=edit_user_error');
+                    header('Location: config/admin-config.php?msg=edit_user_error');
                     exit;
                 }
             }
@@ -424,11 +424,11 @@ switch ($act) {
 
             if ($stmt->affected_rows === 0) {
                 $_SESSION['error_msg'] = 'Não foi possível editar o utilizador adicionando uma foto - tente novamente o processo de edição...';
-                header('Location: adm_config.php?msg=edit_user_error');
+                header('Location: config/admin-config.php?msg=edit_user_error');
                 exit;
             } else {
                 $_SESSION['info_msg'] = 'Utilizador alterado com sucesso!';
-                header('Location: adm_config.php?msg=edit_user_success');
+                header('Location: config/admin-config.php?msg=edit_user_success');
             }
         } else {
             // Editar sem foto
@@ -439,12 +439,12 @@ switch ($act) {
 
             if ($stmt->affected_rows === 0) {
                 $_SESSION['error_msg'] = 'Não foi possível editar o utilizador (Talvez não tenha feito edição?)';
-                header('Location: adm_config.php?msg=edit_user_error');
+                header('Location: config/admin-config.php?msg=edit_user_error');
                 exit;
             } else {
 
                 $_SESSION['info_msg'] = 'Utilizador alterado com sucesso!';
-                header('Location: adm_config.php?msg=edit_user_success');
+                header('Location: config/admin-config.php?msg=edit_user_success');
             }
         }
         break;
@@ -470,7 +470,7 @@ switch ($act) {
         if (!$tudoOk) {
             $_SESSION['error_msg'] = 'Não foi possível eliminar o produto!';
             $conn->rollback();
-            header('Location: adm_config.php?msg=del_prod_error');
+            header('Location: config/admin-config.php?msg=del_prod_error');
             exit;
         } else {
             while ($row = $results->fetch_assoc()) {
@@ -481,7 +481,7 @@ switch ($act) {
             if (!$tudoOk) {
                 $_SESSION['error_msg'] = 'Não foi possível eliminar o produto!';
                 $conn->rollback();
-                header('Location: adm_config.php?msg=del_prod_error');
+                header('Location: config/admin-config.php?msg=del_prod_error');
                 exit;
             } else {
                 $stmt = $conn->prepare('DELETE f FROM fotos AS f
@@ -494,7 +494,7 @@ switch ($act) {
             if (!$tudoOk) {
                 $_SESSION['error_msg'] = 'Não foi possível eliminar o produto!';
                 $conn->rollback();
-                header('Location: adm_config.php?msg=del_prod_error');
+                header('Location: config/admin-config.php?msg=del_prod_error');
                 exit;
             } else {
                 $stmt = $conn->prepare('DELETE pf FROM produtos_filamentos_cores AS pf
@@ -507,7 +507,7 @@ switch ($act) {
             if (!$tudoOk) {
                 $_SESSION['error_msg'] = 'Não foi possível eliminar o produto!';
                 $conn->rollback();
-                header('Location: adm_config.php?msg=del_prod_error');
+                header('Location: config/admin-config.php?msg=del_prod_error');
                 exit;
             } else {
                 $stmt = $conn->prepare('DELETE FROM produtos
@@ -519,12 +519,12 @@ switch ($act) {
             if (!$tudoOk) {
                 $_SESSION['error_msg'] = 'Não foi possível eliminar o produto!';
                 $conn->rollback();
-                header('Location: adm_config.php?msg=del_prod_error');
+                header('Location: config/admin-config.php?msg=del_prod_error');
                 exit;
             } else {
                 $_SESSION['info_msg'] = 'Produto eliminado com sucesso!';
                 $conn->commit();
-                header('Location: adm_config.php?msg=del_prod_success');
+                header('Location: config/admin-config.php?msg=del_prod_success');
             }
         }
 

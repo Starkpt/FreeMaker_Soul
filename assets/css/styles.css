@@ -215,10 +215,15 @@ a {
 .login_container {
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .form .log_btn_container {
+  position: absolute;
+  right: 60px; /* Valor igual ao padding do container */
+  width: 24px;
+  height: 24px;
   background-color: rgba(192, 192, 192, 0.678);
   transition: 0.2s ease;
   border-radius: 50%;
@@ -737,7 +742,7 @@ a {
 /********************************************************************************************************************************************/
 
 .banner {
-  background-image: url("../assets/imgs/banner.png");
+  background-image: url("../imgs/banner.png");
   background-size: cover;
   background-position: center center;
   padding-top: 20px;
@@ -1059,7 +1064,7 @@ a {
 }
 .insert_product_container::before {
   content: "";
-  background-image: url("../assets/imgs/wallpaper.png");
+  background-image: url("../imgs/wallpaper.png");
   background-size: cover;
   background-position: center center;
   position: absolute;
@@ -1251,7 +1256,7 @@ p {
 
 .configs_container::before {
   content: "";
-  background-image: url("../assets/imgs/cogwheel.png");
+  background-image: url("../imgs/cogwheel.png");
   background-size: cover;
   background-position: center center;
   position: absolute;

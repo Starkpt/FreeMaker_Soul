@@ -1,6 +1,6 @@
 <?php
 $title = "Administração";
-include 'components/header/header.php';
+include $_SERVER["DOCUMENT_ROOT"] . '/includes/header/header.php';
 ?>
 <!--/********************************************************************************************************************************************/
 /*                                                                   USERS_LIST                                                                */
@@ -55,23 +55,23 @@ include 'components/header/header.php';
                         <?php
                         if (!$row['foto']) {
                         ?>
-                            <img class="user_foto" src="assets/icons/login-avatar2.png" height="60">
+                            <img class="user_foto" src="assets/imgs/icons/login-avatar2.png" height="60">
                         <?php
                         } else {
                         ?>
                             <a href="imgs/users/profile_pics/<?= $row['foto'] ?>" target="_blank">
-                                <img class="user_foto"img src="/assets/imgs/users/profile_pics/<?= $row['foto'] ?>" height="60">
+                                <img class="user_foto" img src="/assets/imgs/users/profile_pics/<?= $row['foto'] ?>" height="60">
                             </a>
                         <?php
                         }
                         ?>
                     </td>
                     <td class="icon_container">
-                        <a href="actions.php?act=del_user&ID=<?= $row['ID'] ?>" onclick="return confirm('Pretende apagar o cliente <?= @$row['nome'] ?>?')" style="text-decoration: none">
-                            <img src="assets/icons/trash.png" class="icon" alt="Eliminar" title="Eliminar Utilizador">
+                        <a href="/utils/actions.php?act=del_user&ID=<?= $row['ID'] ?>" onclick="return confirm('Pretende apagar o cliente <?= @$row['nome'] ?>?')" style="text-decoration: none">
+                            <img src="assets/imgs/icons/trash.png" class="icon" alt="Eliminar" title="Eliminar Utilizador">
                         </a>
                         <a href="#" class="edit_user_link">
-                            <img src="assets/icons/pencil.png" class='user_edit icon' data-id="<?= $row['ID'] ?>" alt="Editar" title="Editar Utilizador">
+                            <img src="assets/imgs/icons/pencil.png" class='user_edit icon' data-id="<?= $row['ID'] ?>" alt="Editar" title="Editar Utilizador">
                         </a>
                     </td>
                 </tr>
@@ -90,7 +90,7 @@ include 'components/header/header.php';
             Editar Utilizador<br>
             <hr>
         </div>
-        <form action="actions.php?act=edit_user" method="POST" enctype="multipart/form-data">
+        <form action="/utils/actions.php?act=edit_user" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="ID" value="<?= $ID ?>">
             <table class="lista" border="0">
                 <tr>
@@ -214,11 +214,11 @@ include 'components/header/header.php';
                         <?= $row['preco'] ?>
                     </td>
                     <td class="icon_container" align="center">
-                        <a href="actions.php?act=del_prod&ID=<?= $row['ID'] ?>" onclick="return confirm('Pretende apagar o produto <?= $row['nome'] ?>?')" style="text-decoration: none">
-                            <img src="assets/icons/trash.png" class="icon" alt="Eliminar" title="Eliminar Produto">
+                        <a href="/utils/actions.php?act=del_prod&ID=<?= $row['ID'] ?>" onclick="return confirm('Pretende apagar o produto <?= $row['nome'] ?>?')" style="text-decoration: none">
+                            <img src="assets/imgs/icons/trash.png" class="icon" alt="Eliminar" title="Eliminar Produto">
                         </a>
                         <a href="#" class="prod_edit_link">
-                            <img src="assets/icons/pencil.png" class='prod_edit icon' data-id="<?= $row['ID'] ?>" alt="Editar" title="Editar Produto">
+                            <img src="assets/imgs/icons/pencil.png" class='prod_edit icon' data-id="<?= $row['ID'] ?>" alt="Editar" title="Editar Produto">
                         </a>
                     </td>
                 </tr>
@@ -237,7 +237,7 @@ include 'components/header/header.php';
             Editar Produto<br>
             <hr>
         </div>
-        <form action="actions.php?act=edit_prod" method="POST" enctype="multipart/form-data">
+        <form action="/utils/actions.php?act=edit_prod" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="ID" value="<?= $ID ?>">
             <table class="lista" border="0">
                 <tr>
@@ -295,7 +295,7 @@ include 'components/header/header.php';
                     </td>
                     <div class="add_btn_container" id="add_fil" style="display: none;">
                         <div class="add_btn">
-                            <img src="assets/icons/add.png" alt="Botão de adicionar mais filamentos" title="Adicionar mais filamentos">
+                            <img src="assets/imgs/icons/add.png" alt="Botão de adicionar mais filamentos" title="Adicionar mais filamentos">
                         </div>
                     </div>
                     <td>
@@ -313,7 +313,7 @@ include 'components/header/header.php';
                     </td>
                     <div class="add_btn_container" id="add_cor" style="display: none;">
                         <div class="add_btn">
-                            <img src="assets/icons/add.png" alt="Botão de adicionar mais cores" title="Adicionar mais cores">
+                            <img src="assets/imgs/icons/add.png" alt="Botão de adicionar mais cores" title="Adicionar mais cores">
                         </div>
                     </div>
                     <td>
@@ -341,7 +341,7 @@ include 'components/header/header.php';
                 const userId = $(this).find('.user_edit').data('id');
 
                 $.ajax({
-                    url: 'actions.php', // Endpoint para buscar dados do utilizador pelo ID
+                    url: '/utils/actions.php', // Endpoint para buscar dados do utilizador pelo ID
                     method: 'GET',
                     data: {
                         act: 'get_user',
@@ -410,7 +410,7 @@ include 'components/header/header.php';
                 $('#user_edit_list').hide();
                 $('#users_list').show();
             });
-            
+
             //Função para abrir o painel de edição de produto quando se carrega no botao de editar
             $('.prod_edit_link').on('click', function(e) {
                 e.preventDefault();
@@ -420,7 +420,7 @@ include 'components/header/header.php';
                 console.log(prodId);
 
                 $.ajax({
-                    url: 'actions.php', // Endpoint para buscar dados do produto pelo ID
+                    url: '/utils/actions.php', // Endpoint para buscar dados do produto pelo ID
                     method: 'GET',
                     data: {
                         act: 'get_prod',
