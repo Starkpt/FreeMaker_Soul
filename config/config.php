@@ -9,12 +9,12 @@ $server = 'localhost';
 $user = 'root';
 $pw = '';
 $db = 'freemaker_soul';
-$site_name = "Freemaker Soul";
 
 // ** Define Constants **
 define('SALT', '@#$7:d@erR_er€');
 define('ROOT_PATH', __DIR__); // Uses current directory for relative paths
 define('MAX_PRODUCTS_DISPLAY', 4); // Max items to display on homepage
+define("SITE_NAME", "Freemaker Soul");
 
 // ** Debug Settings **
 if ($debug) {
@@ -42,4 +42,15 @@ try {
 // ** Start Session If Not Already Started **
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
+
+    print_r($_SESSION);
+    if (isset($_SESSION['ID'])) { // Check if user is logged in
+        echo json_encode(['logged_in' => true]);
+    } else {
+        echo json_encode(['logged_in' => false]);
+    }
 }
+
+$adm = $_SESSION['adm'] ?? null;
+$error_msg = $_SESSION['error_msg'] ?? '';
+$info_msg = $_SESSION['info_msg'] ?? '';

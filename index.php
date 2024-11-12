@@ -1,35 +1,33 @@
 <?php
-include $_SERVER["DOCUMENT_ROOT"] . "/config/config.php";
-include $_SERVER["DOCUMENT_ROOT"] . "/includes/product_card/product_card.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/config/config.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/includes/product_card/product_card.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/utils/helper_functions.php";
 
-require_once 'public/products/product_helpers.php';
-require_once 'includes/product_card/product_card.php';
-require_once "utils/helper-functions.php";
+include $_SERVER["DOCUMENT_ROOT"] . "/public/products/product_helpers.php";
 
-$adm = $_SESSION['adm'] ?? null;
-$error_msg = $_SESSION['error_msg'] ?? '';
-$info_msg = $_SESSION['info_msg'] ?? '';
-
-$current_page = "Home";
-
+$title = "Home";
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-PT">
 
-<?php include $_SERVER["DOCUMENT_ROOT"] . "/templates/head.php" ?>
+<?php require_once $_SERVER["DOCUMENT_ROOT"] . "/templates/head.php" ?>
 
 <body>
-  <?php include $_SERVER["DOCUMENT_ROOT"] . '/includes/header/header.php'; ?>
+  <?php
+  require_once $_SERVER["DOCUMENT_ROOT"] . '/includes/header/header.php';
+  require_once $_SERVER["DOCUMENT_ROOT"] . '/includes/modals/login.php';
+  require_once $_SERVER["DOCUMENT_ROOT"] . '/includes/modals/signup.php';
+  ?>
 
   <div class="banner">
     <div class="wrapper">
-      <h1><?= $GLOBALS['site_name']; ?></h1>
+      <h1><?= SITE_NAME ?></h1>
       <hr class="sep">
     </div>
   </div>
 
-  <?php renderHomeProducts(4); ?>
+  <?php renderProducts(4); ?>
 
   <div class="mais_container wrapper">
     <a href="products.php" title="Ver mais produtos">
@@ -37,8 +35,7 @@ $current_page = "Home";
     </a>
   </div>
 
-  <?php include $_SERVER["DOCUMENT_ROOT"] . '/includes/footer/footer.php'; ?>
-
+  <?php require_once $_SERVER["DOCUMENT_ROOT"] . '/includes/footer/footer.php'; ?>
 </body>
 
 </html>

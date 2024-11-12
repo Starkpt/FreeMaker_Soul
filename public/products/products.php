@@ -1,28 +1,30 @@
 <?php
-require_once  $_SERVER["DOCUMENT_ROOT"] . '/config/config.php';
-require_once  'product_helpers.php';
-require_once  $_SERVER["DOCUMENT_ROOT"] . '/includes/product_card/product_card.php';
-require_once  $_SERVER["DOCUMENT_ROOT"] . "/utils/helper-functions.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . '/config/config.php';
+require_once $_SERVER["DOCUMENT_ROOT"] . '/includes/product_card/product_card.php';
+require_once $_SERVER["DOCUMENT_ROOT"] . "/utils/helper_functions.php";
 
-$current_page = "Produtos";
+include $_SERVER["DOCUMENT_ROOT"] . "/public/products/product_helpers.php";
+
+$title = "Produtos";
 $categoria = $_GET['categoria'] ?? null;
+?>
 
-
-echo '
 <!DOCTYPE html>
-<html lang="pt-PT">';
+<html lang="pt-PT">
 
-include  $_SERVER["DOCUMENT_ROOT"] . "/templates/head.php";
+<?php require_once $_SERVER["DOCUMENT_ROOT"] . "/templates/head.php" ?>
 
-echo '<body>';
+<body>
+  <?php
+  require_once $_SERVER["DOCUMENT_ROOT"] . '/includes/header/header.php';
+  require_once $_SERVER["DOCUMENT_ROOT"] . '/includes/modals/login.php';
+  require_once $_SERVER["DOCUMENT_ROOT"] . '/includes/modals/signup.php';
 
-include  $_SERVER["DOCUMENT_ROOT"] . '/includes/header/header.php';
+  renderAddButton();
+  renderProducts();
 
-echo renderAddButton();
-echo renderHomeProducts();
-echo renderFooter();
-
-echo '
-<script src="/utils/main.js"></script>
+  require_once $_SERVER["DOCUMENT_ROOT"] . '/includes/footer/footer.php';
+  ?>
 </body>
-</html>';
+
+</html>

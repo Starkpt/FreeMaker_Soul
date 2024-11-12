@@ -50,44 +50,14 @@ if ($msg): ?>
     </div>
 <?php endif; ?>
 
-<!-- Login Form Modal -->
-<div class="backdrop" id="login_backdrop">
-    <form class="form wrapper" id="form_login" action="/utils/actions.php?act=login" method="POST">
-        <div class="login_container">
-            <div class="log_btn_container">
-                <img id="close_login" class="close_msg" src="/assets/imgs/icons/close.png" alt="Close">
-            </div>
-            <div class="titulo">Login</div>
-            <div class="input-box">
-                <input type="text" id="name_login" name="nickname" placeholder="Email ou nome de utilizador" required>
-                <img src="/assets/imgs/icons/login-avatar.png" alt="User icon">
-            </div>
-            <div class="input-box">
-                <input type="password" id="pwd_login" name="password" placeholder="Password" required>
-                <img class="eye" src="/assets/imgs/icons/closed-eye.png" alt="Show password">
-            </div>
-            <div class="remember-forgot">
-                <label>
-                    <input type="checkbox" name="remember"> Lembrar-me
-                </label>
-                <a href="#">Esqueci a Password</a>
-            </div>
-            <button type="submit" class="btn">Login</button>
-            <div class="register-link">
-                Ainda não efetuou registo? <a id="registar" href="#">Registar</a>
-            </div>
-        </div>
-    </form>
-</div>
-
 <!-- Header -->
 <header class="header">
     <div class="wrapper">
-        <a class="logo" href="/index">
+        <a class="logo" href="/">
             <img src="/assets/imgs/logos/logo.png" alt="Logotipo do proprietário" title="Página principal">
         </a>
         <nav class="menu">
-            <a href="/index" class="link" title="Página principal">Home</a>
+            <a href="/" class="link" title="Página principal">Home</a>
             <a href="/products" class="link" title="Todos os produtos">Produtos</a>
             <li class="categorias link" tabindex="0">
                 <a href="#">Categorias</a>
@@ -135,31 +105,6 @@ if ($msg): ?>
     </div>
 </header>
 
-<!-- Signup Form Modal -->
-<div class="backdrop" id="signup_backdrop">
-    <form class="form wrapper" id="form_signup" action="/utils/actions.php?act=register" method="POST">
-        <div class="titulo">Registar</div>
-        <div class="input-box">
-            <input type="text" name="nickname" placeholder="Nome de utilizador" required>
-            <img src="/assets/imgs/icons/login-avatar.png" alt="User icon">
-        </div>
-        <div class="input-box">
-            <input type="email" name="email" placeholder="Email" required>
-            <img src="/assets/imgs/icons/at.png" alt="Email icon">
-        </div>
-        <div class="input-box">
-            <input type="password" name="password" placeholder="Password" minlength="8" required>
-            <img class="eye" src="/assets/imgs/icons/closed-eye.png" alt="Show password">
-        </div>
-        <div class="input-box">
-            <input type="password" name="re_password" placeholder="Repetir password" required>
-            <img class="re_eye" src="/assets/imgs/icons/closed-eye.png" alt="Show password">
-        </div>
-        <button type="submit" class="btn">Registar</button>
-    </form>
-</div>
-
 <script>
     const msg = "<?= $msg ?>"; // Global variable for JavaScript use
 </script>
-<script src="/utils/main.js"></script>

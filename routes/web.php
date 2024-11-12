@@ -2,13 +2,19 @@
 $requestUri = $_SERVER['REQUEST_URI'];
 
 if ($requestUri === '/' || $requestUri === '/index') {
-  include 'index.php';
+  include $_SERVER["DOCUMENT_ROOT"] . '/';
   exit;
 }
 
-// Add other routing cases as needed
+// Products page
 if ($requestUri === '/products') {
-  include  $_SERVER["DOCUMENT_ROOT"] . '/public/products/products.php';
+  include $_SERVER["DOCUMENT_ROOT"] . '/public/products/products.php';
+  exit;
+}
+
+// Add product
+if ($requestUri === '/add_product') {
+  include $_SERVER["DOCUMENT_ROOT"] . '/public/products/add_product.php';
   exit;
 }
 

@@ -1,6 +1,5 @@
 <?php
 
-
 function getProductsByCategory($conn, $categoria = null, $limit = MAX_PRODUCTS_DISPLAY)
 {
   $sql = 'SELECT p.ID, c.c_descricao, p.nome, p.descricao, p.preco, MIN(f.foto) AS foto

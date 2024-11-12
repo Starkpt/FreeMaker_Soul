@@ -1,3 +1,8 @@
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+
 /********************************************************************************************************************************************/
 /*                                                                      HEADER                                                              */
 /********************************************************************************************************************************************/
@@ -286,23 +291,24 @@ $(document).ready(function () {
 $(document).ready(function () {
   $("#add").on("click", function (e) {
     e.preventDefault();
+    alert("shush!");
 
-    $.ajax({
-      url: "utils/check_session.php",
-      method: "GET",
-      dataType: "json",
-      success: function (resposta) {
-        if (resposta.logged_in) {
-          window.location.href = "utils/insert_prod.php#insert_product";
-        } else {
-          $("#login_backdrop").removeClass("hide").addClass("show");
-          $("#login").removeClass("show").addClass("hide");
-          $("#msg_backdrop").removeClass("show").addClass("hide");
-        }
-      },
-      error: function () {
-        alert("Erro ao verificar a sessão.");
-      },
-    });
+    //     $.ajax({
+    //       url: "utils/check_session.php",
+    //       method: "GET",
+    //       dataType: "json",
+    //       success: function (resposta) {
+    //         if (resposta.logged_in) {
+    //           window.location.href = "utils/insert_prod.php#insert_product";
+    //         } else {
+    //           $("#login_backdrop").removeClass("hide").addClass("show");
+    //           $("#login").removeClass("show").addClass("hide");
+    //           $("#msg_backdrop").removeClass("show").addClass("hide");
+    //         }
+    //       },
+    //       error: function () {
+    //         alert("Erro ao verificar a sessão.");
+    //       },
+    //     });
   });
 });
