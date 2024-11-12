@@ -2,7 +2,7 @@
 include $_SERVER["DOCUMENT_ROOT"] . "/config/config.php";
 include $_SERVER["DOCUMENT_ROOT"] . "/includes/product_card/product_card.php";
 
-require_once 'public/produtos/product_helpers.php';
+require_once 'public/products/product_helpers.php';
 require_once 'includes/product_card/product_card.php';
 require_once "utils/helper-functions.php";
 
@@ -17,7 +17,7 @@ $current_page = "Home";
 <!DOCTYPE html>
 <html lang="pt-PT">
 
-<?php include  $_SERVER["DOCUMENT_ROOT"] . "/templates/head.php" ?>
+<?php include $_SERVER["DOCUMENT_ROOT"] . "/templates/head.php" ?>
 
 <body>
   <?php include $_SERVER["DOCUMENT_ROOT"] . '/includes/header/header.php'; ?>
