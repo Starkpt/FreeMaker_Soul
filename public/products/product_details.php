@@ -1,90 +1,88 @@
 <?php
+// Setup and Header
 $title = 'Detalhes Produto';
 include 'includes/header/header.php';
 
-// Get product ID from the query string if available
+// Get product ID
 $produto = $_GET['produto'] ?? null;
 
-// Function to retrieve product details
-function getProductDetails($conn, $produto)
+// Helper Functions
+function fetchSingleResult($conn, $sql, $params)
 {
-    $sql = 'SELECT p.nome, p.descricao, c.c_descricao, p.preco
-            FROM produtos AS p
-            JOIN categorias AS c ON c.ID = p.ID_categoria
-            WHERE p.ID = ?';
-
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('i', $produto);
+    $stmt->bind_param(...$params);
     $stmt->execute();
     return $stmt->get_result()->fetch_assoc();
 }
 
-// Function to retrieve product images
-function getProductImages($conn, $produto)
+function fetchMultipleResults($conn, $sql, $params)
 {
-    $sql = 'SELECT f.foto, p.nome, c.c_descricao
-            FROM fotos AS f
-            JOIN produtos AS p ON p.ID = f.ID_produto
-            JOIN categorias AS c ON c.ID = p.ID_categoria
-            WHERE p.ID = ?';
-
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('i', $produto);
+    $stmt->bind_param(...$params);
     $stmt->execute();
     return $stmt->get_result();
 }
 
-// Function to retrieve product materials
-function getProductFilaments($conn, $produto)
+// Queries
+$productDetails = fetchSingleResult(
+    $conn,
+    'SELECT p.nome, p.descricao, c.c_descricao, p.preco
+     FROM produtos AS p
+     JOIN categorias AS c ON c.ID = p.ID_categoria
+     WHERE p.ID = ?',
+    ['i', $produto]
+);
+
+$productImages = fetchMultipleResults(
+    $conn,
+    'SELECT f.foto, p.nome, c.c_descricao
+     FROM fotos AS f
+     JOIN produtos AS p ON p.ID = f.ID_produto
+     JOIN categorias AS c ON c.ID = p.ID_categoria
+     WHERE p.ID = ?',
+    ['i', $produto]
+);
+
+$filamentos = array_column(fetchMultipleResults(
+    $conn,
+    'SELECT f.tipo
+     FROM filamentos AS f
+     JOIN produtos_filamentos_cores AS pf ON pf.ID_filamento = f.ID
+     WHERE pf.ID_produto = ?',
+    ['i', $produto]
+)->fetch_all(MYSQLI_ASSOC), 'tipo');
+
+$cores = array_column(fetchMultipleResults(
+    $conn,
+    'SELECT c.cor
+     FROM cores AS c
+     JOIN produtos_filamentos_cores AS pc ON pc.ID_cor = c.ID
+     WHERE pc.ID_produto = ?',
+    ['i', $produto]
+)->fetch_all(MYSQLI_ASSOC), 'cor');
+
+// Helper function to build a <select> dropdown
+function buildSelect($name, $defaultOption, $sql, $conn)
 {
-    $sql = 'SELECT f.tipo
-            FROM filamentos AS f
-            JOIN produtos_filamentos_cores AS pf ON pf.ID_filamento = f.ID
-            JOIN produtos AS p ON p.ID = pf.ID_produto
-            WHERE p.ID = ?';
+    $html = "<select name=\"$name\" id=\"$name\">";
+    $html .= "<option value=\"\">$defaultOption</option>";
 
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('i', $produto);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    $filamentos = [];
+    $result = $conn->query($sql);
     while ($row = $result->fetch_assoc()) {
-        $filamentos[] = $row['tipo'];
+        $value = htmlspecialchars($row['ID']);
+        $label = htmlspecialchars($row['tipo'] ?? $row['cor']); // Use either 'tipo' or 'cor' as the display text
+        $html .= "<option value=\"$value\">$label</option>";
     }
-    return $filamentos;
+
+    $html .= "</select>";
+    return $html;
 }
 
-// Function to retrieve product colors
-function getProductColors($conn, $produto)
-{
-    $sql = 'SELECT c.cor
-            FROM cores AS c
-            JOIN produtos_filamentos_cores AS pc ON pc.ID_cor = c.ID
-            JOIN produtos AS p ON p.ID = pc.ID_produto
-            WHERE p.ID = ?';
-
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('i', $produto);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    $cores = [];
-    while ($row = $result->fetch_assoc()) {
-        $cores[] = $row['cor'];
-    }
-    return $cores;
-}
-
-// Fetch product data
-$productDetails = getProductDetails($conn, $produto);
-$productImages = getProductImages($conn, $produto);
-$filamentos = getProductFilaments($conn, $produto);
-$cores = getProductColors($conn, $produto);
 ?>
 
 <div class="product_detail_container wrapper">
     <div class="product_container">
+        <!-- Slideshow -->
         <div class="slideshow_container">
             <img class="prev_icon" onclick="slide(-1)" src="/assets/imgs/icons/arrow.png" alt="Previous">
             <img class="next_icon" onclick="slide(1)" src="/assets/imgs/icons/arrow.png" alt="Next">
@@ -97,24 +95,22 @@ $cores = getProductColors($conn, $produto);
             </div>
         </div>
 
+        <!-- Image Selector -->
         <div class="img_selector">
-            <?php
-            $productImages->data_seek(0);
-            $img_index = 0;
-            while ($row = $productImages->fetch_assoc()):
-            ?>
+            <?php $productImages->data_seek(0);
+            $img_index = 0; ?>
+            <?php while ($row = $productImages->fetch_assoc()): ?>
                 <div class="product_imgs">
                     <a href="#">
                         <img class="img" onclick="img_click(<?= $img_index ?>)" src="/assets/imgs/produtos/<?= htmlspecialchars($row['c_descricao']) ?>/<?= htmlspecialchars($row['foto']) ?>" alt="<?= htmlspecialchars($row['nome']) ?>" title="Ver Imagem">
                     </a>
                 </div>
-            <?php
-                $img_index++;
-            endwhile;
-            ?>
+                <?php $img_index++; ?>
+            <?php endwhile; ?>
         </div>
     </div>
 
+    <!-- Product Details -->
     <div class="product_description">
         <div class="container_description">
             <h2 class="nome"><?= htmlspecialchars($productDetails['nome']) ?></h2>
@@ -124,31 +120,18 @@ $cores = getProductColors($conn, $produto);
             <div class="cor"><strong>Cor(es):</strong> <?= htmlspecialchars(implode(', ', $cores)) ?><br><br></div>
             <div class="preco"><strong>Preço:</strong> <u><?= htmlspecialchars($productDetails['preco']) ?>€</u></div><br><br>
 
+            <!-- Selectors -->
             <div class="seletores">
                 <div class="filamento">
-                    <select name="escolher_filamento" id="escolher_filamento">
-                        <option value="">Escolha um tipo de filamento</option>
-                        <?php
-                        $result = $conn->query('SELECT ID, tipo FROM filamentos');
-                        while ($row = $result->fetch_assoc()):
-                        ?>
-                            <option name="filamento" value="<?= htmlspecialchars($row['ID']) ?>"> <?= htmlspecialchars($row['tipo']) ?> </option>
-                        <?php endwhile; ?>
-                    </select>
+                    <?= buildSelect('escolher_filamento', 'Escolha um tipo de filamento', 'SELECT ID, tipo FROM filamentos', $conn) ?>
                 </div>
                 <div class="cor">
-                    <select name="escolher_cor" id="escolher_cor">
-                        <option value="">Escolha uma cor</option>
-                        <?php
-                        $result = $conn->query('SELECT ID, cor FROM cores');
-                        while ($row = $result->fetch_assoc()):
-                        ?>
-                            <option name="cor" value="<?= htmlspecialchars($row['ID']) ?>"> <?= htmlspecialchars($row['cor']) ?> </option>
-                        <?php endwhile; ?>
-                    </select>
+                    <?= buildSelect('escolher_cor', 'Escolha uma cor', 'SELECT ID, cor FROM cores', $conn) ?>
                 </div>
             </div><br>
             <hr>
+
+            <!-- Add to Cart -->
             <div class="add_to_cart">
                 <div class="quantidade">
                     <label for="quantity"><strong>Quantidade:</strong></label>
@@ -163,45 +146,4 @@ $cores = getProductColors($conn, $produto);
 </div>
 
 <?php include 'includes/footer/footer.php'; ?>
-
-
-<script>
-    $(document).ready(function() {
-        //TESTE CAROUSEL
-        let slide_index = 0;
-        const slides = $('.slideshow_container .img');
-
-        //Função para mostrar apenas a 1ª img do array
-        function mostrarSlide(index) {
-            slides.hide(); // Esconde todas as imagens
-            slides.eq(index).show(); // Mostra apenas a imagem atual
-        }
-
-        // Mostrar a 1ª imagem do array
-        mostrarSlide(slide_index);
-
-        // Função para mudar de imagem com os botões prev e next
-        slide = function(direcao) {
-            slide_index += direcao;
-
-            // Voltar à última img
-            if (slide_index < 0) {
-                slide_index = slides.length - 1;
-            }
-            // Voltar à primeira img
-            else if (slide_index >= slides.length) {
-                slide_index = 0;
-            }
-
-            // Mostrar a nova imagem
-            mostrarSlide(slide_index);
-        };
-
-        //Função para mostrar a imagem que for carregada no seletor de baixo
-        img_click = function(index) {
-            slide_index = index; // Recebe o indice que foi incrementado por cada imagem no loop while
-            mostrarSlide(slide_index);
-        };
-
-    });
-</script>
+<script src="./product_details_js.php"></script>

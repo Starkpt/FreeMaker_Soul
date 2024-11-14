@@ -1,6 +1,6 @@
 <!-- Signup Form Modal -->
 <div class="backdrop" id="signup_backdrop">
-    <form class="form wrapper" id="form_signup" action="/utils/actions.php?act=register" method="POST">
+    <form class="form wrapper" id="form_signup" action="/actions/actions.php?act=register" method="POST">
         <div class="titulo">Registar</div>
         <div class="input-box">
             <input type="text" name="nickname" placeholder="Nome de utilizador" required>

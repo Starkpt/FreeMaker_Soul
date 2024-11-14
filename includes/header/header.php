@@ -1,6 +1,10 @@
 <!-- Message backdrop modal -->
 <?php
 
+
+$adm = $_SESSION['adm'] ?? null;
+$error_msg = $_SESSION['error_msg'] ?? '';
+$info_msg = $_SESSION['info_msg'] ?? '';
 $msg = htmlspecialchars($_GET['msg'] ?? '');
 
 if ($msg): ?>
@@ -85,9 +89,14 @@ if ($msg): ?>
                         $stmt->bind_param('s', $_SESSION['nome']);
                         $stmt->execute();
                         $user = $stmt->get_result()->fetch_assoc();
-                        $user_img = $user['foto'] ? "imgs/profile_pics/{$user['foto']}" : 'assets/imgs/icons/login-avatar.png';
+                        // TODO : Correct this part. It should show:
+                        //  - a crown when admin
+                        //  - user photo when regular user logged in
+                        //  - "Login" when now user logged in
+                        $user_img = ($user && $user['foto']) ? "/imgs/profile_pics/{$user['foto']}" : '/assets/imgs/icons/login-avatar.png';
                         ?>
                         <img class="user_pic" src="<?= $user_img ?>" alt="User icon">
+
                     <?php endif; ?>
                     <ul class="profile-options">
                         <?php if ($adm): ?>
@@ -95,7 +104,7 @@ if ($msg): ?>
                         <?php else: ?>
                             <li><a href="profile.php">Ver perfil</a></li>
                         <?php endif; ?>
-                        <li><a href="/utils/actions.php?act=logout">Logout</a></li>
+                        <li><a href="/actions/actions.php?act=logout">Logout</a></li>
                     </ul>
                 </div>
             <?php else: ?>

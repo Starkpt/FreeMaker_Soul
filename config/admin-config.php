@@ -67,7 +67,7 @@ include $_SERVER["DOCUMENT_ROOT"] . '/includes/header/header.php';
                         ?>
                     </td>
                     <td class="icon_container">
-                        <a href="/utils/actions.php?act=del_user&ID=<?= $row['ID'] ?>" onclick="return confirm('Pretende apagar o cliente <?= @$row['nome'] ?>?')" style="text-decoration: none">
+                        <a href="/actions/actions.php?act=del_user&ID=<?= $row['ID'] ?>" onclick="return confirm('Pretende apagar o cliente <?= @$row['nome'] ?>?')" style="text-decoration: none">
                             <img src="assets/imgs/icons/trash.png" class="icon" alt="Eliminar" title="Eliminar Utilizador">
                         </a>
                         <a href="#" class="edit_user_link">
@@ -90,7 +90,7 @@ include $_SERVER["DOCUMENT_ROOT"] . '/includes/header/header.php';
             Editar Utilizador<br>
             <hr>
         </div>
-        <form action="/utils/actions.php?act=edit_user" method="POST" enctype="multipart/form-data">
+        <form action="/actions/actions.php?act=edit_user" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="ID" value="<?= $ID ?>">
             <table class="lista" border="0">
                 <tr>
@@ -214,7 +214,7 @@ include $_SERVER["DOCUMENT_ROOT"] . '/includes/header/header.php';
                         <?= $row['preco'] ?>
                     </td>
                     <td class="icon_container" align="center">
-                        <a href="/utils/actions.php?act=del_prod&ID=<?= $row['ID'] ?>" onclick="return confirm('Pretende apagar o produto <?= $row['nome'] ?>?')" style="text-decoration: none">
+                        <a href="/actions/actions.php?act=del_prod&ID=<?= $row['ID'] ?>" onclick="return confirm('Pretende apagar o produto <?= $row['nome'] ?>?')" style="text-decoration: none">
                             <img src="assets/imgs/icons/trash.png" class="icon" alt="Eliminar" title="Eliminar Produto">
                         </a>
                         <a href="#" class="prod_edit_link">
@@ -237,7 +237,7 @@ include $_SERVER["DOCUMENT_ROOT"] . '/includes/header/header.php';
             Editar Produto<br>
             <hr>
         </div>
-        <form action="/utils/actions.php?act=edit_prod" method="POST" enctype="multipart/form-data">
+        <form action="/actions/actions.php?act=edit_prod" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="ID" value="<?= $ID ?>">
             <table class="lista" border="0">
                 <tr>
@@ -341,7 +341,7 @@ include $_SERVER["DOCUMENT_ROOT"] . '/includes/header/header.php';
                 const userId = $(this).find('.user_edit').data('id');
 
                 $.ajax({
-                    url: '/utils/actions.php', // Endpoint para buscar dados do utilizador pelo ID
+                    url: '/actions/actions.php', // Endpoint para buscar dados do utilizador pelo ID
                     method: 'GET',
                     data: {
                         act: 'get_user',
@@ -420,7 +420,7 @@ include $_SERVER["DOCUMENT_ROOT"] . '/includes/header/header.php';
                 console.log(prodId);
 
                 $.ajax({
-                    url: '/utils/actions.php', // Endpoint para buscar dados do produto pelo ID
+                    url: '/actions/actions.php', // Endpoint para buscar dados do produto pelo ID
                     method: 'GET',
                     data: {
                         act: 'get_prod',

@@ -1,6 +1,6 @@
 <!-- Login Form Modal -->
 <div class="backdrop" id="login_backdrop">
-  <form class="form wrapper" id="form_login" action="/utils/actions.php?act=login" method="POST">
+  <form class="form wrapper" id="form_login" action="/actions/actions.php?act=login" method="POST">
     <div class="login_container">
       <div class="log_btn_container">
         <img id="close_login" class="close_msg" src="/assets/imgs/icons/close.png" alt="Close">

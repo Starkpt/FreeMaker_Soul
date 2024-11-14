@@ -37,20 +37,16 @@ try {
         echo 'Erro ao tentar ligar ao servidor!';
         exit;
     }
-}
+};
 
 // ** Start Session If Not Already Started **
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
-
-    print_r($_SESSION);
-    if (isset($_SESSION['ID'])) { // Check if user is logged in
-        echo json_encode(['logged_in' => true]);
-    } else {
-        echo json_encode(['logged_in' => false]);
-    }
 }
 
-$adm = $_SESSION['adm'] ?? null;
-$error_msg = $_SESSION['error_msg'] ?? '';
-$info_msg = $_SESSION['info_msg'] ?? '';
+if (isset($_SESSION['ID'])) { // Check if user is logged in
+    $_SESSION["logged_in"] = true;
+} else {
+    $_SESSION["logged_in"] = false;
+}
+print_r($_SESSION);

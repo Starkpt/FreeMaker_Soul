@@ -1,222 +1,115 @@
+// Scroll to Top Function
 function topFunction() {
   document.body.scrollTop = 0;
   document.documentElement.scrollTop = 0;
 }
 
-/********************************************************************************************************************************************/
-/*                                                                      HEADER                                                              */
-/********************************************************************************************************************************************/
+// Helper to Toggle Show/Hide Classes
+function toggleVisibility(element, show) {
+  element.removeClass(show ? "hide" : "show").addClass(show ? "show" : "hide");
+}
 
+// Initialize jQuery
 $(document).ready(function () {
-  //Impedir que qualquer click no formulario dê trigger ao backdrop
-  $(".form").on("click", function (e) {
-    e.stopPropagation();
-  });
+  // Toggle Visibility for Backdrop
+  function setupBackdropToggle(backdropId, containerId) {
+    $(backdropId).on("click", function () {
+      toggleVisibility($(backdropId), false);
+      toggleVisibility($(containerId), true);
+    });
+  }
 
-  //Esconder o container do login quando se clica no background/backdrop
-  $("#login_backdrop").on("click", function () {
-    $("#login_backdrop").removeClass("show").addClass("hide");
-    $("#login").removeClass("hide").addClass("show");
-  });
-
-  $("#close_login").on("click", function () {
-    $("#login_backdrop").removeClass("show").addClass("hide");
-    $("#login").removeClass("hide").addClass("show");
-  });
-
-  //Esconder o container do signup quando se clica no background/backdrop
-  $("#signup_backdrop").on("click", function () {
-    $("#signup_backdrop").removeClass("show").addClass("hide");
-    $("#login").removeClass("hide").addClass("show");
-  });
-
-  $("#close_signup").on("click", function () {
-    $("#signup_backdrop").removeClass("show").addClass("hide");
-    $("#login").removeClass("hide").addClass("show");
-  });
-
-  //Abrir o container do login
-  $("#login").on("click", function () {
-    $("#login_backdrop").removeClass("hide").addClass("show");
-    $("#login").removeClass("show").addClass("hide");
-    $("#signup_backdrop").removeClass("show").addClass("hide");
-    $("#msg_backdrop").removeClass("show").addClass("hide");
-  });
-
-  $("#try_login").on("click", function () {
-    $("#login_backdrop").removeClass("hide").addClass("show");
-    $("#login").removeClass("show").addClass("hide");
-    $("#signup_backdrop").removeClass("show").addClass("hide");
-    $("#msg_backdrop").removeClass("show").addClass("hide");
-  });
-
-  //Abrir o container de registo do utilizador
-  $("#registar").on("click", function () {
-    $("#signup_backdrop").removeClass("hide").addClass("show");
-    $("#login_backdrop").removeClass("show").addClass("hide");
-    $("#login").removeClass("show").addClass("hide");
-    $("#msg_backdrop").removeClass("show").addClass("hide");
-  });
-
-  $("#try_signup").on("click", function () {
-    $("#signup_backdrop").removeClass("hide").addClass("show");
-    $("#login_backdrop").removeClass("show").addClass("hide");
-    $("#login").removeClass("show").addClass("hide");
-    $("#msg_backdrop").removeClass("show").addClass("hide");
-  });
-
-  //Fechar Containers ao carregar na tecla ESC
+  // Close Modal on ESC key
   $(document).on("keydown", function (e) {
     if (e.key === "Escape") {
-      $("#login_backdrop").removeClass("show").addClass("hide");
-      $("#signup_backdrop").removeClass("show").addClass("hide");
-      $("#login").removeClass("hide").addClass("show");
+      ["#login_backdrop", "#signup_backdrop"].forEach((backdrop) =>
+        toggleVisibility($(backdrop), false)
+      );
+      toggleVisibility($("#login"), true);
     }
   });
 
-  //Retroceder do signup para o login
-  $("#back").on("click", function () {
-    $("#login_backdrop").removeClass("hide").addClass("show");
-    $("#login").removeClass("show").addClass("hide");
-    $("#signup_backdrop").removeClass("show").addClass("hide");
-    $("#msg_backdrop").removeClass("show").addClass("hide");
+  // Backdrop and Close Button Event Setup
+  setupBackdropToggle("#login_backdrop", "#login");
+  setupBackdropToggle("#signup_backdrop", "#login");
+  $("#close_login, #close_signup").on("click", function () {
+    toggleVisibility($("#login_backdrop, #signup_backdrop"), false);
+    toggleVisibility($("#login"), true);
   });
 
-  //Funções para visualizar password e trocar o símbolo
-  $(".eye").on("mousedown", function () {
-    $(this).attr("src", "imgs/icons/eye.png");
-    $('input[name="password"]').attr("type", "text");
-  });
-
-  $(".eye").on("mouseup mouseleave", function () {
-    $(this).attr("src", "imgs/icons/closed-eye.png");
-    $('input[name="password"]').attr("type", "password");
-  });
-
-  $(".re_eye").on("mousedown", function () {
-    $(this).attr("src", "imgs/icons/eye.png");
-    $('input[name="re_password"]').attr("type", "text");
-  });
-
-  $(".re_eye").on("mouseup mouseleave", function () {
-    $(this).attr("src", "imgs/icons/closed-eye.png");
-    $('input[name="re_password"]').attr("type", "password");
-  });
-
-  //Função para garantir que não faltam dados na submissão do formulário de login
-  $("#form_login").on("submit", function () {
-    let nome = $("#name_login");
-    let pwd = $("#pwd_login");
-    let error_msg = document.getElementsByClassName("login_error_msg");
-    let input_box = document.getElementsByClassName("input-box");
-
-    // Função para informar que um nome foi introduzido
-    nome.on("input", function () {
-      if ($.trim(nome.val()) !== "") {
-        error_msg[0].style.display = "none";
-        input_box[0].style.borderColor = "green";
-      }
+  // Toggle Login & Signup Views
+  function setupToggleButton(buttonId, showBackdrop, hideContainer) {
+    $(buttonId).on("click", function () {
+      toggleVisibility($(showBackdrop), true);
+      toggleVisibility($(hideContainer), false);
     });
+  }
+  setupToggleButton("#login, #try_login", "#login_backdrop", "#signup_backdrop, #msg_backdrop");
+  setupToggleButton("#registar, #try_signup", "#signup_backdrop", "#login_backdrop, #msg_backdrop");
+  setupToggleButton("#back", "#login_backdrop", "#signup_backdrop");
 
-    if ($.trim(nome.val()) == "") {
-      error_msg[0].style.display = "block";
-      input_box[0].style.borderColor = "red";
-      nome.val("");
-      nome.focus();
-      return false;
-    }
+  // Toggle Password Visibility
+  function setupPasswordToggle(buttonClass, inputName) {
+    $(buttonClass)
+      .on("mousedown", function () {
+        $(this).attr("src", "imgs/icons/eye.png");
+        $(`input[name="${inputName}"]`).attr("type", "text");
+      })
+      .on("mouseup mouseleave", function () {
+        $(this).attr("src", "imgs/icons/closed-eye.png");
+        $(`input[name="${inputName}"]`).attr("type", "password");
+      });
+  }
+  setupPasswordToggle(".eye", "password");
+  setupPasswordToggle(".re_eye", "re_password");
 
-    //Função para informar que foi introduzida uma password
-    pwd.on("input", function () {
-      if ($.trim(pwd.val()) !== "") {
-        error_msg[1].style.display = "none";
-        input_box[1].style.borderColor = "green";
-      }
+  // Form Validation Handler
+  function setupFormValidation(formId, fields) {
+    $(formId).on("submit", function () {
+      let valid = true;
+      fields.forEach(({ selector, errorIndex }) => {
+        let input = $(selector);
+        let errorMsg = document.getElementsByClassName(`${formId.slice(1)}_error_msg`)[errorIndex];
+        let inputBox = document.getElementsByClassName("input-box")[errorIndex];
+
+        if ($.trim(input.val()) === "") {
+          errorMsg.style.display = "block";
+          inputBox.style.borderColor = "red";
+          input.val("").focus();
+          valid = false;
+        } else {
+          input.on("input", function () {
+            errorMsg.style.display = "none";
+            inputBox.style.borderColor = "green";
+          });
+        }
+      });
+      return valid;
     });
+  }
 
-    if ($.trim(pwd.val()) == "") {
-      error_msg[1].style.display = "block";
-      input_box[1].style.borderColor = "red";
-      pwd.val("");
-      pwd.focus();
-      return false;
-    }
-  });
+  // Setup Validation for Login & Signup
+  setupFormValidation("#form_login", [
+    { selector: "#name_login", errorIndex: 0 },
+    { selector: "#pwd_login", errorIndex: 1 },
+  ]);
+  setupFormValidation("#form_signup", [
+    { selector: "#name_signup", errorIndex: 0 },
+    { selector: "#email_signup", errorIndex: 1 },
+    { selector: "#pwd_signup", errorIndex: 2 },
+    { selector: "#re_pwd_signup", errorIndex: 3 },
+  ]);
 
-  //Função para garantir que não faltam dados na submissão do formulário de registo
+  // Handle Signup Password Match Validation
   $("#form_signup").on("submit", function () {
-    let nome = $("#name_signup");
-    let email = $("#email_signup");
     let pwd1 = $("#pwd_signup");
     let pwd2 = $("#re_pwd_signup");
+    let inputBox = document.getElementsByClassName("input-box");
 
-    let error_msg = document.getElementsByClassName("signup_error_msg");
-    let input_box = document.getElementsByClassName("input-box");
-
-    //Função para informar que um nome foi introduzido
-    nome.on("input", function () {
-      if ($.trim(nome.val()) !== "") {
-        error_msg[0].style.display = "none";
-        input_box[2].style.borderColor = "green";
-      }
-    });
-
-    //Nome obrigatório
-    if ($.trim(nome.val()) == "") {
-      error_msg[0].style.display = "block";
-      input_box[2].style.borderColor = "red";
-      nome.val("");
-      nome.focus();
-      return false;
-    }
-
-    //Função para informar que foi introduzido um email
-    email.on("input", function () {
-      if ($.trim(email.val()) !== "") {
-        error_msg[1].style.display = "none";
-        input_box[3].style.borderColor = "green";
-      }
-    });
-
-    //Email obrigatório
-    if ($.trim(email.val()) == "") {
-      error_msg[1].style.display = "block";
-      input_box[3].style.borderColor = "red";
-      email.val("");
-      email.focus();
-      return false;
-    }
-
-    //Função para informar se foi introduzida uma password
-    pwd1.on("input", function () {
-      if ($.trim(pwd1.val()) !== "") {
-        error_msg[2].style.display = "none";
-        input_box[4].style.borderColor = "green";
-      }
-    });
-
-    //Password obrigatória
-    if ($.trim(pwd1.val()) == "") {
-      error_msg[2].style.display = "block";
-      input_box[4].style.borderColor = "red";
-      pwd1.val("");
-      pwd1.focus();
-      return false;
-    }
-
-    //Função para informar se foi introduzida uma password de confirmação
-    pwd2.on("input", function () {
-      if ($.trim(pwd2.val()) !== "") {
-        error_msg[3].style.display = "none";
-        input_box[5].style.borderColor = "green";
-      }
-    });
-
-    //Validar passwords
-    if (pwd1.val() != pwd2.val()) {
-      error_msg[3].style.display = "block";
-      input_box[4].style.borderColor = "red";
-      input_box[5].style.borderColor = "red";
+    if (pwd1.val() !== pwd2.val()) {
+      $(".signup_error_msg")[3].style.display = "block";
+      inputBox[4].style.borderColor = "red";
+      inputBox[5].style.borderColor = "red";
       pwd1.val("");
       pwd2.val("");
       pwd1.focus();
@@ -224,91 +117,56 @@ $(document).ready(function () {
     }
   });
 
-  // Remover o token da msg que vem por URL do PHP
+  // Display Message Container with Backdrop
   const url = new URL(window.location.href);
-
   if (url.searchParams.has("msg")) {
-    // Remove o token
     url.searchParams.delete("msg");
-
-    // Atualiza o URL sem recarregar a página
     history.replaceState(null, "", url);
   }
 
-  // Se houver alguma mensagem a ser mostrada o backdrop das msgs é mostrado
   if (msg) {
+    toggleVisibility($("#msg_backdrop"), true);
+    $("#msg_backdrop").on("click", function () {
+      toggleVisibility($("#msg_backdrop"), false);
+    });
+
     $(".msg_container").on("click", function (e) {
       e.stopPropagation();
     });
 
-    $("#msg_backdrop").removeClass("hide").addClass("show");
-
-    //Esconder o container das msgs quando se clica no background/backdrop
-    $("#msg_backdrop").on("click", function () {
-      $("#msg_backdrop").removeClass("show").addClass("hide");
-    });
-
-    //Esconder o container das msgs quando se clica na cruz
     $("#close_msg").on("click", function () {
-      $("#msg_backdrop").removeClass("show").addClass("hide");
+      toggleVisibility($("#msg_backdrop"), false);
     });
 
-    //Esconder o container das msgs quando se clica ENTER ou ESC
     $(document).on("keydown", function (e) {
-      // Verificar se a tecla pressionada é 'Enter' ou 'Esc'
       if (e.key === "Enter" || e.key === "Escape") {
-        e.preventDefault(); // Impedir o comportamento padrão da tecla
-        $("#msg_backdrop").removeClass("show").addClass("hide");
+        e.preventDefault();
+        toggleVisibility($("#msg_backdrop"), false);
       }
     });
 
-    if (msg == "login_success") {
-      setTimeout(function () {
-        window.location.href = "index.php";
+    // Redirects on Success
+    const redirections = {
+      login_success: "index.php",
+      logout: "index.php",
+      insert_success: "utils/insert_prod.php",
+    };
+    if (redirections[msg]) {
+      setTimeout(() => {
+        window.location.href = redirections[msg];
       }, 1500);
-    } else if (msg == "logout") {
-      setTimeout(function () {
-        window.location.href = "index.php";
-      }, 1500);
-    } else if (msg == "registo_success") {
-      $("#signup_backdrop").removeClass("show").addClass("hide");
-      setTimeout(function () {
-        $("#msg_backdrop").removeClass("show").addClass("hide");
-        $("#login_backdrop").removeClass("hide").addClass("show");
-      }, 1500);
-    } else if (msg == "insert_success") {
-      setTimeout(function () {
-        window.location.href = "utils/insert_prod.php";
+    } else if (msg === "registo_success") {
+      toggleVisibility($("#signup_backdrop"), false);
+      setTimeout(() => {
+        toggleVisibility($("#msg_backdrop"), false);
+        toggleVisibility($("#login_backdrop"), true);
       }, 1500);
     }
   }
-});
 
-/********************************************************************************************************************************************/
-/*                                                                      CHECK_SESSION                                                       */
-/********************************************************************************************************************************************/
-
-$(document).ready(function () {
+  // Redirect to Add Product
   $("#add").on("click", function (e) {
     e.preventDefault();
-    alert("shush!");
-
-    //     $.ajax({
-    //       url: "utils/check_session.php",
-    //       method: "GET",
-    //       dataType: "json",
-    //       success: function (resposta) {
-    //         if (resposta.logged_in) {
-    //           window.location.href = "utils/insert_prod.php#insert_product";
-    //         } else {
-    //           $("#login_backdrop").removeClass("hide").addClass("show");
-    //           $("#login").removeClass("show").addClass("hide");
-    //           $("#msg_backdrop").removeClass("show").addClass("hide");
-    //         }
-    //       },
-    //       error: function () {
-    //         alert("Erro ao verificar a sessão.");
-    //       },
-    //     });
+    window.location.href = "public/products/add_product.php";
   });
 });

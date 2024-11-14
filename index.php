@@ -30,7 +30,7 @@ $title = "Home";
   <?php renderProducts(4); ?>
 
   <div class="mais_container wrapper">
-    <a href="products.php" title="Ver mais produtos">
+    <a href="/products" title="Ver mais produtos">
       <button class="mais">Ver mais produtos</button>
     </a>
   </div>
