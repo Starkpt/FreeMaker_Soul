@@ -55,30 +55,52 @@ if ($msg): ?>
 <?php endif; ?>
 
 <!-- Header -->
-<header class="header">
-    <div class="wrapper">
-        <a class="logo" href="/">
-            <img src="/assets/imgs/logos/logo.png" alt="Logotipo do proprietário" title="Página principal">
-        </a>
-        <nav class="menu">
-            <a href="/" class="link" title="Página principal">Home</a>
-            <a href="/products" class="link" title="Todos os produtos">Produtos</a>
-            <li class="categorias link" tabindex="0">
-                <a href="#">Categorias</a>
-                <ul class="submenu">
-                    <?php foreach (['Figuras', 'Decor', 'Gaming', 'Misc', 'Porta-Chaves', 'Utensílios'] as $categoria): ?>
-                        <li><a class="link" href="products?categoria=<?= urlencode($categoria) ?>"><?= $categoria ?></a></li>
-                    <?php endforeach; ?>
+<header id="navbar-header">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" aria-label="Main navigation">
+
+        <div class="container-fluid">
+            <a id="navbar-logo" class="navbar-brand" href="/">
+                <img
+                    title="Página principal"
+                    alt="Freemaker Soul"
+                    src="/assets/imgs/logos/logo.png"
+                    loading="lazy">
+            </a>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a href="/" class="nav-link" title="Página principal">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/products" class="nav-link" title="Ver produtos">Produtos</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <!-- <a class="nav-link dropdown-toggle" href="/categories">Categorias</a> -->
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Categorias
+                        </a>
+                        <ul class="dropdown-menu">
+                            <?php foreach (['Figuras', 'Decor', 'Gaming', 'Misc', 'Porta-Chaves', 'Utensílios'] as $categoria): ?>
+                                <li>
+                                    <a class="dropdown-item" href="products?categoria=<?= urlencode($categoria) ?>">
+                                        <?= htmlspecialchars($categoria, ENT_QUOTES, 'UTF-8') ?>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </li>
                 </ul>
-            </li>
-        </nav>
-        <nav class="menu2">
-            <form class="search-bar">
-                <input type="text" placeholder="Pesquisar">
-                <button type="submit">
-                    <img src="/assets/imgs/icons/search.png" alt="Search icon">
-                </button>
-            </form>
+
+                <form id="search-bar" class="d-flex m-0" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">
+                        <img src="/assets/imgs/icons/search.svg" alt="Ícone de pesquisar">
+                    </button>
+                </form>
+
+            </div>
+
             <?php if ($_SESSION): ?>
                 <div class="profile_container">
                     <?php if ($adm): ?>
@@ -95,7 +117,8 @@ if ($msg): ?>
                         //  - "Login" when now user logged in
                         $user_img = ($user && $user['foto']) ? "/imgs/profile_pics/{$user['foto']}" : '/assets/imgs/icons/login-avatar.png';
                         ?>
-                        <img class="user_pic" src="<?= $user_img ?>" alt="User icon">
+                        <!-- <img class="user_pic" src="<?= $user_img ?>" alt="User icon"> -->
+                        <img class="user_pic" src="/assets/imgs/icons/person.svg" alt="User icon">
 
                     <?php endif; ?>
                     <ul class="profile-options">
@@ -110,8 +133,9 @@ if ($msg): ?>
             <?php else: ?>
                 <a id="login" class="login" href="#">Login</a>
             <?php endif; ?>
-        </nav>
-    </div>
+
+        </div>
+    </nav>
 </header>
 
 <script>
