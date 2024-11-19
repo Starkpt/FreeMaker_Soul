@@ -1,7 +1,9 @@
 <!-- Navbar -->
+
+<!-- TODO: add menu options on other screen sizes (add responsiveness) -->
 <nav class="navbar navbar-expand-lg bg-body-tertiary" aria-label="Main navigation">
 
-    <div class="container-fluid">
+    <div class="container-fluid container-md">
         <a id="navbar-logo" class="navbar-brand" href="/">
             <img
                 title="Página principal"
@@ -11,7 +13,7 @@
         </a>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav mb-lg-0">
                 <li class="nav-item">
                     <a href="/" class="nav-link" title="Página principal">Home</a>
                 </li>
@@ -19,7 +21,6 @@
                     <a href="/products" class="nav-link" title="Ver produtos">Produtos</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <!-- <a class="nav-link dropdown-toggle" href="/categories">Categorias</a> -->
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Categorias
                     </a>
@@ -35,25 +36,25 @@
                 </li>
             </ul>
 
-            <form id="search-bar" class="d-flex m-0" role="search">
+            <form id="search-bar" class="d-flex m-0 ms-4" role="search">
+                <img class="m-2" src="/assets/imgs/icons/search.svg" alt="Ícone de pesquisar">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">
-                    <img src="/assets/imgs/icons/search.svg" alt="Ícone de pesquisar">
-                </button>
             </form>
 
         </div>
 
 
 
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav mb-lg-0">
             <li class="nav-item dropdown">
 
                 <!-- Determine User State -->
                 <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']): ?>
 
                     <!-- User is Logged In -->
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <?php echo $_SESSION["nickname"] ?>
+
                         <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
                             <!-- Admin View -->
                             <img class="user_pic" src="/assets/imgs/icons/crown.png" alt="Admin Icon">
@@ -72,7 +73,7 @@
                         <?php endif; ?>
                     </a>
 
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu dropdown-menu-end">
                         <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
                             <li><a class="dropdown-item" href="/config/admin-config.php">Admin Configurações</a></li>
                         <?php else: ?>
