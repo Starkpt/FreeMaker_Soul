@@ -36,12 +36,6 @@ html {
   scroll-behavior: smooth;
 }
 
-#navbar-wrapper {
-  max-width: 1300px;
-  margin: 0 auto;
-  /* user-select: auto; */
-}
-
 body {
   margin: 0;
   background-color: #a4e6ff;
@@ -430,14 +424,6 @@ a {
   width: 100%;
 }
 
-#navbar-wrapper .menu2 .profile_container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  list-style: none;
-  position: relative;
-}
-
 .profile_container .user_pic {
   width: 35px;
   border-radius: 50%;
@@ -465,11 +451,6 @@ a {
   opacity: 0;
   z-index: -10;
   transition: all 0.3s ease;
-}
-
-.menu2 .profile_container:hover .profile-options {
-  opacity: 1;
-  z-index: 10;
 }
 
 .profile-options .logout {

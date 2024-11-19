@@ -4,6 +4,10 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/includes/product_card/product_card.ph
 require_once $_SERVER["DOCUMENT_ROOT"] . "/utils/helper_functions.php";
 
 include $_SERVER["DOCUMENT_ROOT"] . "/public/products/product_helpers.php";
+// Example usage
+if (is_logged_in()) {
+  echo "Welcome, user ID: " . get_user_id();
+}
 
 $title = "Home";
 ?>

@@ -92,7 +92,7 @@ switch ($act) {
     case 'logout':
         session_unset();
         session_destroy();
-        header('Location: index.php?msg=logout');
+        header('Location: /index.php?msg=logout');
         break;
 
         /********************************************************************************************************************************************/

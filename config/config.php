@@ -1,22 +1,15 @@
 <?php
-// ** Set headers and character encoding **
-header('Content-Type: text/html; charset=UTF-8');
-header("title: asdjapfoaisjdao");
+define('PROJECT_ROOT', $_SERVER["DOCUMENT_ROOT"]);
 
-// ** Configuration Settings **
+// Include required files
+require_once PROJECT_ROOT . '/config/constants.php';
+require_once PROJECT_ROOT . '/config/database.php';
+require_once PROJECT_ROOT . '/config/session.php';
+require_once PROJECT_ROOT . '/includes/helpers.php';
+
+// ** Debugging Settings **
 $debug = true;
-$server = 'localhost';
-$user = 'root';
-$pw = '';
-$db = 'freemaker_soul';
 
-// ** Define Constants **
-define('SALT', '@#$7:d@erR_er€');
-define('ROOT_PATH', __DIR__); // Uses current directory for relative paths
-define('MAX_PRODUCTS_DISPLAY', 4); // Max items to display on homepage
-define("SITE_NAME", "Freemaker Soul");
-
-// ** Debug Settings **
 if ($debug) {
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
@@ -26,27 +19,5 @@ if ($debug) {
     ini_set('display_errors', 0);
 }
 
-// ** Database Connection **
-try {
-    $conn = new mysqli($server, $user, $pw, $db);
-    $conn->set_charset("utf8");
-} catch (Exception $e) {
-    if ($debug) {
-        die("Database connection failed: " . $e->getMessage());
-    } else {
-        echo 'Erro ao tentar ligar ao servidor!';
-        exit;
-    }
-};
-
-// ** Start Session If Not Already Started **
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-if (isset($_SESSION['ID'])) { // Check if user is logged in
-    $_SESSION["logged_in"] = true;
-} else {
-    $_SESSION["logged_in"] = false;
-}
-print_r($_SESSION);
+// Set headers and character encoding
+header('Content-Type: text/html; charset=UTF-8');
