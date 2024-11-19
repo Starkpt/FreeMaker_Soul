@@ -4,10 +4,6 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/includes/product_card/product_card.ph
 require_once $_SERVER["DOCUMENT_ROOT"] . "/utils/helper_functions.php";
 
 include $_SERVER["DOCUMENT_ROOT"] . "/public/products/product_helpers.php";
-// Example usage
-if (is_logged_in()) {
-  echo "Welcome, user ID: " . get_user_id();
-}
 
 $title = "Home";
 ?>
@@ -19,7 +15,7 @@ $title = "Home";
 
 <body>
   <?php
-  require_once $_SERVER["DOCUMENT_ROOT"] . '/includes/header/header.php';
+  require_once $_SERVER["DOCUMENT_ROOT"] . '/includes/navbar/navbar.php';
   require_once $_SERVER["DOCUMENT_ROOT"] . '/includes/modals/login.php';
   require_once $_SERVER["DOCUMENT_ROOT"] . '/includes/modals/signup.php';
   ?>

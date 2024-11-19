@@ -16,7 +16,7 @@ $categoria = $_GET['categoria'] ?? null;
 
 <body>
   <?php
-  require_once $_SERVER["DOCUMENT_ROOT"] . '/includes/header/header.php';
+  require_once $_SERVER["DOCUMENT_ROOT"] . '/includes/navbar/navbar.php';
   require_once $_SERVER["DOCUMENT_ROOT"] . '/includes/modals/login.php';
   require_once $_SERVER["DOCUMENT_ROOT"] . '/includes/modals/signup.php';
 

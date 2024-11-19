@@ -1,7 +1,7 @@
 <?php
 // Setup and Header
 $title = 'Detalhes Produto';
-include 'includes/header/header.php';
+include 'includes/navbar/navbar.php';
 
 // Get product ID
 $produto = $_GET['produto'] ?? null;

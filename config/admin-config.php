@@ -1,6 +1,6 @@
 <?php
 $title = "Administração";
-include $_SERVER["DOCUMENT_ROOT"] . '/includes/header/header.php';
+include $_SERVER["DOCUMENT_ROOT"] . '/includes/navbar/navbar.php';
 ?>
 <!--/********************************************************************************************************************************************/
 /*                                                                   USERS_LIST                                                                */
