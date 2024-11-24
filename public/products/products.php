@@ -19,10 +19,15 @@ $categoria = $_GET['categoria'] ?? null;
   require_once $_SERVER["DOCUMENT_ROOT"] . '/includes/navbar/navbar.php';
   require_once $_SERVER["DOCUMENT_ROOT"] . '/includes/modals/login.php';
   require_once $_SERVER["DOCUMENT_ROOT"] . '/includes/modals/signup.php';
+  ?>
+  <div class="container container-md p-5 px-2">
+    <?php
+      renderAddButton();
+      renderProducts();
+    ?>
+  </div>
 
-  renderAddButton();
-  renderProducts();
-
+  <?php
   require_once $_SERVER["DOCUMENT_ROOT"] . '/includes/footer/footer.php';
   ?>
 </body>

@@ -12,7 +12,7 @@ function renderProducts($max_items = null)
   // Store results
   $result = $GLOBALS["conn"]->query($sql);
 
-  echo "<div class='product-sample wrapper'>";
+  echo "<div class='product-list'>";
 
   // Initialize counter
   $count = 0;
@@ -35,11 +35,18 @@ function renderProducts($max_items = null)
 
 function renderAddButton()
 {
-  $addBtn = (isset($_SESSION['adm']) && $_SESSION['adm'] === 1) ? 'Adicionar Produto' : 'Sugerir Produto';
+  $addBtn = (isset($_SESSION['adm']) && $_SESSION['adm'] === 1)
+    ? 'Novo Produto'
+    : 'Sugerir Produto';
+
   echo '
-        <div class="mais_container wrapper" id="add_container">
-          <a href="#" id="add" title="' . htmlspecialchars($addBtn) . '">
-            <button class="mais">' . htmlspecialchars($addBtn) . '</button>
+        <div class="py-3 pb-4">
+          <a href="#" title="' . htmlspecialchars($addBtn) . '">
+            <!-- <button class="mais">' . htmlspecialchars($addBtn) . '</button> -->
+            <button class="btn btn-primary">
+              <img src="./assets/imgs/icons/plus-24x24.svg" alt="" title="Adicionar producto">
+              ' . htmlspecialchars($addBtn) . '
+            </button>
           </a>
         </div>
   ';

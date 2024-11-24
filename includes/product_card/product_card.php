@@ -16,12 +16,16 @@ function productCard($product)
     $price = htmlspecialchars($product['preco']);
 
     echo "
-        <div class='product'>
+        <div class='product-item'>
             <a href='{$productLink}'>
                 <img src='{$imagePath}' alt='{$name}' title='Ver detalhes'>
             </a>
-            <div class='nome_prod' title='Nome do Produto'>{$name}</div>
-            <div class='preco' title='Preço'>{$price}€</div>
+            <a href='{$productLink}'>
+                <p class='product-item-name' title='Nome do Produto'>{$name}</p>
+            </a>
+            <div class='product-item-price' title='Preço'>
+                {$price}€
+            </div>
         </div>
     ";
 }

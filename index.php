@@ -14,6 +14,7 @@ $title = "Home";
 <?php require_once $_SERVER["DOCUMENT_ROOT"] . "/templates/head.php" ?>
 
 <body>
+  <?= print_r($_SESSION) ?>
   <?php
   require_once $_SERVER["DOCUMENT_ROOT"] . '/includes/navbar/navbar.php';
   require_once $_SERVER["DOCUMENT_ROOT"] . '/includes/modals/login.php';
@@ -21,18 +22,21 @@ $title = "Home";
   ?>
 
   <div class="banner">
-    <div class="wrapper">
+    <div class="container-md pt-5">
       <h1><?= SITE_NAME ?></h1>
-      <hr class="sep">
+      <hr class="ruler">
     </div>
   </div>
 
-  <?php renderProducts(4); ?>
+  <div class="container container-md p-5 px-2">
+    <?php renderProducts(5); ?>
 
-  <div class="mais_container wrapper">
-    <a href="/products" title="Ver mais produtos">
-      <button class="mais">Ver mais produtos</button>
-    </a>
+    <div class="more-products pt-4">
+      <a href="/products" title="Ver mais produtos">
+        <!-- <button class="mais">Ver mais produtos</button> -->
+        <button class="btn btn-outline-primary">Ver mais produtos</button>
+      </a>
+    </div>
   </div>
 
   <?php require_once $_SERVER["DOCUMENT_ROOT"] . '/includes/footer/footer.php'; ?>

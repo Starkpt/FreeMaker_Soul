@@ -1,7 +1,7 @@
 <!-- Navbar -->
 
 <!-- TODO: add menu options on other screen sizes (add responsiveness) -->
-<nav class="navbar navbar-expand-lg bg-body-tertiary" aria-label="Main navigation">
+<nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom" aria-label="Main navigation">
 
     <div class="container-fluid container-md">
         <a id="navbar-logo" class="navbar-brand" href="/">
