@@ -39,6 +39,7 @@ html {
 body {
   margin: 0;
   background-color: #a4e6ff;
+  background-color: #daf5ff;
 }
 
 a {
@@ -466,74 +467,8 @@ a {
 /*                                                                FOOTER                                                                     */
 /********************************************************************************************************************************************/
 
-.footer {
-  padding: 10px;
-  background-color: #5454558c;
-  width: 100%;
-  text-align: center;
-}
-
-.footer #navbar-wrapper {
-  margin-bottom: 0;
-  display: flex;
-  justify-content: space-around;
-}
-
-.footer .logo {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-}
-
-.footer .col1 h3 {
-  font-family: Pristina;
-  margin: 0;
-}
-
-.footer .col2 {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.footer .col2 p {
-  margin: 0;
-  margin-bottom: 10px;
-}
-
-.footer .col3 a {
-  text-decoration: none;
-  color: #000000;
-  font-size: 20px;
-  font-family: Pristina;
-}
-
-.footer hr {
-  border: 0.5px solid #00000050;
-  width: 100%;
-}
-
-.footer .ft_topBtn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-}
-
-.footer .ft_topBtn img {
-  position: absolute;
-  right: 10px;
+.move-to-top {
   height: 25px;
-  cursor: pointer;
-  border: 1px solid #00000050;
-  border-radius: 50%;
-  padding: 2px;
-  transition: 0.3s ease;
-}
-
-.footer .ft_topBtn img:hover {
-  border: 1px solid rgba(206, 206, 206, 0.666);
 }
 
 /********************************************************************************************************************************************/
@@ -543,8 +478,7 @@ a {
 .banner {
   background-image: url("../imgs/banner.png");
   background-size: cover;
-  background-position: center;
-  height: calc(100vh - 50px);
+  height: 55vh;
 }
 
 .banner h1 {

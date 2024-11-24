@@ -14,7 +14,6 @@ $title = "Home";
 <?php require_once $_SERVER["DOCUMENT_ROOT"] . "/templates/head.php" ?>
 
 <body>
-  <?= print_r($_SESSION) ?>
   <?php
   require_once $_SERVER["DOCUMENT_ROOT"] . '/includes/navbar/navbar.php';
   require_once $_SERVER["DOCUMENT_ROOT"] . '/includes/modals/login.php';

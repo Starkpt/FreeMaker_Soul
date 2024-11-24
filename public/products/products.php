@@ -20,7 +20,7 @@ $categoria = $_GET['categoria'] ?? null;
   require_once $_SERVER["DOCUMENT_ROOT"] . '/includes/modals/login.php';
   require_once $_SERVER["DOCUMENT_ROOT"] . '/includes/modals/signup.php';
   ?>
-  <div class="container container-md p-5 px-2">
+  <div class="container container-md p-5 px-2 mb-5">
     <?php
       renderAddButton();
       renderProducts();
