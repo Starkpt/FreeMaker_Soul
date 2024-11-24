@@ -36,7 +36,7 @@ function renderProducts($max_items = null)
 function renderAddButton()
 {
   $addBtn = (isset($_SESSION['adm']) && $_SESSION['adm'] === 1)
-    ? 'Novo Produto'
+    ? 'Adicionar Produto'
     : 'Sugerir Produto';
 
   echo '

@@ -10,12 +10,12 @@
 
         <!-- Right -->
         <div>
-            <a href="" class="me-4 text-reset">
+            <a href="https://www.facebook.com/FreemakerSoul" class="me-4 text-reset">
                 <img
                     src="/assets/imgs/icons/facebook.svg"
                     alt="Facebook" />
             </a>
-            <a href="" class="me-4 text-reset">
+            <a href="https://www.instagram.com/freemaker_soul/" class="me-4 text-reset">
                 <img
                     src="/assets/imgs/icons/instagram.svg"
                     alt="Instagram" />

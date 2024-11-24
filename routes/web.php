@@ -29,7 +29,7 @@ if ($requestUri === '/product_details') {
   exit;
 }
 
-// Add product
+// Add product page
 if ($requestUri === '/add_product') {
   if (isAuthenticated()) {
     include $_SERVER["DOCUMENT_ROOT"] . '/public/products/add_product.php';
@@ -39,6 +39,18 @@ if ($requestUri === '/add_product') {
     header('Location: /');
     exit;
   }
+}
+
+// User profile page
+if ($requestUri === '/user-profile') {
+  include $_SERVER["DOCUMENT_ROOT"] . '/public/users/user.php';
+  exit;
+}
+
+// User settings page
+if ($requestUri === '/user-settings') {
+  include $_SERVER["DOCUMENT_ROOT"] . '/public/users/settings.php';
+  exit;
 }
 
 // Optional: Add a default case if no match is found

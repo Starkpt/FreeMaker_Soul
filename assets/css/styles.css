@@ -51,7 +51,7 @@ a {
 /*                                                               COVER                                                                      */
 /********************************************************************************************************************************************/
 
-.video-conainer a {
+.video-container a {
   text-decoration: none;
   color: lightgrey;
 }
@@ -421,18 +421,6 @@ a {
   width: 100%;
 }
 
-.profile_container .user_pic {
-  width: 35px;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-.profile_container .avatar {
-  width: 22px;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
 .profile-options {
   text-align: left;
   padding-left: 0;
@@ -642,9 +630,6 @@ a {
   position: absolute;
 }
 
-.product_detail_container .profile_container .slideshow_container .img:first-child {
-  display: block;
-}
 .product_container .prev_icon,
 .product_container .next_icon {
   height: 25px;

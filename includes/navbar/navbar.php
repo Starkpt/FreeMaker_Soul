@@ -68,7 +68,7 @@
                             $user = $stmt->get_result()->fetch_assoc();
                             $user_img = ($user && $user['foto']) ? "/assets/imgs/profile_pics/{$user['foto']}" : '/assets/imgs/icons/person.svg';
                             ?>
-                            <img class="user_pic" src="<?= htmlspecialchars($user_img, ENT_QUOTES, 'UTF-8') ?>" alt="User Icon">
+                            <img src="<?= htmlspecialchars($user_img, ENT_QUOTES, 'UTF-8') ?>" alt="User Icon">
                             <span><?= htmlspecialchars($_SESSION['nome'] ?? "", ENT_QUOTES, 'UTF-8') ?></span>
                         <?php endif; ?>
                     </a>
@@ -77,8 +77,10 @@
                         <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
                             <li><a class="dropdown-item" href="/config/admin-config.php">Admin Configurações</a></li>
                         <?php else: ?>
-                            <li><a class="dropdown-item" href="/profile.php">Ver Perfil</a></li>
+                            <li><a class="dropdown-item" href="/user-profile">Perfil</a></li>
                         <?php endif; ?>
+
+                        <li><a class="dropdown-item" href="/user-settings">Configurações</a></li>
 
                         <li><a class="dropdown-item" href="/actions/actions.php?act=logout">Logout</a></li>
                     </ul>
@@ -87,7 +89,7 @@
                     <!-- No User Logged In -->
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
                         Login
-                        <img class="user_pic" src="/assets/imgs/icons/person.svg" alt="User Icon">
+                        <img src="/assets/imgs/icons/person.svg" alt="User Icon">
                     </button>
                 <?php endif; ?>
 
