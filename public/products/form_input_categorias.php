@@ -1,5 +1,5 @@
 <!-- CATEGORIAS INPUT -->
-<div class="input-box" id="input-box">
+<div >
   <select name="categoria">
     <option value="">Escolha uma categoria</option>
     <?php

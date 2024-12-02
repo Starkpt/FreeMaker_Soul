@@ -10,13 +10,13 @@ switch ($act) {
 
     case 'register':
 
-        $nickname = htmlentities($_POST['nickname']);
+        $username = htmlentities($_POST['username']);
         $email = htmlentities($_POST['email']);
         $password = hash('sha256', SALT . $_POST['password'] . SALT);
 
-        // Verificar se já existe alguma conta com este email ou nickname de utilizador 
-        $stmt = $conn->prepare('SELECT COUNT(*) AS total FROM utilizadores WHERE (email = ? or nickname = ?)');
-        $stmt->bind_param('ss', $email, $nickname);
+        // Verificar se já existe alguma conta com este email ou username de utilizador 
+        $stmt = $conn->prepare('SELECT COUNT(*) AS total FROM utilizadores WHERE (email = ? or username = ?)');
+        $stmt->bind_param('ss', $email, $username);
         $stmt->execute();
         $results = $stmt->get_result();
         $row = $results->fetch_assoc();
@@ -27,8 +27,8 @@ switch ($act) {
         }
 
         // Registar utilizador
-        $stmt = $conn->prepare('INSERT INTO utilizadores (nickname, email, pw) VALUES (?, ?, ?)');
-        $stmt->bind_param('sss', $nickname, $email, $password);
+        $stmt = $conn->prepare('INSERT INTO utilizadores (username, email, pw) VALUES (?, ?, ?)');
+        $stmt->bind_param('sss', $username, $email, $password);
         $stmt->execute();
 
         if ($stmt->affected_rows === 0) {
@@ -47,10 +47,10 @@ switch ($act) {
 
     case 'login':
 
-        $email = htmlentities(strtolower($_POST['nickname']));
+        $email = htmlentities(strtolower($_POST['username']));
         $password = hash('sha256', SALT . $_POST['password'] . SALT);
 
-        $stmt = $conn->prepare('SELECT ID, nickname, email, adm, pw FROM utilizadores WHERE (nickname = ? OR email = ?)');
+        $stmt = $conn->prepare('SELECT ID, username, email, adm, pw FROM utilizadores WHERE (username = ? OR email = ?)');
         $stmt->bind_param('ss', $email, $email);
         $stmt->execute();
         $results = $stmt->get_result();
@@ -70,12 +70,12 @@ switch ($act) {
 
 
         $row['email'] = strtolower($row['email']);
-        $row['nickname'] = strtolower($row['nickname']);
+        $row['username'] = strtolower($row['username']);
 
 
-        if (($row['nickname'] == $email || $row['email'] == $email) && $row['pw'] == $password) {
+        if (($row['username'] == $email || $row['email'] == $email) && $row['pw'] == $password) {
             $_SESSION['ID'] = $row['ID'];
-            $_SESSION['nickname'] = $row['nickname'];
+            $_SESSION['username'] = $row['username'];
             $_SESSION['email'] = $row['email'];
             $_SESSION['adm'] = $row['adm'];
 
@@ -368,7 +368,7 @@ switch ($act) {
         $cod_postal = htmlentities($_POST['cod_postal']);
         $telefone = htmlentities($_POST['telefone']);
         $nif = htmlentities($_POST['nif']);
-        $nickname = htmlentities($_POST['nickname']);
+        $username = htmlentities($_POST['username']);
         $email = htmlentities($_POST['email']);
 
 
@@ -417,8 +417,8 @@ switch ($act) {
             move_uploaded_file($_FILES['foto']['tmp_name'], $folder . $file);
 
             $stmt = $conn->prepare('UPDATE utilizadores SET nome = ?, morada = ?, cod_postal = ?, telefone = ?,
-                                           nif = ?, nickname = ?, email = ?, foto = ? WHERE ID = ?');
-            $stmt->bind_param('ssssisssi', $nome, $morada, $cod_postal, $telefone, $nif, $nickname, $email, $file, $ID);
+                                           nif = ?, username = ?, email = ?, foto = ? WHERE ID = ?');
+            $stmt->bind_param('ssssisssi', $nome, $morada, $cod_postal, $telefone, $nif, $username, $email, $file, $ID);
             $stmt->execute();
 
 
@@ -433,8 +433,8 @@ switch ($act) {
         } else {
             // Editar sem foto
             $stmt = $conn->prepare('UPDATE utilizadores SET nome = ?, morada = ?, cod_postal = ?, telefone = ?,
-                                           nif = ?, nickname = ?, email = ? WHERE ID = ?');
-            $stmt->bind_param('ssssissi', $nome, $morada, $cod_postal, $telefone, $nif, $nickname, $email, $ID);
+                                           nif = ?, username = ?, email = ? WHERE ID = ?');
+            $stmt->bind_param('ssssissi', $nome, $morada, $cod_postal, $telefone, $nif, $username, $email, $ID);
             $stmt->execute();
 
             if ($stmt->affected_rows === 0) {

@@ -111,14 +111,14 @@ function buildSelect($name, $defaultOption, $sql, $conn)
     </div>
 
     <!-- Product Details -->
-    <div class="product_description">
+    <div class="product-description">
         <div class="container_description">
             <h2 class="nome"><?= htmlspecialchars($productDetails['nome']) ?></h2>
-            <div class="descricao"><strong>Descrição:</strong> <?= htmlspecialchars($productDetails['descricao']) ?></div><br>
+            <div class="description"><strong>Descrição:</strong> <?= htmlspecialchars($productDetails['descricao']) ?></div><br>
             <div class="categoria"><strong>Categoria:</strong> <?= htmlspecialchars($productDetails['c_descricao']) ?></div><br>
             <div class="filamento"><strong>Feito em:</strong> <?= htmlspecialchars(implode(', ', $filamentos)) ?><br><br></div>
             <div class="cor"><strong>Cor(es):</strong> <?= htmlspecialchars(implode(', ', $cores)) ?><br><br></div>
-            <div class="preco"><strong>Preço:</strong> <u><?= htmlspecialchars($productDetails['preco']) ?>€</u></div><br><br>
+            <div class="price"><strong>Preço:</strong> <u><?= htmlspecialchars($productDetails['preco']) ?>€</u></div><br><br>
 
             <!-- Selectors -->
             <div class="seletores">

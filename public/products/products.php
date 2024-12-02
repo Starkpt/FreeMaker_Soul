@@ -19,11 +19,14 @@ $categoria = $_GET['categoria'] ?? null;
   require_once $_SERVER["DOCUMENT_ROOT"] . '/includes/navbar/navbar.php';
   require_once $_SERVER["DOCUMENT_ROOT"] . '/includes/modals/login.php';
   require_once $_SERVER["DOCUMENT_ROOT"] . '/includes/modals/signup.php';
+  require_once $_SERVER["DOCUMENT_ROOT"] . '/public/products/add_product.php';
+
   ?>
   <div class="container container-md p-5 px-2 mb-5">
+
     <?php
-      renderAddButton();
-      renderProducts();
+    renderAddButton();
+    renderProducts();
     ?>
   </div>
 

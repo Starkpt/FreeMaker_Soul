@@ -12,7 +12,7 @@
     ?>
   </select>
 </div>
-<div class="add_btn_container" id="add_fil" style="display: none;">
+<div id="add_fil" style="display: none;">
   <div class="add_btn">
     <img src="assets/imgs/icons/add.png" alt="Botão de adicionar mais filamentos" title="Adicionar mais filamentos">
   </div>

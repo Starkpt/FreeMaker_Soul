@@ -18,7 +18,7 @@ include $_SERVER["DOCUMENT_ROOT"] . '/includes/navbar/navbar.php';
                 <th>Codigo Postal</th>
                 <th>Telefone</th>
                 <th>Nif</th>
-                <th>Nickname</th>
+                <th>Username</th>
                 <th>Email</th>
                 <th>Foto</th>
                 <th>Opções</th>
@@ -46,7 +46,7 @@ include $_SERVER["DOCUMENT_ROOT"] . '/includes/navbar/navbar.php';
                         <?= $row['nif'] ?>
                     </td>
                     <td>
-                        <?= $row['nickname'] ?>
+                        <?= $row['username'] ?>
                     </td>
                     <td>
                         <?= $row['email'] ?>
@@ -115,7 +115,7 @@ include $_SERVER["DOCUMENT_ROOT"] . '/includes/navbar/navbar.php';
                 </tr>
                 <tr>
                     <th>Nif</th>
-                    <th>Nickname</th>
+                    <th>Username</th>
                     <th>Email</th>
                     <th>Foto</th>
                 </tr>
@@ -124,7 +124,7 @@ include $_SERVER["DOCUMENT_ROOT"] . '/includes/navbar/navbar.php';
                         <input type="text" name="nif" maxlength="10" id="input_nif" pattern="^\d{9}$">
                     </td>
                     <td>
-                        <input type="text" name="nickname" maxlength="30" id="input_nickname" required>
+                        <input type="text" name="username" maxlength="30" id="input_username" required>
                     </td>
                     <td>
                         <input type="text" name="email" maxlength="30" id="input_email" required>
@@ -251,7 +251,7 @@ include $_SERVER["DOCUMENT_ROOT"] . '/includes/navbar/navbar.php';
                         <input type="text" name="nome" placeholder="Nome do produto">
                     </td>
                     <td>
-                        <textarea class="descricao" name="descricao" rows="4" placeholder="Descrição do produto"></textarea>
+                        <textarea class="description" name="description" rows="4" placeholder="Descrição do produto"></textarea>
                     </td>
                     <td>
                         <select name="categoria">
@@ -293,7 +293,7 @@ include $_SERVER["DOCUMENT_ROOT"] . '/includes/navbar/navbar.php';
                             ?>
                         </select>
                     </td>
-                    <div class="add_btn_container" id="add_fil" style="display: none;">
+                    <div id="add_fil" style="display: none;">
                         <div class="add_btn">
                             <img src="assets/imgs/icons/add.png" alt="Botão de adicionar mais filamentos" title="Adicionar mais filamentos">
                         </div>
@@ -311,13 +311,13 @@ include $_SERVER["DOCUMENT_ROOT"] . '/includes/navbar/navbar.php';
                             ?>
                         </select>
                     </td>
-                    <div class="add_btn_container" id="add_cor" style="display: none;">
+                    <div id="add_cor" style="display: none;">
                         <div class="add_btn">
                             <img src="assets/imgs/icons/add.png" alt="Botão de adicionar mais cores" title="Adicionar mais cores">
                         </div>
                     </div>
                     <td>
-                        <input type="number" name="preco" step="0.1" min="0">
+                        <input type="number" name="price" step="0.1" min="0">
                     </td>
                 </tr>
                 <tr>
@@ -364,7 +364,7 @@ include $_SERVER["DOCUMENT_ROOT"] . '/includes/navbar/navbar.php';
                             $('input[name="cod_postal"]').val(data.cod_postal);
                             $('input[name="telefone"]').val(data.telefone);
                             $('input[name="nif"]').val(data.nif);
-                            $('input[name="nickname"]').val(data.nickname);
+                            $('input[name="username"]').val(data.username);
                             $('input[name="email"]').val(data.email);
 
                             // Atualizar a imagem do perfil, se existir
@@ -433,12 +433,12 @@ include $_SERVER["DOCUMENT_ROOT"] . '/includes/navbar/navbar.php';
                             // Preencher os campos do formulário com os dados recebidos
                             $('input[name="ID"]').val(data.ID);
                             $('input[name="nome"]').val(data.nome);
-                            $('textarea[name="descricao"]').val(data.descricao);
+                            $('textarea[name="description"]').val(data.descricao);
                             $('select[name="categoria"]').val(data.categoria);
                             $('input[name="foto"]').val(data.foto);
                             $('select[name="filamento"]').val(data.tipo);
                             $('select[name="cor"]').val(data.cor);
-                            $('input[name="preco"]').val(data.preco);
+                            $('input[name="price"]').val(data.preco);
                             // Handle image display if photo exists
                             if (data.foto) {
                                 $('img[src*="profile_pics"]').attr('src', 'imgs/users/profile_pics/' + data.foto);

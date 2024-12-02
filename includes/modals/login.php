@@ -1,15 +1,15 @@
 <!-- Bootstrap Login Modal -->
 <div
-  id="loginModal"
+  id="login-modal"
   class="modal fade"
   tabindex="-1"
-  aria-labelledby="loginModalLabel"
+  aria-labelledby="login-modal-label"
   aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <!-- Modal Header -->
       <div class="modal-header">
-        <h5 class="modal-title" id="loginModalLabel">Login</h5>
+        <h5 class="modal-title" id="login-modal-label">Login</h5>
         <button
           type="button"
           class="btn-close"
@@ -18,18 +18,18 @@
       </div>
       <!-- Modal Body -->
       <div class="modal-body">
-        <form id="form_login" action="/actions/actions.php?act=login" method="POST">
+        <form id="login-form" action="/actions/actions.php?act=login" method="POST">
           <!-- Email/Username Input -->
           <div class="mb-3">
-            <label for="name_login" class="form-label">Email ou Nome de Utilizador</label>
+            <label for="name-login-form" class="form-label">Email ou Nome de Utilizador</label>
             <div class="input-group">
               <span class="input-group-text">
                 <i class="bi bi-person"></i>
               </span>
               <input
                 type="text"
-                id="name_login"
-                name="nickname"
+                id="name-login-form"
+                name="username"
                 class="form-control"
                 placeholder="Email ou nome de utilizador"
                 required />

@@ -11,7 +11,7 @@
       const fileCountMsg = $('<p class="file-count"></p>').text(`${fileCount} ficheiros adicionados`);
 
       // Adiciona a mensagem de contagem ao contêiner
-      $('#stl_files').append(fileCountMsg);
+      $('#stl-files').append(fileCountMsg);
     });
 
 
@@ -48,7 +48,7 @@
       $('.insert_product').on('submit', function(e) {
         let nome = $('input[name="nome_prod"]');
         let foto = $('#foto');
-        let preco = $('input[name="preco"]');
+        let preco = $('input[name="price"]');
         let categoria = $('select[name="categoria"]');
 
         if ($.trim(nome.val()) == "") {

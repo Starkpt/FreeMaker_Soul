@@ -1,5 +1,5 @@
 <!-- COR INPUT -->
-<div class="input-box cor" id="input-box">
+<div class="input-box cor" >
   <select class="cor" id="cor" name="cor[]">
     <option value="">Escolha uma cor</option>
     <?php
@@ -12,7 +12,7 @@
     ?>
   </select>
 </div>
-<div class="add_btn_container" id="add_cor" style="display: none;">
+<div id="add_cor" style="display: none;">
   <div class="add_btn">
     <img src="assets/imgs/icons/add.png" alt="Botão de adicionar mais cores" title="Adicionar mais cores">
   </div>

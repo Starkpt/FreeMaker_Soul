@@ -53,7 +53,7 @@
 
                     <!-- User is Logged In -->
                     <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <?php echo $_SESSION["nickname"] ?>
+                        <?php echo $_SESSION["username"] ?>
 
                         <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
                             <!-- Admin View -->
@@ -87,7 +87,7 @@
 
                 <?php else: ?>
                     <!-- No User Logged In -->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#login-modal">
                         Login
                         <img src="/assets/imgs/icons/person.svg" alt="User Icon">
                     </button>

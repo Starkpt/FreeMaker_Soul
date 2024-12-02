@@ -89,8 +89,8 @@ $(document).ready(function () {
   }
 
   // Setup Validation for Login & Signup
-  setupFormValidation("#form_login", [
-    { selector: "#name_login", errorIndex: 0 },
+  setupFormValidation("#login-form", [
+    { selector: "#name-login-form", errorIndex: 0 },
     { selector: "#pwd_login", errorIndex: 1 },
   ]);
   setupFormValidation("#form_signup", [

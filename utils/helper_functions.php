@@ -36,18 +36,19 @@ function renderProducts($max_items = null)
 function renderAddButton()
 {
   $addBtn = (isset($_SESSION['adm']) && $_SESSION['adm'] === 1)
-    ? 'Adicionar Produto'
-    : 'Sugerir Produto';
+    ? 'Adicionar produto'
+    : 'Sugerir produto';
 
   echo '
         <div class="py-3 pb-4">
-          <a href="#" title="' . htmlspecialchars($addBtn) . '">
-            <!-- <button class="mais">' . htmlspecialchars($addBtn) . '</button> -->
-            <button class="btn btn-primary">
-              <img src="./assets/imgs/icons/plus-24x24.svg" alt="" title="Adicionar producto">
-              ' . htmlspecialchars($addBtn) . '
-            </button>
-          </a>
+          <button 
+            type="button"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#add-product-modal" >
+            <img src="./assets/imgs/icons/plus-24x24.svg" alt="" title="Adicionar producto">
+            ' . htmlspecialchars($addBtn) . '
+          </button>
         </div>
   ';
 }
