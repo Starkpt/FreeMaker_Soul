@@ -32,141 +32,151 @@ $title = "Adicionar produto";
                         aria-label="Close"></button>
                 </div>
 
+
                 <!-- Modal Body -->
-                <div class="modal-body">
-                    <!-- Product Name Input -->
-                    <div class="mb-3">
-                        <label
-                            for="product-name-login-form"
-                            class="form-label">
-                            Nome do producto
-                        </label>
-                        <input
-                            type="text"
-                            id="product-name-login-form"
-                            name="product-name"
-                            class="form-control"
-                            placeholder="Nome do producto"
-                            required />
-                    </div>
+                <div class="modal-body d-flex column">
 
-                    <div class="mb-3">
-                        <label for="description" class="form-label">Descrição do Produto</label>
-                        <textarea
-                            name="description"
-                            id="description"
-                            class="form-control"
-                            rows="4"
-                            placeholder="Descrição do produto"></textarea>
-                    </div>
+                    <div class="product-identity">
 
-                    <div class="mb-3">
-                        <label for="price" class="form-label">Preço (€):</label>
-                        <input
-                            type="text"
-                            name="price"
-                            id="price"
-                            class="form-control"
-                            placeholder="Insira o preço do produto" />
-                    </div>
+                        <!-- Images Upload Section -->
+                        <div class="mb-3">
+                            <label for='photos' class="form-label">Fotos</label>
+                            <div id="product-images-list"></div>
+                            <input
+                                class="form-control"
+                                type="file"
+                                id="photos"
+                                name="photos[]"
+                                accept="image/*"
+                                hidden
+                                multiple />
 
-                    <!-- Category Upload Section -->
-                    <div class="mb-3">
-                        <label for="category" class="form-label">Categoria</label>
-                        <select name='category' class="form-control">
-                            <option value=''>Escolha uma categoria</option>
-                            <?php
-                            $result = $conn->query('SELECT ID, c_descricao FROM categorias');
-                            while ($row = $result->fetch_assoc()) { ?>
-                                <option value="<?= $row['ID'] ?>">
-                                    <?= $row['c_descricao'] ?>
-                                </option>
-                            <?php } ?>
-                        </select>
-                    </div>
-
-                    <!-- File Upload Section -->
-                    <div class="mb-3">
-                        <label for='files' class="form-label">Ficheiro STL:</label>
-                        <div id='stl-files'></div>
-                        <input class='form-control' type='file' id='files' name='files[]' accept='.stl' style='display:none' multiple>
-
-
-                        <button
-                            type="button"
-                            class="btn btn-outline-secondary w-100">
-                            Escolher Ficheiros
-                            <img
-                                src='assets/imgs/icons/plus-24x24.svg'
-                                alt='Adicionar ficheiros'
-                                title='Adicionar ficheiros'>
-                        </button>
-                    </div>
-
-                    <!-- Images Upload Section -->
-                    <div class="mb-3">
-                        <label for='photos' class="form-label">Fotos</label>
-                        <div id="product-images-list"></div>
-                        <input
-                            class="form-control"
-                            style="display:none"
-                            type="file"
-                            id="photos"
-                            name="photos[]"
-                            accept="image/*"
-                            multiple>
-
-                        <button
-                            type="button"
-                            class="btn btn-outline-secondary w-100">
-                            Inserir fotos
-                            <img
-                                src='assets/imgs/icons/plus-24x24.svg'
-                                alt='Adicionar fotos'
-                                title='Adicionar fotos'>
-                        </button>
-                    </div>
-
-                    <!-- Filament Upload Section -->
-                    <div class="mb-3">
-                        <label for="filament" class="form-label">Filamento</label>
-                        <select name='filament' class="form-control">
-                            <option value=''>Escolha um filamento</option>
-                            <?php
-                            $result = $conn->query('SELECT ID, tipo FROM filamentos');
-                            while ($row = $result->fetch_assoc()) { ?>
-                                <option value="<?= $row['ID'] ?>">
-                                    <?= $row['tipo'] ?>
-                                </option>
-                            <?php } ?>
-                        </select>
-                    </div>
-
-                    <!-- Filament Upload Section -->
-                    <div class="mb-3">
-                        <label for="color" class="form-label">Filamento</label>
-                        <select name="color" class="form-control">
-                            <option value=''>Escolha um filamento</option>
-                            <?php
-                            $result = $conn->query('SELECT ID, cor FROM cores');
-                            while ($row = $result->fetch_assoc()) { ?>
-                                <option value="<?= $row['ID'] ?>">
-                                    <?= $row['cor'] ?>
-                                </option>
-                            <?php } ?>
-                        </select>
-                    </div>
-
-                    <div id="add_cor" style="display: none;">
-                        <div class="add_btn">
-                            <img src="assets/imgs/icons/add.png" alt="Botão de adicionar mais cores" title="Adicionar mais cores">
+                            <button
+                                id="btn-upload-photos"
+                                type="button"
+                                class="btn btn-outline-secondary w-100">
+                                Inserir fotos
+                                <img
+                                    src='assets/imgs/icons/plus-24x24.svg'
+                                    alt='Adicionar fotos'
+                                    title='Adicionar fotos' />
+                            </button>
                         </div>
+
+                        <!-- Product Name Input -->
+                        <div class="mb-3">
+                            <label
+                                for="product-name-login-form"
+                                class="form-label">
+                                Nome do producto
+                            </label>
+                            <input
+                                type="text"
+                                id="product-name-login-form"
+                                name="product-name"
+                                class="form-control"
+                                placeholder="Nome do producto"
+                                required />
+                        </div>
+
+                        <!-- Product Description Input -->
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Descrição do Produto</label>
+                            <textarea
+                                name="description"
+                                id="description"
+                                class="form-control"
+                                rows="4"
+                                placeholder="Descrição do produto"></textarea>
+                        </div>
+
+                        <!-- Product Price Input -->
+                        <div class="mb-3">
+                            <label for="price" class="form-label">Preço (€):</label>
+                            <input
+                                type="text"
+                                name="price"
+                                id="price"
+                                class="form-control"
+                                placeholder="Insira o preço do produto" />
+                        </div>
+
+
                     </div>
 
-                    <div id="add_fil" style="display: none;">
-                        <div class="add_btn">
-                            <img src="assets/imgs/icons/add.png" alt="Botão de adicionar mais filamentos" title="Adicionar mais filamentos">
+                    <div class="product-characteristics">
+
+                        <!-- File Upload Section -->
+                        <div class="mb-3">
+                            <label for='files' class="form-label">Ficheiro STL:</label>
+                            <div id='stl-files'></div>
+                            <input
+                                class='form-control'
+                                type='file'
+                                id='files'
+                                name='files[]'
+                                accept='.stl'
+                                hidden
+                                multiple />
+
+
+                            <button
+                                id="btn-upload-files"
+                                type="button"
+                                class="btn btn-outline-secondary w-100">
+                                Escolher Ficheiros
+                                <img
+                                    src='assets/imgs/icons/plus-24x24.svg'
+                                    alt='Adicionar ficheiros'
+                                    title='Adicionar ficheiros'>
+                            </button>
                         </div>
+
+                        <!-- Category Select Section -->
+                        <div class="mb-3">
+                            <label for="category" class="form-label">Categoria</label>
+                            <select name='category' class="form-control">
+                                <option value=''>Escolha uma categoria</option>
+                                <?php
+                                $result = $conn->query('SELECT ID, c_descricao FROM categorias');
+                                while ($row = $result->fetch_assoc()) { ?>
+                                    <option value="<?= $row['ID'] ?>">
+                                        <?= $row['c_descricao'] ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                        </div>
+
+                        <!-- Filament Select Section -->
+                        <div class="mb-3">
+                            <label for="filament" class="form-label">Filamento</label>
+                            <select name='filament' class="form-control">
+                                <option value=''>Escolha um filamento</option>
+                                <?php
+                                $result = $conn->query('SELECT ID, tipo FROM filamentos');
+                                while ($row = $result->fetch_assoc()) { ?>
+                                    <option value="<?= $row['ID'] ?>">
+                                        <?= $row['tipo'] ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                        </div>
+
+                        <!-- Filament Upload Section -->
+                        <div class="mb-3">
+                            <label for="color" class="form-label">Filamento</label>
+                            <select name="color" class="form-control">
+                                <option value=''>Escolha um filamento</option>
+                                <?php
+                                $result = $conn->query('SELECT ID, cor FROM cores');
+                                while ($row = $result->fetch_assoc()) { ?>
+                                    <option value="<?= $row['ID'] ?>">
+                                        <?= $row['cor'] ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                        </div>
+
                     </div>
 
                 </div>
@@ -177,6 +187,7 @@ $title = "Adicionar produto";
                     <button type="submit" class="btn btn-primary">Confirmar</button>
                     <button type="cancel" class="btn btn-outline-danger">Cancelar</button>
                 </div>
+
             </form>
         </div>
     </div>
@@ -184,6 +195,14 @@ $title = "Adicionar produto";
 
 
 <script>
+    $('#btn-upload-files').click(function() {
+        $('#files').click();
+    });
+
+    $('#btn-upload-photos').click(function() {
+        $('#photos').click();
+    });
+
     $('#photos').on('change', function(e) {
         const foto = e.target.files[0];
 
