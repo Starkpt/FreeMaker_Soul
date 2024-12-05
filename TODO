@@ -1,6 +1,7 @@
 # TODO
 
 - Transform the add_product file/page into a modal [ongoing]
+  - Filament dropdown must allow for multi selection
 - Create user settings page
 - Create user profile page
 - Fix categories page routing

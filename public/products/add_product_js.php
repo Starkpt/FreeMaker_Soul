@@ -1,10 +1,5 @@
 <script>
   $(document).ready(function() {
-    $('.stl_btn').on('click', function(e) {
-      e.preventDefault();
-      $('#ficheiro').click();
-    });
-
 
     $('#ficheiro').on('change', function() {
       const fileCount = this.files.length;

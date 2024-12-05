@@ -19,6 +19,7 @@ $title = "Adicionar produto";
                 action="<?= $_SESSION['adm'] ? '/public/products/add_product' : '/actions/actions.php?act=sugest_product' ?>"
                 method="POST"
                 enctype="multipart/form-data">
+
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <h5 class="modal-title" id="add-product-label">
@@ -30,6 +31,7 @@ $title = "Adicionar produto";
                         data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
+
                 <!-- Modal Body -->
                 <div class="modal-body">
                     <!-- Product Name Input -->
@@ -71,8 +73,7 @@ $title = "Adicionar produto";
                     <!-- Category Upload Section -->
                     <div class="mb-3">
                         <label for="category" class="form-label">Categoria</label>
-                        <select name='category'
-                            class="form-control">
+                        <select name='category' class="form-control">
                             <option value=''>Escolha uma categoria</option>
                             <?php
                             $result = $conn->query('SELECT ID, c_descricao FROM categorias');
@@ -93,7 +94,8 @@ $title = "Adicionar produto";
 
                         <button
                             type="button"
-                            class="btn btn-outline-secondary">Escolher Ficheiros
+                            class="btn btn-outline-secondary w-100">
+                            Escolher Ficheiros
                             <img
                                 src='assets/imgs/icons/plus-24x24.svg'
                                 alt='Adicionar ficheiros'
@@ -116,7 +118,7 @@ $title = "Adicionar produto";
 
                         <button
                             type="button"
-                            class="btn btn-outline-secondary">
+                            class="btn btn-outline-secondary w-100">
                             Inserir fotos
                             <img
                                 src='assets/imgs/icons/plus-24x24.svg'
@@ -125,32 +127,50 @@ $title = "Adicionar produto";
                         </button>
                     </div>
 
+                    <!-- Filament Upload Section -->
                     <div class="mb-3">
-                        <select name="category">
-                            <option value="">Escolha uma categoria</option>
+                        <label for="filament" class="form-label">Filamento</label>
+                        <select name='filament' class="form-control">
+                            <option value=''>Escolha um filamento</option>
                             <?php
-                            $result = $conn->query('SELECT ID, c_descricao FROM categorias');
-                            while ($row = $result->fetch_assoc()) {
-                            ?>
+                            $result = $conn->query('SELECT ID, tipo FROM filamentos');
+                            while ($row = $result->fetch_assoc()) { ?>
                                 <option value="<?= $row['ID'] ?>">
-                                    <?= $row['c_descricao'] ?>
+                                    <?= $row['tipo'] ?>
                                 </option>
-                            <?php
-                            }
-                            ?>
+                            <?php } ?>
                         </select>
                     </div>
 
+                    <!-- Filament Upload Section -->
+                    <div class="mb-3">
+                        <label for="color" class="form-label">Filamento</label>
+                        <select name="color" class="form-control">
+                            <option value=''>Escolha um filamento</option>
+                            <?php
+                            $result = $conn->query('SELECT ID, cor FROM cores');
+                            while ($row = $result->fetch_assoc()) { ?>
+                                <option value="<?= $row['ID'] ?>">
+                                    <?= $row['cor'] ?>
+                                </option>
+                            <?php } ?>
+                        </select>
+                    </div>
 
-                    <?php if ($_SESSION['adm']): ?>
-                        <!-- Admin Inputs -->
-                        <?php include $_SERVER["DOCUMENT_ROOT"] . '/public/products/form_input_filamento.php'; ?>
-                        <?php include $_SERVER["DOCUMENT_ROOT"] . '/public/products/form_input_cor.php'; ?>
+                    <div id="add_cor" style="display: none;">
+                        <div class="add_btn">
+                            <img src="assets/imgs/icons/add.png" alt="Botão de adicionar mais cores" title="Adicionar mais cores">
+                        </div>
+                    </div>
 
-                    <?php endif; ?>
-
+                    <div id="add_fil" style="display: none;">
+                        <div class="add_btn">
+                            <img src="assets/imgs/icons/add.png" alt="Botão de adicionar mais filamentos" title="Adicionar mais filamentos">
+                        </div>
+                    </div>
 
                 </div>
+
                 <!-- Modal Footer -->
                 <div class="modal-footer">
                     <!-- Submit Button -->
@@ -178,6 +198,82 @@ $title = "Adicionar produto";
             $('#product-images-list').append(img_preview);
         }
 
+    });
+</script>
+
+<script>
+    function verificarSelecaoFilamento() {
+        // Verifica se qualquer <select> de filamento possui uma seleção válida
+        const algumFilamentoSelecionado = $('.filamento').filter(function() {
+            return $(this).val();
+        }).length > 0;
+
+        // Exibe o botão se algum filamento estiver selecionado; caso contrário, oculta
+        document.getElementById('add_fil').style.display = algumFilamentoSelecionado ? 'block' : 'none';
+    }
+
+    // Aplica o evento de mudança a todos os selects de filamento atuais e futuros
+    $(document).on('change', '.filamento', verificarSelecaoFilamento);
+
+    $('#add_fil').on('click', function(e) {
+        e.preventDefault();
+        verificarSelecaoFilamento();
+
+        // Cria um novo select de filamento
+        const newSelectContainer = $('<div class="input-box fil"></div>');
+        const newSelect = $('<select class="filamento"></select>');
+
+        // Copia as opções do primeiro select 
+        $('#filamento option').each(function() {
+            newSelect.append($(this).clone());
+        });
+
+        // Adiciona o novo select ao DOM
+        newSelectContainer.append(newSelect);
+        $('.input-box.fil').last().after(newSelectContainer);
+
+        verificarSelecaoFilamento();
+
+        // Oculta o botão "Adicionar Filamento" logo após criar um novo select
+        document.getElementById('add_fil').style.display = 'none';
+    });
+</script>
+
+<script>
+    function verificarSelecaoCor() {
+        // Verifica se qualquer <select> de cor possui uma seleção válida
+        const algumaCor = $('.cor').filter(function() {
+            return $(this).val();
+        }).length > 0;
+
+        // Exibe o botão se alguma cor estiver selecionada; caso contrário, oculta
+        document.getElementById('add_cor').style.display = algumaCor ? 'block' : 'none';
+    }
+
+    // Aplica o evento de mudança a todos os selects de cor atuais e futuros
+    $(document).on('change', '.cor', verificarSelecaoCor);
+
+    $('#add_cor').on('click', function(e) {
+        e.preventDefault();
+        verificarSelecaoCor();
+
+        // Cria um novo select de cor
+        const newSelectContainer = $('<div class="input-box cor"></div>');
+        const newSelect = $('<select class="cor"></select>');
+
+        // Copia as opções do primeiro select 
+        $('#cor option').each(function() {
+            newSelect.append($(this).clone());
+        });
+
+        // Adiciona o novo select ao DOM
+        newSelectContainer.append(newSelect);
+        $('.input-box.cor').last().after(newSelectContainer);
+
+        verificarSelecaoCor();
+
+        // Oculta o botão "Adicionar cor" logo após criar um novo select
+        document.getElementById('add_cor').style.display = 'none';
     });
 </script>
 
