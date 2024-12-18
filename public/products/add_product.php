@@ -32,152 +32,171 @@ $title = "Adicionar produto";
                         aria-label="Close"></button>
                 </div>
 
-
                 <!-- Modal Body -->
-                <div class="modal-body d-flex column">
+                <div class="modal-body">
 
-                    <div class="product-identity">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="product-details-tab" data-bs-toggle="tab" data-bs-target="#product-details" type="button" role="tab" aria-controls="product-details" aria-selected="true">Details</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="product-characteristics-tab" data-bs-toggle="tab" data-bs-target="#product-characteristics" type="button" role="tab" aria-controls="product-characteristics" aria-selected="false">Charateristics</button>
+                        </li>
+                    </ul>
 
-                        <!-- Images Upload Section -->
-                        <div class="mb-3">
-                            <label for='photos' class="form-label">Fotos</label>
-                            <div id="product-images-list"></div>
-                            <input
-                                class="form-control"
-                                type="file"
-                                id="photos"
-                                name="photos[]"
-                                accept="image/*"
-                                hidden
-                                multiple />
+                    <!-- Tab panes -->
+                    <div class="tab-content">
 
-                            <button
-                                id="btn-upload-photos"
-                                type="button"
-                                class="btn btn-outline-secondary w-100">
-                                Inserir fotos
-                                <img
-                                    src='assets/imgs/icons/plus-24x24.svg'
-                                    alt='Adicionar fotos'
-                                    title='Adicionar fotos' />
-                            </button>
+                        <div class="tab-pane p-3 active" id="product-details" role="tabpanel" aria-labelledby="product-details-tab" tabindex="0">
+
+                            <!-- Images Upload Section -->
+                            <!-- <div class="mb-3">
+                                <label for='photos' class="form-label">Fotos</label>
+                                <div id="product-images-list" class="p-2 border border-tertiary rounded-2">
+                                </div>
+                                <input
+                                    class="form-control"
+                                    type="file"
+                                    id="photos"
+                                    name="photos[]"
+                                    accept="image/*"
+                                    hidden
+                                    multiple />
+
+
+                                <button
+                                    id="btn-upload-photos"
+                                    type="button"
+                                    class="btn btn-outline-secondary w-100">
+                                    Inserir fotos
+                                    <img
+                                        src='assets/imgs/icons/plus-24x24.svg'
+                                        alt='Adicionar fotos'
+                                        title='Adicionar fotos' />
+                                </button>
+                            </div> -->
+
+                            <?php require_once $_SERVER["DOCUMENT_ROOT"] . '/public/products/dnd_zone.php'; ?>
+
+                            <!-- Product Name Input -->
+                            <div class="mb-3">
+                                <label
+                                    for="product-name-login-form"
+                                    class="form-label">
+                                    Nome do producto
+                                </label>
+                                <input
+                                    type="text"
+                                    id="product-name-login-form"
+                                    name="product-name"
+                                    class="form-control"
+                                    placeholder="Nome do producto"
+                                    required />
+                            </div>
+
+                            <!-- Product Description Input -->
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Descrição do Produto</label>
+                                <textarea
+                                    name="description"
+                                    id="description"
+                                    class="form-control"
+                                    rows="4"
+                                    placeholder="Descrição do produto"></textarea>
+                            </div>
+
+                            <!-- Product Price Input -->
+                            <div class="mb-3">
+                                <label for="price" class="form-label">Preço (€):</label>
+                                <input
+                                    type="text"
+                                    name="price"
+                                    id="price"
+                                    class="form-control"
+                                    placeholder="Insira o preço do produto" />
+                            </div>
+
                         </div>
 
-                        <!-- Product Name Input -->
-                        <div class="mb-3">
-                            <label
-                                for="product-name-login-form"
-                                class="form-label">
-                                Nome do producto
-                            </label>
-                            <input
-                                type="text"
-                                id="product-name-login-form"
-                                name="product-name"
-                                class="form-control"
-                                placeholder="Nome do producto"
-                                required />
-                        </div>
+                        <div class="tab-pane p-3" id="product-characteristics" role="tabpanel" aria-labelledby="product-characteristics-tab" tabindex="0">
 
-                        <!-- Product Description Input -->
-                        <div class="mb-3">
-                            <label for="description" class="form-label">Descrição do Produto</label>
-                            <textarea
-                                name="description"
-                                id="description"
-                                class="form-control"
-                                rows="4"
-                                placeholder="Descrição do produto"></textarea>
-                        </div>
+                            <!-- File Upload Section -->
+                            <div class="mb-3">
+                                <label for='files' class="form-label">Ficheiro STL:</label>
+                                <div id='stl-files'></div>
+                                <input
+                                    class='form-control'
+                                    type='file'
+                                    id='files'
+                                    name='files[]'
+                                    accept='.stl'
+                                    hidden
+                                    multiple />
 
-                        <!-- Product Price Input -->
-                        <div class="mb-3">
-                            <label for="price" class="form-label">Preço (€):</label>
-                            <input
-                                type="text"
-                                name="price"
-                                id="price"
-                                class="form-control"
-                                placeholder="Insira o preço do produto" />
-                        </div>
 
+                                <button
+                                    id="btn-upload-files"
+                                    type="button"
+                                    class="btn btn-outline-secondary w-100">
+                                    Escolher Ficheiros
+                                    <img
+                                        src='assets/imgs/icons/plus-24x24.svg'
+                                        alt='Adicionar ficheiros'
+                                        title='Adicionar ficheiros'>
+                                </button>
+                            </div>
+
+                            <!-- Category Select Section -->
+                            <div class="mb-3">
+                                <label for="category" class="form-label">Categoria</label>
+                                <select name='category' class="form-control">
+                                    <option value=''>Escolha uma categoria</option>
+                                    <?php
+                                    $result = $conn->query('SELECT ID, c_descricao FROM categorias');
+                                    while ($row = $result->fetch_assoc()) { ?>
+                                        <option value="<?= $row['ID'] ?>">
+                                            <?= $row['c_descricao'] ?>
+                                        </option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+
+                            <!-- Filament Select Section -->
+                            <div class="mb-3">
+                                <label for="filament" class="form-label">Filamento</label>
+                                <select name='filament' class="form-control">
+                                    <option value=''>Escolha um filamento</option>
+                                    <?php
+                                    $result = $conn->query('SELECT ID, tipo FROM filamentos');
+                                    while ($row = $result->fetch_assoc()) { ?>
+                                        <option value="<?= $row['ID'] ?>">
+                                            <?= $row['tipo'] ?>
+                                        </option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+
+                            <!-- Color Upload Section -->
+                            <div class="mb-3">
+                                <label for="color" class="form-label">Cor</label>
+                                <select name="color" class="form-control">
+                                    <option value=''>Escolha uma cor</option>
+                                    <?php
+                                    $result = $conn->query('SELECT ID, cor FROM cores');
+                                    while ($row = $result->fetch_assoc()) { ?>
+                                        <option value="<?= $row['ID'] ?>">
+                                            <?= $row['cor'] ?>
+                                        </option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+
+                        </div>
 
                     </div>
 
-                    <div class="product-characteristics">
 
-                        <!-- File Upload Section -->
-                        <div class="mb-3">
-                            <label for='files' class="form-label">Ficheiro STL:</label>
-                            <div id='stl-files'></div>
-                            <input
-                                class='form-control'
-                                type='file'
-                                id='files'
-                                name='files[]'
-                                accept='.stl'
-                                hidden
-                                multiple />
-
-
-                            <button
-                                id="btn-upload-files"
-                                type="button"
-                                class="btn btn-outline-secondary w-100">
-                                Escolher Ficheiros
-                                <img
-                                    src='assets/imgs/icons/plus-24x24.svg'
-                                    alt='Adicionar ficheiros'
-                                    title='Adicionar ficheiros'>
-                            </button>
-                        </div>
-
-                        <!-- Category Select Section -->
-                        <div class="mb-3">
-                            <label for="category" class="form-label">Categoria</label>
-                            <select name='category' class="form-control">
-                                <option value=''>Escolha uma categoria</option>
-                                <?php
-                                $result = $conn->query('SELECT ID, c_descricao FROM categorias');
-                                while ($row = $result->fetch_assoc()) { ?>
-                                    <option value="<?= $row['ID'] ?>">
-                                        <?= $row['c_descricao'] ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
-                        </div>
-
-                        <!-- Filament Select Section -->
-                        <div class="mb-3">
-                            <label for="filament" class="form-label">Filamento</label>
-                            <select name='filament' class="form-control">
-                                <option value=''>Escolha um filamento</option>
-                                <?php
-                                $result = $conn->query('SELECT ID, tipo FROM filamentos');
-                                while ($row = $result->fetch_assoc()) { ?>
-                                    <option value="<?= $row['ID'] ?>">
-                                        <?= $row['tipo'] ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
-                        </div>
-
-                        <!-- Filament Upload Section -->
-                        <div class="mb-3">
-                            <label for="color" class="form-label">Filamento</label>
-                            <select name="color" class="form-control">
-                                <option value=''>Escolha um filamento</option>
-                                <?php
-                                $result = $conn->query('SELECT ID, cor FROM cores');
-                                while ($row = $result->fetch_assoc()) { ?>
-                                    <option value="<?= $row['ID'] ?>">
-                                        <?= $row['cor'] ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
-                        </div>
-
-                    </div>
 
                 </div>
 
@@ -204,19 +223,67 @@ $title = "Adicionar produto";
     });
 
     $('#photos').on('change', function(e) {
-        const foto = e.target.files[0];
+        const files = e.target.files;
 
-        for (let i = 0; i < this.files.length; i++) {
+        for (let i = 0; i < files.length; i++) {
             let reader = new FileReader();
-            let img_preview = $(`<img class="preview-${i}" />`);
 
-            reader.onload = function(e) {
-                img_preview.attr("src", e.target.result);
-            }
-            reader.readAsDataURL(this.files[i]);
-            $('#product-images-list').append(img_preview);
+            // Create an empty div for the thumbnail
+            const thumbnailPreviewer = $('<div></div>')
+                .css({
+                    width: '100px',
+                    height: '100px',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    margin: '5px',
+                });
+
+
+            // Load the file and set the background image when ready
+            reader.onload = function(event) {
+                thumbnailPreviewer.css('background-image', `url(${event.target.result})`);
+            };
+
+            reader.readAsDataURL(files[i]);
+
+            // Append the thumbnail container to the list
+            $('#product-images-list').append(thumbnailPreviewer);
         }
+    });
 
+
+    // $('#photos').on('change', function(e) {
+    //     const files = e.target.files;
+
+    //     for (let i = 0; i < files.length; i++) {
+    //         let reader = new FileReader();
+    //         let thumbnail = $(`<img class="preview-${i}" width="100px" />`);
+
+    //         reader.onload = (reader) => thumbnail.attr("src", reader.target.result);
+
+    //         reader.readAsDataURL(files[i]);
+
+    //         $('#product-images-list').append(thumbnail);
+    //     }
+
+    // });
+
+
+    // Clear modal data on close
+    $('#add-product-modal').on('hidden.bs.modal', function() {
+        // Clear form inputs
+        $(this).find('form')[0].reset();
+
+        // Clear file preview containers
+        $('#product-images-list').empty();
+        $('#upload_gallery').empty();
+        $('#stl-files').empty();
+
+        // Optional: Clear custom data or elements like previews
+        const previewZone = document.querySelector('#files-gallery');
+        if (previewZone) {
+            previewZone.innerHTML = ''; // Clear any previews
+        }
     });
 </script>
 
@@ -296,4 +363,4 @@ $title = "Adicionar produto";
     });
 </script>
 
-<script src="./add_product_js.php"></script>
+<!-- <script src="./add_product_js.php"></script> -->
