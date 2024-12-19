@@ -7,6 +7,11 @@
   #drop-zone {
     transition: background-color 0.3s, border-color 0.3s;
     cursor: pointer;
+    background-color: #f9f9f9;
+    /* Optional background */
+    /* border: 1px solid #ddd; */
+    /* Optional border */
+    border-radius: 8px;
   }
 
   #drop-zone.bg-light {
@@ -24,16 +29,9 @@
 
   .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(3, minmax(120px, 1fr));
     gap: 16px;
     /* Space between grid items */
-    padding: 16px;
-    /* Optional padding */
-    background-color: #f9f9f9;
-    /* Optional background */
-    border: 1px solid #ddd;
-    /* Optional border */
-    border-radius: 8px;
   }
 
 
@@ -46,19 +44,25 @@
     font-size: 1.2rem;
     font-weight: bold;
   }
+
+  #placeholder-message {
+    margin: 0;
+  }
 </style>
 
 <div class="mb-3">
   <label for='fileInput' class="form-label">Imagens do produto</label>
 
   <div id="drop-zone-wrapper">
-    <div id="drop-zone" class="border border-tertiary rounded-3 p-5 text-center"
+    <div
+      id="drop-zone"
+      class="border border-tertiary rounded-3 p-3 text-center"
       tabindex="0"
       role="region"
       aria-label="Drag and drop files"
       aria-describedby="upload-hint">
-      <p id="upload-hint" class="text-body-tertiary m-0">
-        Drag and drop files here, or browse
+      <p id="placeholder-message" class="text-muted">
+        No files uploaded yet.
       </p>
       <input id="fileInput" type="file" class="d-none" aria-hidden="true" multiple />
       <div id="files-gallery" class="grid-container"></div>
@@ -120,7 +124,17 @@
     }
   });
 
-  // Process and preview files
+  // Toggle the placeholder message based on the number of files
+  function togglePlaceholder() {
+    const placeholder = document.querySelector('#placeholder-message');
+    if (dropZone.children.length > 0) { // More than just the placeholder message
+      placeholder.style.display = 'none';
+    } else {
+      placeholder.style.display = 'block';
+    }
+  }
+
+  // Updated handleFiles function
   function handleFiles(files) {
     files.forEach(file => {
       if (!file.type.startsWith('image/')) {
@@ -130,8 +144,6 @@
 
       const reader = new FileReader();
       reader.onload = e => {
-        const col = document.createElement('div');
-        col.className = 'col-6 col-md-3 grid-item';
 
         const card = document.createElement('div');
         card.className = 'card';
@@ -153,15 +165,14 @@
         removeButton.textContent = 'Remove';
         removeButton.addEventListener('click', () => {
           event.stopPropagation(); // Prevent the event from bubbling up to the parent
-          col.remove()
         });
 
         cardBody.appendChild(fileName);
         cardBody.appendChild(removeButton);
         card.appendChild(img);
         card.appendChild(cardBody);
-        col.appendChild(card);
-        filesGallery.appendChild(col);
+        filesGallery.appendChild(card)
+        togglePlaceholder();
       };
       reader.readAsDataURL(file);
     });
