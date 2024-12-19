@@ -4,50 +4,8 @@ function topFunction() {
   document.documentElement.scrollTop = 0;
 }
 
-// Helper to Toggle Show/Hide Classes
-function toggleVisibility(element, show) {
-  element.removeClass(show ? "hide" : "show").addClass(show ? "show" : "hide");
-}
-
 // Initialize jQuery
 $(document).ready(function () {
-  // Toggle Visibility for Backdrop
-  function setupBackdropToggle(backdropId, containerId) {
-    $(backdropId).on("click", function () {
-      toggleVisibility($(backdropId), false);
-      toggleVisibility($(containerId), true);
-    });
-  }
-
-  // Close Modal on ESC key
-  $(document).on("keydown", function (e) {
-    if (e.key === "Escape") {
-      ["#login_backdrop", "#signup_backdrop"].forEach((backdrop) =>
-        toggleVisibility($(backdrop), false)
-      );
-      toggleVisibility($("#login"), true);
-    }
-  });
-
-  // Backdrop and Close Button Event Setup
-  setupBackdropToggle("#login_backdrop", "#login");
-  setupBackdropToggle("#signup_backdrop", "#login");
-  $("#close_login, #close_signup").on("click", function () {
-    toggleVisibility($("#login_backdrop, #signup_backdrop"), false);
-    toggleVisibility($("#login"), true);
-  });
-
-  // Toggle Login & Signup Views
-  function setupToggleButton(buttonId, showBackdrop, hideContainer) {
-    $(buttonId).on("click", function () {
-      toggleVisibility($(showBackdrop), true);
-      toggleVisibility($(hideContainer), false);
-    });
-  }
-  setupToggleButton("#login, #try_login", "#login_backdrop", "#signup_backdrop, #msg_backdrop");
-  setupToggleButton("#registar, #try_signup", "#signup_backdrop", "#login_backdrop, #msg_backdrop");
-  setupToggleButton("#back", "#login_backdrop", "#signup_backdrop");
-
   // Toggle Password Visibility
   function setupPasswordToggle(buttonClass, inputName) {
     $(buttonClass)
@@ -122,46 +80,6 @@ $(document).ready(function () {
   if (url.searchParams.has("msg")) {
     url.searchParams.delete("msg");
     history.replaceState(null, "", url);
-  }
-
-  if (msg) {
-    toggleVisibility($("#msg_backdrop"), true);
-    $("#msg_backdrop").on("click", function () {
-      toggleVisibility($("#msg_backdrop"), false);
-    });
-
-    $(".msg_container").on("click", function (e) {
-      e.stopPropagation();
-    });
-
-    $("#close_msg").on("click", function () {
-      toggleVisibility($("#msg_backdrop"), false);
-    });
-
-    $(document).on("keydown", function (e) {
-      if (e.key === "Enter" || e.key === "Escape") {
-        e.preventDefault();
-        toggleVisibility($("#msg_backdrop"), false);
-      }
-    });
-
-    // Redirects on Success
-    const redirections = {
-      login_success: "index.php",
-      logout: "index.php",
-      insert_success: "utils/insert_prod.php",
-    };
-    if (redirections[msg]) {
-      setTimeout(() => {
-        window.location.href = redirections[msg];
-      }, 1500);
-    } else if (msg === "registo_success") {
-      toggleVisibility($("#signup_backdrop"), false);
-      setTimeout(() => {
-        toggleVisibility($("#msg_backdrop"), false);
-        toggleVisibility($("#login_backdrop"), true);
-      }, 1500);
-    }
   }
 
   // Redirect to Add Product
