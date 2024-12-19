@@ -50,33 +50,6 @@ $title = "Adicionar produto";
 
                         <div class="tab-pane p-3 active" id="product-details" role="tabpanel" aria-labelledby="product-details-tab" tabindex="0">
 
-                            <!-- Images Upload Section -->
-                            <!-- <div class="mb-3">
-                                <label for='photos' class="form-label">Fotos</label>
-                                <div id="product-images-list" class="p-2 border border-tertiary rounded-2">
-                                </div>
-                                <input
-                                    class="form-control"
-                                    type="file"
-                                    id="photos"
-                                    name="photos[]"
-                                    accept="image/*"
-                                    hidden
-                                    multiple />
-
-
-                                <button
-                                    id="btn-upload-photos"
-                                    type="button"
-                                    class="btn btn-outline-secondary w-100">
-                                    Inserir fotos
-                                    <img
-                                        src='assets/imgs/icons/plus-24x24.svg'
-                                        alt='Adicionar fotos'
-                                        title='Adicionar fotos' />
-                                </button>
-                            </div> -->
-
                             <?php require_once $_SERVER["DOCUMENT_ROOT"] . '/public/products/dnd_zone.php'; ?>
 
                             <!-- Product Name Input -->
@@ -218,56 +191,6 @@ $title = "Adicionar produto";
         $('#files').click();
     });
 
-    $('#btn-upload-photos').click(function() {
-        $('#photos').click();
-    });
-
-    $('#photos').on('change', function(e) {
-        const files = e.target.files;
-
-        for (let i = 0; i < files.length; i++) {
-            let reader = new FileReader();
-
-            // Create an empty div for the thumbnail
-            const thumbnailPreviewer = $('<div></div>')
-                .css({
-                    width: '100px',
-                    height: '100px',
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    margin: '5px',
-                });
-
-
-            // Load the file and set the background image when ready
-            reader.onload = function(event) {
-                thumbnailPreviewer.css('background-image', `url(${event.target.result})`);
-            };
-
-            reader.readAsDataURL(files[i]);
-
-            // Append the thumbnail container to the list
-            $('#product-images-list').append(thumbnailPreviewer);
-        }
-    });
-
-
-    // $('#photos').on('change', function(e) {
-    //     const files = e.target.files;
-
-    //     for (let i = 0; i < files.length; i++) {
-    //         let reader = new FileReader();
-    //         let thumbnail = $(`<img class="preview-${i}" width="100px" />`);
-
-    //         reader.onload = (reader) => thumbnail.attr("src", reader.target.result);
-
-    //         reader.readAsDataURL(files[i]);
-
-    //         $('#product-images-list').append(thumbnail);
-    //     }
-
-    // });
-
 
     // Clear modal data on close
     $('#add-product-modal').on('hidden.bs.modal', function() {
@@ -275,8 +198,6 @@ $title = "Adicionar produto";
         $(this).find('form')[0].reset();
 
         // Clear file preview containers
-        $('#product-images-list').empty();
-        $('#upload_gallery').empty();
         $('#stl-files').empty();
 
         // Optional: Clear custom data or elements like previews

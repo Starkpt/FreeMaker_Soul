@@ -2,179 +2,149 @@
 
 ?>
 
-
 <style>
   #drop-zone {
     transition: background-color 0.3s, border-color 0.3s;
     cursor: pointer;
     background-color: #f9f9f9;
-    /* Optional background */
-    /* border: 1px solid #ddd; */
-    /* Optional border */
+    border: 2px dashed #ddd;
     border-radius: 8px;
+    padding: 16px;
   }
 
   #drop-zone.bg-light {
     background-color: #f8f9fa !important;
-    /* Light gray */
+    border-color: #28a745;
+    /* Success green border */
   }
 
-  #files-gallery .card {
-    transition: transform 0.3s;
-  }
-
-  #files-gallery .card:hover {
-    transform: scale(1.05);
-  }
-
-  .grid-container {
+  #files-gallery {
     display: grid;
-    grid-template-columns: repeat(3, minmax(120px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 16px;
-    /* Space between grid items */
   }
 
-
-  .grid-item {
-    background-color: #ffffff;
-    padding: 16px;
+  .card {
+    transition: transform 0.3s, box-shadow 0.3s;
     border: 1px solid #ddd;
     border-radius: 4px;
     text-align: center;
-    font-size: 1.2rem;
-    font-weight: bold;
+    overflow: hidden;
+  }
+
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .card img {
+    width: 100%;
+    height: auto;
   }
 
   #placeholder-message {
     margin: 0;
+    font-size: 1rem;
+    color: #888;
   }
 </style>
 
 <div class="mb-3">
-  <label for='fileInput' class="form-label">Imagens do produto</label>
+  <label for="fileInput" class="form-label">Imagens do produto</label>
 
   <div id="drop-zone-wrapper">
     <div
       id="drop-zone"
-      class="border border-tertiary rounded-3 p-3 text-center"
       tabindex="0"
       role="region"
-      aria-label="Drag and drop files"
+      aria-label="Drag and drop files or click to upload"
       aria-describedby="upload-hint">
-      <p id="placeholder-message" class="text-muted">
-        No files uploaded yet.
-      </p>
+      <p id="placeholder-message" class="text-center">No files uploaded yet.</p>
       <input id="fileInput" type="file" class="d-none" aria-hidden="true" multiple />
-      <div id="files-gallery" class="grid-container"></div>
+      <div id="files-gallery"></div>
     </div>
   </div>
+  <small class="text-tertiary">The first image will be the default image to be shown</small>
 </div>
 
-
 <script>
-  // References
-  const dropZoneWrapper = document.querySelector("#drop-zone-wrapper")
   const dropZone = document.querySelector('#drop-zone');
   const fileInput = document.querySelector('#fileInput');
   const filesGallery = document.querySelector('#files-gallery');
+  const placeholder = document.querySelector('#placeholder-message');
 
   // Prevent default drag behaviors
-  ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(event => {
+  ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(event =>
     dropZone.addEventListener(event, e => {
       e.preventDefault();
       e.stopPropagation();
-    });
-  });
+    })
+  );
 
   // Highlight drop zone on drag
-  ['dragenter', 'dragover'].forEach(event => {
-    dropZone.addEventListener(event, () => {
-      dropZone.classList.add('bg-light', 'border-success');
-    });
-  });
+  dropZone.addEventListener('dragenter', () => dropZone.classList.add('bg-light'));
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('bg-light'));
+  dropZone.addEventListener('drop', () => dropZone.classList.remove('bg-light'));
 
-  ['dragleave', 'drop'].forEach(event => {
-    dropZone.addEventListener(event, () => {
-      dropZone.classList.remove('bg-light', 'border-success');
-    });
-  });
-
-  // Handle dropped files
-  dropZone.addEventListener('drop', e => {
-    const files = [...e.dataTransfer.files];
-    handleFiles(files);
-  });
-
-  // Trigger file input on zone click
-  dropZoneWrapper.addEventListener("click", (e) => {
-    fileInput.click()
-  });
-
-  // Handle file input change
-  fileInput.addEventListener('change', e => {
-    const files = [...e.target.files];
-    handleFiles(files);
-  });
-
-  // Handle keyboard interactions
-  dropZone.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault()
-      fileInput.click();
-    }
-  });
-
-  // Toggle the placeholder message based on the number of files
-  function togglePlaceholder() {
-    const placeholder = document.querySelector('#placeholder-message');
-    if (dropZone.children.length > 0) { // More than just the placeholder message
-      placeholder.style.display = 'none';
-    } else {
-      placeholder.style.display = 'block';
-    }
-  }
-
-  // Updated handleFiles function
-  function handleFiles(files) {
+  // Handle file input and drop
+  const handleFiles = files => {
     files.forEach(file => {
       if (!file.type.startsWith('image/')) {
-        alert(`${file.name} is not an image file.`);
+        alert(`"${file.name}" is not an image file.`);
         return;
       }
 
       const reader = new FileReader();
-      reader.onload = e => {
-
+      reader.onload = () => {
         const card = document.createElement('div');
         card.className = 'card';
 
         const img = document.createElement('img');
-        img.src = e.target.result;
-        img.className = 'card-img-top';
+        img.src = reader.result;
         img.alt = file.name;
 
         const cardBody = document.createElement('div');
-        cardBody.className = 'card-body text-center p-2';
+        cardBody.className = 'card-body';
 
         const fileName = document.createElement('p');
-        fileName.className = 'card-text text-truncate mb-2';
         fileName.textContent = file.name;
+        fileName.className = 'card-text text-truncate mb-2';
 
         const removeButton = document.createElement('button');
-        removeButton.className = 'btn btn-sm btn-danger';
         removeButton.textContent = 'Remove';
-        removeButton.addEventListener('click', () => {
-          event.stopPropagation(); // Prevent the event from bubbling up to the parent
+        removeButton.className = 'btn btn-sm btn-danger';
+        removeButton.addEventListener('click', e => {
+          e.stopPropagation(); // Prevent the event from bubbling to the drop zone
+          card.remove();
+          togglePlaceholder();
         });
 
         cardBody.appendChild(fileName);
         cardBody.appendChild(removeButton);
         card.appendChild(img);
         card.appendChild(cardBody);
-        filesGallery.appendChild(card)
+        filesGallery.appendChild(card);
+
+        // Stop propagation of any clicks on the card or its elements
+        card.addEventListener('click', e => e.stopPropagation());
         togglePlaceholder();
       };
       reader.readAsDataURL(file);
     });
-  }
+  };
+
+  const togglePlaceholder = () => {
+    placeholder.style.display = filesGallery.childElementCount ? 'none' : 'block';
+  };
+
+  dropZone.addEventListener('click', () => fileInput.click());
+  dropZone.addEventListener('drop', e => handleFiles([...e.dataTransfer.files]));
+  fileInput.addEventListener('change', e => handleFiles([...e.target.files]));
+
+  dropZone.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      fileInput.click();
+    }
+  });
 </script>
