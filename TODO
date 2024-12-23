@@ -7,6 +7,7 @@
     ---- ----
     ---- ----
         -- --
+  - Finish file upload(with drag and drop feature) component
 - Create user settings page
 - Create user profile page
 - Fix categories page routing

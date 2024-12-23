@@ -38,15 +38,37 @@ $title = "Adicionar produto";
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="product-details-tab" data-bs-toggle="tab" data-bs-target="#product-details" type="button" role="tab" aria-controls="product-details" aria-selected="true">Details</button>
+                            <button
+                                class="nav-link active"
+                                id="product-details-tab"
+                                data-bs-toggle="tab"
+                                data-bs-target="#product-details"
+                                type="button"
+                                role="tab"
+                                aria-controls="product-details"
+                                aria-selected="true">
+                                
+                                Details
+                            </button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="product-characteristics-tab" data-bs-toggle="tab" data-bs-target="#product-characteristics" type="button" role="tab" aria-controls="product-characteristics" aria-selected="false">Charateristics</button>
+                            <button
+                                class="nav-link"
+                                id="product-characteristics-tab"
+                                data-bs-toggle="tab"
+                                data-bs-target="#product-characteristics"
+                                type="button"
+                                role="tab"
+                                aria-controls="product-characteristics"
+                                aria-selected="false">
+                                
+                                Charateristics
+                            </button>
                         </li>
                     </ul>
 
                     <!-- Tab panes -->
-                    <div class="tab-content">
+                    <div class="tab-content border border-top-0">
 
                         <div class="tab-pane p-3 active" id="product-details" role="tabpanel" aria-labelledby="product-details-tab" tabindex="0">
 
