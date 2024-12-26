@@ -74,6 +74,27 @@
     color: #888;
     text-align: center;
   }
+
+
+  /* Normal state: star outline icon */
+  .default-btn {
+    width: 32px;
+    height: 32px;
+    background: url("../../assets/imgs/icons/star-24x24.svg") no-repeat center center;
+    background-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: background-image 0.3s ease;
+  }
+
+  /* Hover state: filled star icon */
+  .default-btn:hover {
+    background-image: url("../../assets/imgs/icons/star-fill-24x24.svg");
+  }
+
+  .default-btn.selected {
+    background-image: url("../../assets/imgs/icons/star-fill-24x24.svg");
+  }
 </style>
 
 <!-- Upload and preview section -->
@@ -104,113 +125,171 @@
   const filesGallery = document.querySelector("#files-gallery");
   const placeholder = document.querySelector("#placeholder-message");
 
+  // Utility function to create DOM elements
+  const createElement = (tag, attributes = {}, innerText = "") => {
+    const element = document.createElement(tag);
+    Object.keys(attributes).forEach((key) => {
+      element[key] = attributes[key];
+    });
+    if (innerText) element.textContent = innerText;
+    return element;
+  };
+
   // Function to handle uploaded files
   const handleFiles = (files) => {
     files.forEach((file) => {
-      // Skip non-image files
       if (!file.type.startsWith("image/")) {
         alert(`"${file.name}" is not an image file.`);
         return;
       }
 
-      // Read the image file
       const reader = new FileReader();
       reader.onload = () => {
-        // Create a card element for each uploaded file
-        const card = document.createElement("div");
-        card.className = "card d-flex flex-row p-2 pe-4 gap-2 rounded-2 align-items-center";
-
-        // Create an image element for the uploaded file preview
-        const img = document.createElement("img");
-        img.src = reader.result;
-        img.alt = file.name;
-
-        // Create a delete button
-        const deleteButton = document.createElement("button");
-        deleteButton.className = "btn btn-outline-danger btn-sm";
-        deleteButton.setAttribute("aria-label", `Delete ${file.name}`);
-
-        // Add a trash icon to the delete button
-        const deleteImg = document.createElement("img");
-        deleteImg.src = "../../assets/imgs/icons/trash-24x24-red.svg";
-        deleteImg.alt = `Delete ${file.name}`;
-        deleteImg.width = 16;
-        deleteImg.height = 16;
-
-        // Change trash icon on hover
-        deleteButton.appendChild(deleteImg);
-        deleteButton.addEventListener("mouseenter", () => {
-          deleteImg.src = "../../assets/imgs/icons/trash-24x24-white.svg";
-        });
-        deleteButton.addEventListener("mouseleave", () => {
-          deleteImg.src = "../../assets/imgs/icons/trash-24x24-red.svg";
-        });
-        deleteButton.addEventListener("click", (e) => {
-          e.stopPropagation(); // Prevent event bubbling
-          card.remove();
-          togglePlaceholder();
-        });
-
-        // File details section
-        const fileDetails = document.createElement("div");
-        fileDetails.className = "file-details gap-1";
-
-        // File name
-        const fileName = document.createElement("p");
-        fileName.className = "fw-bold";
-        fileName.textContent = file.name;
-
-        // File size and type
-        const fileMeta = document.createElement("div");
-        fileMeta.className = "file-meta d-flex gap-1";
-
-        const fileSize = document.createElement("p");
-        fileSize.textContent = file.size;
-
-        const fileType = document.createElement("p");
-        fileType.className = "fst-italic";
-        fileType.textContent = file.type;
-
-        // "Set as default" button
-        const setDefaultButton = document.createElement("button");
-        setDefaultButton.className = "btn btn-sm btn-light";
-
-        // Add a star icon to the button
-        const defaultImg = document.createElement("img");
-        defaultImg.src = "../../assets/imgs/icons/star-24x24.svg";
-        defaultImg.alt = file.name;
-        defaultImg.width = 16;
-        defaultImg.height = 16;
-
-        setDefaultButton.appendChild(defaultImg);
-
-        // Event for setting the default image
-        setDefaultButton.addEventListener("click", (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          alert(`Set "${file.name}" as the default photo.`);
-        });
-
-        // Build the card structure
-        fileMeta.appendChild(fileSize);
-        fileMeta.appendChild(fileType);
-
-        fileDetails.appendChild(fileName);
-        fileDetails.appendChild(fileMeta);
-
-        card.appendChild(img);
-        card.appendChild(fileDetails);
-        card.appendChild(setDefaultButton);
-        card.appendChild(deleteButton);
-
+        // Build the card for each file
+        const card = createCard(file, reader.result);
         filesGallery.appendChild(card);
-
-        // Prevent clicks on the card from propagating
-        card.addEventListener("click", (e) => e.stopPropagation());
         togglePlaceholder();
       };
       reader.readAsDataURL(file);
     });
+  };
+
+  // Function to create a card for a file
+  const createCard = (file, imgSrc) => {
+    const card = createElement("div", {
+      className: "card d-flex flex-row p-2 pe-4 gap-2 rounded-2 align-items-center",
+    });
+
+    // Image preview
+    const img = createElement("img", {
+      src: imgSrc,
+      alt: file.name
+    });
+
+    // File details
+    const fileDetails = createFileDetails(file);
+
+    // "Set as default" button
+    const setDefaultButton = createDefaultButton(file);
+
+    // Delete button
+    const deleteButton = createDeleteButton(file, card);
+
+    // Assemble card
+    card.appendChild(img);
+    card.appendChild(fileDetails);
+    card.appendChild(setDefaultButton);
+    card.appendChild(deleteButton);
+
+    return card;
+  };
+
+  // Function to create file details section
+  const createFileDetails = (file) => {
+    const fileDetails = createElement("div", {
+      className: "file-details gap-1"
+    });
+
+    const fileName = createElement("p", {
+      className: "fw-bold"
+    }, file.name);
+    const fileMeta = createElement("div", {
+      className: "file-meta d-flex gap-1"
+    });
+
+    const fileSize = createElement("p", {}, `${file.size}b`);
+    const fileType = createElement("p", {
+      className: "fst-italic"
+    }, file.type);
+
+    fileMeta.appendChild(fileSize);
+    fileMeta.appendChild(fileType);
+    fileDetails.appendChild(fileName);
+    fileDetails.appendChild(fileMeta);
+
+    return fileDetails;
+  };
+
+  // Function to create the "Set as default" button
+  const createDefaultButton = (file) => {
+    const button = createElement("button", {
+      className: "btn btn-sm btn-light default-btn",
+      title: `Set ${file.name} as default`,
+    });
+
+    const defaultImg = createElement("img", {
+      src: "../../assets/imgs/icons/star-24x24.svg",
+      alt: `Set ${file.name} as default`,
+      width: 16,
+      height: 16,
+    });
+
+    button.appendChild(defaultImg);
+
+    // Change icon on hover
+    button.addEventListener("mouseenter", () => {
+      defaultImg.src = "../../assets/imgs/icons/star-fill-24x24.svg";
+    });
+    button.addEventListener("mouseleave", () => {
+      defaultImg.src = "../../assets/imgs/icons/star-24x24.svg";
+    });
+
+    // Mark file as default
+    button.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const isSelected = button.classList.contains("selected");
+
+      // Remove 'selected' class from all default buttons
+      const allDefaultButtons = document.querySelectorAll(".default-btn");
+      allDefaultButtons.forEach((btn) => btn.classList.remove("selected"));
+
+      // Add 'selected' class to the clicked button
+      if (isSelected) {
+        button.classList.remove("selected")
+      } else {
+        button.classList.add("selected");
+      }
+
+    });
+
+    return button;
+  };
+
+
+  // Function to create the delete button
+  const createDeleteButton = (file, card) => {
+    const button = createElement("button", {
+      className: "btn btn-outline-danger btn-sm",
+      "aria-label": `Delete ${file.name}`,
+    });
+
+    const deleteImg = createElement("img", {
+      src: "../../assets/imgs/icons/trash-24x24-red.svg",
+      alt: `Delete ${file.name}`,
+      width: 16,
+      height: 16,
+    });
+
+    button.appendChild(deleteImg);
+
+    // Change icon on hover
+    button.addEventListener("mouseenter", () => {
+      deleteImg.src = "../../assets/imgs/icons/trash-24x24-white.svg";
+    });
+    button.addEventListener("mouseleave", () => {
+      deleteImg.src = "../../assets/imgs/icons/trash-24x24-red.svg";
+    });
+
+    // Remove card on delete
+    button.addEventListener("click", (e) => {
+      e.stopPropagation();
+      card.remove();
+      togglePlaceholder();
+    });
+
+    return button;
   };
 
   // Toggle placeholder visibility
@@ -218,7 +297,7 @@
     placeholder.style.display = filesGallery.childElementCount ? "none" : "block";
   };
 
-  // Prevent default behaviors for drag-and-drop events
+  // Drag-and-drop events
   ["dragenter", "dragover", "dragleave", "drop"].forEach((event) =>
     dropZone.addEventListener(event, (e) => {
       e.preventDefault();
@@ -226,7 +305,6 @@
     })
   );
 
-  // Highlight drop zone on drag events
   dropZone.addEventListener("dragenter", () => dropZone.classList.add("bg-light"));
   dropZone.addEventListener("dragleave", () => dropZone.classList.remove("bg-light"));
   dropZone.addEventListener("drop", (e) => {
