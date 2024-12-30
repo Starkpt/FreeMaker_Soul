@@ -16,6 +16,7 @@ $title = "Adicionar produto";
     <div class="modal-dialog">
         <div class="modal-content">
             <form
+                id="add-product-form"
                 action="<?= $_SESSION['adm'] ? '/public/products/add_product' : '/actions/actions.php?act=sugest_product' ?>"
                 method="POST"
                 enctype="multipart/form-data">
@@ -36,7 +37,7 @@ $title = "Adicionar produto";
                 <div class="modal-body">
 
                     <!-- Nav tabs -->
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <ul class="nav  nav-pills nav-justified" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button
                                 class="nav-link active"
@@ -47,7 +48,7 @@ $title = "Adicionar produto";
                                 role="tab"
                                 aria-controls="product-details"
                                 aria-selected="true">
-                                
+
                                 Details
                             </button>
                         </li>
@@ -61,14 +62,14 @@ $title = "Adicionar produto";
                                 role="tab"
                                 aria-controls="product-characteristics"
                                 aria-selected="false">
-                                
+
                                 Charateristics
                             </button>
                         </li>
                     </ul>
 
                     <!-- Tab panes -->
-                    <div class="tab-content border border-top-0">
+                    <div class="tab-content">
 
                         <div class="tab-pane p-3 active" id="product-details" role="tabpanel" aria-labelledby="product-details-tab" tabindex="0">
 
@@ -78,7 +79,7 @@ $title = "Adicionar produto";
                             <div class="mb-3">
                                 <label
                                     for="product-name-login-form"
-                                    class="form-label">
+                                    class="form-label fw-semibold">
                                     Nome do producto
                                 </label>
                                 <input
@@ -92,7 +93,11 @@ $title = "Adicionar produto";
 
                             <!-- Product Description Input -->
                             <div class="mb-3">
-                                <label for="description" class="form-label">Descrição do Produto</label>
+                                <label
+                                    for="description"
+                                    class="form-label fw-semibold">
+                                    Descrição do Produto
+                                </label>
                                 <textarea
                                     name="description"
                                     id="description"
@@ -103,7 +108,11 @@ $title = "Adicionar produto";
 
                             <!-- Product Price Input -->
                             <div class="mb-3">
-                                <label for="price" class="form-label">Preço (€):</label>
+                                <label
+                                    for="price"
+                                    class="form-label fw-semibold">
+                                    Preço (€):
+                                </label>
                                 <input
                                     type="text"
                                     name="price"
@@ -118,7 +127,11 @@ $title = "Adicionar produto";
 
                             <!-- File Upload Section -->
                             <div class="mb-3">
-                                <label for='files' class="form-label">Ficheiro STL:</label>
+                                <label
+                                    for='files'
+                                    class="form-label fw-semibold">
+                                    Ficheiro STL:
+                                </label>
                                 <div id='stl-files'></div>
                                 <input
                                     class='form-control'
@@ -144,7 +157,11 @@ $title = "Adicionar produto";
 
                             <!-- Category Select Section -->
                             <div class="mb-3">
-                                <label for="category" class="form-label">Categoria</label>
+                                <label
+                                    for="category"
+                                    class="form-label fw-semibold">
+                                    Categoria
+                                </label>
                                 <select name='category' class="form-control">
                                     <option value=''>Escolha uma categoria</option>
                                     <?php
@@ -159,7 +176,11 @@ $title = "Adicionar produto";
 
                             <!-- Filament Select Section -->
                             <div class="mb-3">
-                                <label for="filament" class="form-label">Filamento</label>
+                                <label
+                                    for="filament"
+                                    class="form-label fw-semibold">
+                                    Filamento
+                                </label>
                                 <select name='filament' class="form-control">
                                     <option value=''>Escolha um filamento</option>
                                     <?php
@@ -174,7 +195,11 @@ $title = "Adicionar produto";
 
                             <!-- Color Upload Section -->
                             <div class="mb-3">
-                                <label for="color" class="form-label">Cor</label>
+                                <label
+                                    for="color"
+                                    class="form-label fw-semibold">
+                                    Cor
+                                </label>
                                 <select name="color" class="form-control">
                                     <option value=''>Escolha uma cor</option>
                                     <?php
@@ -209,101 +234,123 @@ $title = "Adicionar produto";
 
 
 <script>
-    $('#btn-upload-files').click(function() {
-        $('#files').click();
+    // Trigger file input when button is clicked
+    document.getElementById('btn-upload-files').addEventListener('click', () => {
+        document.getElementById('files').click();
     });
-
 
     // Clear modal data on close
-    $('#add-product-modal').on('hidden.bs.modal', function() {
+    document.getElementById('add-product-modal').addEventListener('hidden.bs.modal', () => {
         // Clear form inputs
-        $(this).find('form')[0].reset();
+        const form = document.querySelector('#add-product-modal form');
+        if (form) form.reset();
 
         // Clear file preview containers
-        $('#stl-files').empty();
+        const stlFiles = document.getElementById('stl-files');
+        if (stlFiles) stlFiles.innerHTML = '';
 
         // Optional: Clear custom data or elements like previews
-        const previewZone = document.querySelector('#files-gallery');
-        if (previewZone) {
-            previewZone.innerHTML = ''; // Clear any previews
-        }
+        const previewZone = document.getElementById('files-gallery');
+        if (previewZone) previewZone.innerHTML = '';
     });
 </script>
 
 <script>
+    // Function to verify filament selection
     function verificarSelecaoFilamento() {
-        // Verifica se qualquer <select> de filamento possui uma seleção válida
-        const algumFilamentoSelecionado = $('.filamento').filter(function() {
-            return $(this).val();
-        }).length > 0;
+        // Check if any filament <select> has a valid selection
+        const filamentoSelects = document.querySelectorAll('.filamento');
+        const algumFilamentoSelecionado = Array.from(filamentoSelects).some(
+            (select) => select.value !== ''
+        );
 
-        // Exibe o botão se algum filamento estiver selecionado; caso contrário, oculta
-        document.getElementById('add_fil').style.display = algumFilamentoSelecionado ? 'block' : 'none';
+        // Show or hide the "Add Filament" button
+        // document.getElementById('add_fil').style.display = algumFilamentoSelecionado ? 'block' : 'none';
     }
 
-    // Aplica o evento de mudança a todos os selects de filamento atuais e futuros
-    $(document).on('change', '.filamento', verificarSelecaoFilamento);
-
-    $('#add_fil').on('click', function(e) {
-        e.preventDefault();
-        verificarSelecaoFilamento();
-
-        // Cria um novo select de filamento
-        const newSelectContainer = $('<div class="input-box fil"></div>');
-        const newSelect = $('<select class="filamento"></select>');
-
-        // Copia as opções do primeiro select 
-        $('#filamento option').each(function() {
-            newSelect.append($(this).clone());
-        });
-
-        // Adiciona o novo select ao DOM
-        newSelectContainer.append(newSelect);
-        $('.input-box.fil').last().after(newSelectContainer);
-
-        verificarSelecaoFilamento();
-
-        // Oculta o botão "Adicionar Filamento" logo após criar um novo select
-        document.getElementById('add_fil').style.display = 'none';
+    // Event listener for changes in filament <select> elements
+    document.addEventListener('change', (event) => {
+        if (event.target.classList.contains('filamento')) {
+            verificarSelecaoFilamento();
+        }
     });
+
+    // Add a new filament <select>
+    // document.getElementById('add_fil').addEventListener('click', (event) => {
+    //     event.preventDefault();
+    //     verificarSelecaoFilamento();
+
+    //     // Create a new select element for filament
+    //     const newSelectContainer = document.createElement('div');
+    //     newSelectContainer.className = 'input-box fil';
+    //     const newSelect = document.createElement('select');
+    //     newSelect.className = 'filamento';
+
+    //     // Copy options from the first select
+    //     const options = document.querySelectorAll('#filamento option');
+    //     options.forEach((option) => {
+    //         const clonedOption = option.cloneNode(true);
+    //         newSelect.appendChild(clonedOption);
+    //     });
+
+    //     // Add the new select to the DOM
+    //     newSelectContainer.appendChild(newSelect);
+    //     const lastFilContainer = document.querySelector('.input-box.fil:last-of-type');
+    //     lastFilContainer.parentNode.insertBefore(newSelectContainer, lastFilContainer.nextSibling);
+
+    //     verificarSelecaoFilamento();
+
+    //     // Hide the "Add Filament" button
+    //     document.getElementById('add_fil').style.display = 'none';
+    // });
 </script>
 
 <script>
+    // Function to verify color selection
     function verificarSelecaoCor() {
-        // Verifica se qualquer <select> de cor possui uma seleção válida
-        const algumaCor = $('.cor').filter(function() {
-            return $(this).val();
-        }).length > 0;
+        // Check if any color <select> has a valid selection
+        const corSelects = document.querySelectorAll('.cor');
+        const algumaCor = Array.from(corSelects).some((select) => select.value !== '');
 
-        // Exibe o botão se alguma cor estiver selecionada; caso contrário, oculta
+        // Show or hide the "Add Color" button
         document.getElementById('add_cor').style.display = algumaCor ? 'block' : 'none';
     }
 
-    // Aplica o evento de mudança a todos os selects de cor atuais e futuros
-    $(document).on('change', '.cor', verificarSelecaoCor);
-
-    $('#add_cor').on('click', function(e) {
-        e.preventDefault();
-        verificarSelecaoCor();
-
-        // Cria um novo select de cor
-        const newSelectContainer = $('<div class="input-box cor"></div>');
-        const newSelect = $('<select class="cor"></select>');
-
-        // Copia as opções do primeiro select 
-        $('#cor option').each(function() {
-            newSelect.append($(this).clone());
-        });
-
-        // Adiciona o novo select ao DOM
-        newSelectContainer.append(newSelect);
-        $('.input-box.cor').last().after(newSelectContainer);
-
-        verificarSelecaoCor();
-
-        // Oculta o botão "Adicionar cor" logo após criar um novo select
-        document.getElementById('add_cor').style.display = 'none';
+    // Event listener for changes in color <select> elements
+    document.addEventListener('change', (event) => {
+        if (event.target.classList.contains('cor')) {
+            verificarSelecaoCor();
+        }
     });
+
+    // Add a new color <select>
+    // document.getElementById('add_cor').addEventListener('click', (event) => {
+    //     event.preventDefault();
+    //     verificarSelecaoCor();
+
+    //     // Create a new select element for color
+    //     const newSelectContainer = document.createElement('div');
+    //     newSelectContainer.className = 'input-box cor';
+    //     const newSelect = document.createElement('select');
+    //     newSelect.className = 'cor';
+
+    //     // Copy options from the first select
+    //     const options = document.querySelectorAll('#cor option');
+    //     options.forEach((option) => {
+    //         const clonedOption = option.cloneNode(true);
+    //         newSelect.appendChild(clonedOption);
+    //     });
+
+    //     // Add the new select to the DOM
+    //     newSelectContainer.appendChild(newSelect);
+    //     const lastCorContainer = document.querySelector('.input-box.cor:last-of-type');
+    //     lastCorContainer.parentNode.insertBefore(newSelectContainer, lastCorContainer.nextSibling);
+
+    //     verificarSelecaoCor();
+
+    //     // Hide the "Add Color" button
+    //     document.getElementById('add_cor').style.display = 'none';
+    // });
 </script>
 
 <!-- <script src="./add_product_js.php"></script> -->

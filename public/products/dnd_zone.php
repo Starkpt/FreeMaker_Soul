@@ -24,6 +24,10 @@
     border-color: #28a745;
   }
 
+  #drop-files-here {
+    color: #595959;
+  }
+
   .card {
     border: 1px solid #ddd;
     background-color: #ffffff;
@@ -100,13 +104,17 @@
 
 <div class="mb-3">
   <!-- File upload label -->
-  <label for="fileInput" class="form-label">Imagens do produto</label>
+  <label
+    for="fileInput"
+    class="form-label fw-semibold">
+    Imagens do produto
+  </label>
 
   <!-- Wrapper for drop zone and uploaded files -->
   <div id="drop-zone-wrapper" class="rounded-2">
 
     <div class="p-3 pt-4 pb-0 text-center">
-      <p class="mt-3">Drop images here or <strong>browse files</strong></p>
+      <p id="drop-files-here" class="mt-3">Drop images here or <strong>browse files</strong></p>
       <img class="mb-3" src="../../assets/imgs/icons/upload-24x24.svg" alt="">
       <!-- Placeholder message -->
     </div>
@@ -141,6 +149,39 @@
   const fileInput = document.querySelector("#fileInput");
   const filesGallery = document.querySelector("#files-gallery");
   const placeholder = document.querySelector("#placeholder-message");
+
+  const form = document.getElementById('add-product-form');
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault(); // Prevent the default form submission
+
+    // Create a FormData instance
+    const formData = new FormData(form);
+
+    // Example: Log the FormData content (for debugging)
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
+
+    // Send form data to the server
+    fetch('../../actions/products/add_product.php', {
+        method: 'POST',
+        body: formData,
+      })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => console.log('Server Response:', data))
+      .catch((error) => {
+        console.error('Error:', {
+          error
+        });
+      });
+  });
+
 
   // Helper function to create an HTML element with attributes and text
   const createElement = (tag, attributes = {}, innerText = "") => {
